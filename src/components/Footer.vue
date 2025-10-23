@@ -1,0 +1,47 @@
+<template>
+	<footer class="has-background-black-bis has-text-white mt-6 py-6">
+		<div class="container">
+			<div class="columns">
+				<div class="column is-one-third my-6">
+					<div class="is-flex">
+						<img class="image is-32x32" src="/icons/favicon.png" alt="">
+						<h5 class="mx-3 is-flex is-align-items-center">RAFH</h5>
+					</div>
+					<div>
+						<p class="is-justify-content-left">Nuestro sistema de inventarios multiusuario optimiza la gestión y trazabilidad de bienes dentro de una organización, permitiendo registrar y monitorear activos en tiempo real. Con un control de usuarios que define accesos y permisos, asegura la seguridad de la información.
+							Además, incluye una herramienta de reportes detallados sobre movimientos, transferencias y estado de los activos, garantizando una administración eficiente y segura de los recursos.</p>
+					</div>
+				</div>
+				<div class="column is-one-third my-6 ">
+					<h3 class="title is-5 has-text-white">Enlaces</h3>
+					<ul>
+						<li><a href="#" class="has-text-white hover-white">Inicio</a></li>
+						<li><a href="#" class="has-text-white hover-white">Servicios</a></li>
+						<li><a href="#" class="has-text-white hover-white">Acerca de</a></li>
+						<li><a href="#" class="has-text-white hover-white">Contáctanos</a></li>
+					</ul>
+				</div>
+				<div class="column is-one-third my-6">
+					<h3 class="title is-5 has-text-white">Contactanos</h3>
+					<p><strong class="has-text-white">Email:</strong> contacto@ejemplo.com</p>
+					<p><strong class="has-text-white">Teléfono:</strong> +123 456 789</p>
+					<div class="is-flex my-4">
+						<img class="image is-32x32" src="/icons/whatsapp.png" alt="">
+						<img class="image is-32x32" src="/icons/twitter.png" alt="">
+						<img class="image is-32x32" src="/icons/youtube.png" alt="">
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="has-text-centered my-6">
+			<p class="is-size-7">© 2025 RAFH Solutions. Todos los derechos reservados.</p>
+		</div>
+	</footer>
+</template>
+
+<script setup>
+</script>
+
+<style scoped>
+</style>
+
