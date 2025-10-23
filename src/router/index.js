@@ -5,8 +5,33 @@ const router = createRouter({
   routes: [
     {
       path: '/',
+      name: 'home',
+      component: () => import('../views/home/home-view.vue'),
+    },
+    {
+      path: '/login',
       name: 'login',
       component: () => import('../views/login.vue'),
+    },
+    {
+      path: '/register',
+      name: 'register',
+      component: () => import('../views/register.vue'),
+    },
+    {
+      path: '/about',
+      name: 'about',
+      component: () => import('../views/acercaNosotros.vue'),
+    },
+    {
+      path: '/contact',
+      name: 'contact',
+      component: () => import('../views/contactanos.vue'),
+    },
+    {
+      path: '/pricing',
+      name: 'pricing',
+      component: () => import('../views/precios.vue'),
     },
     {
       path: '/dashboard',

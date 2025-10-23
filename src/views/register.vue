@@ -1,46 +1,112 @@
 <template>
-	<section class="custom-section-first">
-		<div class="main-container">
-			<div class="signup-container">
-				<div class="form-side">
-					<h1 class="title custom-family-text">Registro</h1>
-					<form method="POST" class="register-form" id="register-form">
-						<div class="field">
-							<div class="control has-icons-left">
-								<input class="input" type="text" name="nombre" placeholder="Tu Nombre" required>
+	<section class="min-h-[calc(100vh-64px)] bg-gradient-to-br from-white to-blue-50 dark:from-gray-900 dark:to-gray-800 flex items-center justify-center py-12 px-4 transition-colors duration-300">
+		<div class="w-full max-w-4xl">
+			<div class="bg-gray-900 dark:bg-gray-800 text-white rounded-lg shadow-2xl overflow-hidden transition-colors duration-300">
+				<div class="grid grid-cols-1 md:grid-cols-2">
+					<!-- Form Side -->
+					<div class="p-8 md:p-10">
+						<h1 class="text-3xl font-bold mb-8 font-audiowide">Registro</h1>
+						
+						<form @submit.prevent="handleSubmit" class="space-y-6">
+							<!-- Name Field -->
+							<div>
+								<label for="nombre" class="block text-sm font-medium text-gray-300 mb-2">Nombre</label>
+								<input
+									id="nombre"
+									type="text"
+									name="nombre"
+									v-model="formData.nombre"
+									placeholder="Tu Nombre"
+									required
+									class="w-full px-4 py-2 rounded-lg border border-gray-600 bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors duration-300"
+								>
 							</div>
-						</div>
-						<div class="field">
-							<div class="control has-icons-left">
-								<input class="input" type="email" name="email" placeholder="Tu Email" required>
+
+							<!-- Email Field -->
+							<div>
+								<label for="email" class="block text-sm font-medium text-gray-300 mb-2">Email</label>
+								<input
+									id="email"
+									type="email"
+									name="email"
+									v-model="formData.email"
+									placeholder="Tu Email"
+									required
+									class="w-full px-4 py-2 rounded-lg border border-gray-600 bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors duration-300"
+								>
 							</div>
-						</div>
-						<div class="field">
-							<div class="control has-icons-left">
-								<input class="input" type="password" name="contraseña" placeholder="Contraseña" required>
+
+							<!-- Password Field -->
+							<div>
+								<label for="contraseña" class="block text-sm font-medium text-gray-300 mb-2">Contraseña</label>
+								<input
+									id="contraseña"
+									type="password"
+									name="contraseña"
+									v-model="formData.contraseña"
+									placeholder="Contraseña"
+									required
+									class="w-full px-4 py-2 rounded-lg border border-gray-600 bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors duration-300"
+								>
 							</div>
-						</div>
-						<div class="field">
-							<div class="control has-icons-left">
-								<input class="input" type="password" name="repetir_contraseña" placeholder="Repite tu contraseña" required>
+
+							<!-- Confirm Password Field -->
+							<div>
+								<label for="repetir_contraseña" class="block text-sm font-medium text-gray-300 mb-2">Repite tu contraseña</label>
+								<input
+									id="repetir_contraseña"
+									type="password"
+									name="repetir_contraseña"
+									v-model="formData.repetir_contraseña"
+									placeholder="Repite tu contraseña"
+									required
+									class="w-full px-4 py-2 rounded-lg border border-gray-600 bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors duration-300"
+								>
 							</div>
-						</div>
-						<div class="field terms">
-							<label class="checkbox">
-								<input type="checkbox" required>
-								Acepto todos los <a href="#" class="terms-link">términos de servicio</a>
-							</label>
-						</div>
-						<div class="field">
-							<button type="submit" class="button register-button">Registrarse</button>
-						</div>
-						<div class="field login-link">
-							<RouterLink to="/login">Ya tengo una cuenta</RouterLink>
-						</div>
-					</form>
-				</div>
-				<div class="image-side">
-					<img src="/images/form.png" alt="Imagen de registro">
+
+							<!-- Terms Checkbox -->
+							<div class="flex items-center space-x-3">
+								<input
+									id="terms"
+									type="checkbox"
+									v-model="formData.terms"
+									required
+									class="w-4 h-4 rounded border-gray-600 bg-gray-700 text-blue-600 cursor-pointer"
+								>
+								<label for="terms" class="text-sm text-gray-300">
+									Acepto todos los
+									<a href="#" class="text-blue-400 hover:text-blue-300 transition-colors">términos de servicio</a>
+								</label>
+							</div>
+
+							<!-- Submit Button -->
+							<button
+								type="submit"
+								class="w-full px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800"
+							>
+								Registrarse
+							</button>
+
+							<!-- Login Link -->
+							<div class="text-center">
+								<p class="text-gray-400">
+									¿Ya tienes una cuenta?
+									<RouterLink to="/login" class="text-blue-400 hover:text-blue-300 transition-colors font-semibold">
+										Inicia sesión aquí
+									</RouterLink>
+								</p>
+							</div>
+						</form>
+					</div>
+
+					<!-- Image Side -->
+					<div class="hidden md:flex items-center justify-center bg-gray-800 p-8">
+						<img
+							src="/images/form.png"
+							alt="Illustration"
+							class="w-full h-auto object-contain max-h-96"
+						>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -48,92 +114,44 @@
 </template>
 
 <script setup>
+import { reactive } from 'vue'
+import { RouterLink, useRouter } from 'vue-router'
+
+const router = useRouter()
+
+const formData = reactive({
+	nombre: '',
+	email: '',
+	contraseña: '',
+	repetir_contraseña: '',
+	terms: false
+})
+
+const handleSubmit = () => {
+	if (formData.contraseña !== formData.repetir_contraseña) {
+		alert('Las contraseñas no coinciden')
+		return
+	}
+
+	if (!formData.terms) {
+		alert('Debes aceptar los términos de servicio')
+		return
+	}
+
+	console.log('Form submitted:', {
+		nombre: formData.nombre,
+		email: formData.email,
+		contraseña: formData.contraseña
+	})
+
+	// Reset form
+	formData.nombre = ''
+	formData.email = ''
+	formData.contraseña = ''
+	formData.repetir_contraseña = ''
+	formData.terms = false
+
+	// Redirect to login or dashboard
+	router.push('/login')
+}
 </script>
-
-<style scoped>
-/* Ajustar el contenedor de registro */
-.custom-section-first {
-    min-height: calc(100vh - 3.25rem);
-    padding-top: 3.25rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 3.25rem 1rem 2rem 1rem;
-    box-sizing: border-box;
-}
-
-.main-container {
-    width: 100%;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0;
-}
-
-.signup-container {
-    max-width: 1000px;
-    width: 100%;
-    margin: 0 auto;
-    display: flex;
-    background: rgb(20,22,26);
-    border-radius: 10px;
-    box-shadow: 0 0 30px rgba(255, 255, 255, 0.15);
-    overflow: hidden;
-}
-
-.form-side {
-    flex: 1;
-    padding: 2rem;
-    min-width: 0;
-}
-
-.image-side {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 2rem;
-    min-width: 0;
-}
-
-.image-side img {
-    max-width: 100%;
-    height: auto;
-    max-height: 400px;
-}
-
-/* Responsive */
-@media screen and (max-width: 768px) {
-    .custom-section-first {
-        padding: 3.25rem 0.5rem 1rem 0.5rem;
-    }
-    
-    .signup-container {
-        flex-direction: column;
-        margin: 0;
-        border-radius: 0;
-    }
-    
-    .form-side {
-        padding: 1.5rem;
-    }
-    
-    .image-side {
-        display: none;
-    }
-}
-
-@media screen and (max-width: 480px) {
-    .custom-section-first {
-        padding: 3.25rem 0.25rem 0.5rem 0.25rem;
-    }
-    
-    .form-side {
-        padding: 1rem;
-    }
-    
-    .title {
-        font-size: 1.5rem;
-    }
-}
-</style>
-
