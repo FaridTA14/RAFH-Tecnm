@@ -1,0 +1,41 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  @font-face {
+    font-family: 'Montserrat';
+    src: url('/fonts/Montserrat.ttf') format('truetype');
+  }
+
+  @font-face {
+    font-family: 'Audiowide';
+    src: url('/fonts/Audiowide.ttf') format('truetype');
+  }
+
+  body {
+    @apply transition-colors duration-300;
+  }
+
+  html.dark {
+    @apply bg-gray-900 text-white;
+  }
+
+  html.light {
+    @apply bg-white text-gray-900;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply px-4 py-2 rounded-md bg-blue-600 text-white hover:bg-blue-700 transition-colors duration-300;
+  }
+
+  .btn-secondary {
+    @apply px-4 py-2 rounded-md bg-teal-600 text-white hover:bg-teal-700 transition-colors duration-300;
+  }
+
+  .input-field {
+    @apply w-full px-3 py-2 rounded-md border dark:bg-gray-800 dark:border-gray-700 dark:text-white light:bg-white light:border-gray-300 light:text-gray-900;
+  }
+}
