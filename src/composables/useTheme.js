@@ -21,9 +21,11 @@ export function useTheme() {
     if (isDark.value) {
       html.classList.add('dark')
       html.classList.remove('light')
+      document.documentElement.style.colorScheme = 'dark'
     } else {
       html.classList.add('light')
       html.classList.remove('dark')
+      document.documentElement.style.colorScheme = 'light'
     }
   }
 
