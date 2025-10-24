@@ -1,112 +1,81 @@
 <template>
-	<section class="container">
-		<div class="is-flex">
-			<label for="" class="is-size-7-mobile is-size-6-tablet is-size-6-desktop is-size-6-fullhd">Registro de auditorias</label>
-			<label for="" class="is-size-7-mobile is-size-6-tablet is-size-6-desktop is-size-6-fullhd ml-auto">Instituto Tecnológico de Chetumal</label>
+	<div class="space-y-6">
+		<div class="flex justify-between items-center">
+			<label class="text-sm md:text-base text-gray-600 dark:text-gray-400">Registro de auditorías</label>
+			<label class="text-sm md:text-base text-gray-600 dark:text-gray-400">Instituto Tecnológico de Chetumal</label>
 		</div>
-		<div class="container">
-			<div class="container is-flex mt-3 p-2 is-justify-content-space-between">
-				<div>
-					<label class="label">Filtrar por usuario</label>
-					<form action="" class="is-flex">
-						<input type="text" name="" id="" placeholder="Usuario" class="input">
-						<input type="submit" value="Buscar" class="button">
-					</form>
-				</div>
-				<div>
-					<label class="label">Filtrar por tipo de usuario</label>
-					<div class="control">
-						<div class="select">
-							<select>
-								<option>Sin filtro</option>
-								<option>Gestor</option>
-								<option>Resguardante</option>
-							</select>
-						</div>
-					</div>
-				</div>
-				<div>
-					<label class="label">Filtrar por rol</label>
-					<div class="control">
-						<div class="select">
-							<select>
-								<option>Sin filtro</option>
-								<option>Administrador</option>
-								<option>Gestor superior</option>
-								<option>Jefe de departamento</option>
-							</select>
-						</div>
-					</div>
-				</div>
-				<div>
-					<label class="label">Filtrar por acción</label>
-					<div class="control">
-						<div class="select">
-							<select>
-								<option>Sin filtro</option>
-								<option class="has-text-warning">Actualizar centro de trabajo</option>
-								<option class="has-text-success">Crear gestor</option>
-								<option class="has-text-warning">Modificar gestor</option>
-								<option class="has-text-danger">Eliminar gestor</option>
-								<option class="has-text-success">Crear resguardante</option>
-								<option class="has-text-warning">Modificar resguardante</option>
-								<option class="has-text-danger">Eliminar resguardante</option>
-							</select>
-						</div>
-					</div>
+
+		<div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+			<div>
+				<label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Filtrar por usuario</label>
+				<div class="flex gap-2">
+					<input type="text" placeholder="Usuario" class="flex-1 px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+					<button class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors">Buscar</button>
 				</div>
 			</div>
-			<div class="table-container">
-				<table class="table is-fullwidth custom-table">
-					<thead>
-						<tr>
-							<th>Usuario</th>
-							<th>Tipo de usuario</th>
-							<th>Rol</th>
-							<th>Acción</th>
-							<th>Fecha</th>
-							<th>Hora</th>
-							<th>IP</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td class="has-text-grey">Juan Pérez</td>
-							<td class="has-text-grey">Gestor</td>
-							<td class="has-text-grey">Administrador</td>
-							<td class="has-text-grey">Crear gestor</td>
-							<td class="has-text-grey">15/01/2024</td>
-							<td class="has-text-grey">10:30:45</td>
-							<td class="has-text-grey">192.168.1.100</td>
-						</tr>
-						<tr>
-							<td class="has-text-grey">María García</td>
-							<td class="has-text-grey">Resguardante</td>
-							<td class="has-text-grey">Jefe de departamento</td>
-							<td class="has-text-grey">Modificar resguardante</td>
-							<td class="has-text-grey">15/01/2024</td>
-							<td class="has-text-grey">11:15:20</td>
-							<td class="has-text-grey">192.168.1.101</td>
-						</tr>
-						<tr>
-							<td class="has-text-grey">Carlos López</td>
-							<td class="has-text-grey">Gestor</td>
-							<td class="has-text-grey">Gestor superior</td>
-							<td class="has-text-grey">Actualizar centro de trabajo</td>
-							<td class="has-text-grey">15/01/2024</td>
-							<td class="has-text-grey">14:22:10</td>
-							<td class="has-text-grey">192.168.1.102</td>
-						</tr>
-					</tbody>
-				</table>
+			<div>
+				<label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Filtrar por tipo de usuario</label>
+				<select class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+					<option>Sin filtro</option>
+					<option>Gestor</option>
+					<option>Resguardante</option>
+				</select>
+			</div>
+			<div>
+				<label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Filtrar por rol</label>
+				<select class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+					<option>Sin filtro</option>
+					<option>Administrador</option>
+					<option>Gestor superior</option>
+					<option>Jefe de departamento</option>
+				</select>
+			</div>
+			<div>
+				<label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Filtrar por acción</label>
+				<select class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+					<option>Sin filtro</option>
+					<option>Actualizar centro de trabajo</option>
+					<option>Crear gestor</option>
+					<option>Modificar gestor</option>
+					<option>Eliminar gestor</option>
+					<option>Crear resguardante</option>
+					<option>Modificar resguardante</option>
+					<option>Eliminar resguardante</option>
+				</select>
 			</div>
 		</div>
-	</section>
+
+		<div class="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-x-auto">
+			<table class="w-full text-sm">
+				<thead class="bg-gray-100 dark:bg-gray-700">
+					<tr>
+						<th class="px-4 py-3 text-left font-semibold text-gray-900 dark:text-white">Usuario</th>
+						<th class="px-4 py-3 text-left font-semibold text-gray-900 dark:text-white">Tipo</th>
+						<th class="px-4 py-3 text-left font-semibold text-gray-900 dark:text-white">Rol</th>
+						<th class="px-4 py-3 text-left font-semibold text-gray-900 dark:text-white">Acción</th>
+						<th class="px-4 py-3 text-left font-semibold text-gray-900 dark:text-white">Fecha</th>
+					</tr>
+				</thead>
+				<tbody class="divide-y divide-gray-200 dark:divide-gray-600">
+					<tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+						<td class="px-4 py-3 text-gray-600 dark:text-gray-400">Juan Pérez</td>
+						<td class="px-4 py-3 text-gray-600 dark:text-gray-400">Gestor</td>
+						<td class="px-4 py-3 text-gray-600 dark:text-gray-400">Administrador</td>
+						<td class="px-4 py-3"><span class="inline-block px-3 py-1 bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-200 rounded-full text-xs font-semibold">Modificar</span></td>
+						<td class="px-4 py-3 text-gray-600 dark:text-gray-400">2024-01-15 10:30</td>
+					</tr>
+					<tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+						<td class="px-4 py-3 text-gray-600 dark:text-gray-400">María García</td>
+						<td class="px-4 py-3 text-gray-600 dark:text-gray-400">Resguardante</td>
+						<td class="px-4 py-3 text-gray-600 dark:text-gray-400">Gestor</td>
+						<td class="px-4 py-3"><span class="inline-block px-3 py-1 bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 rounded-full text-xs font-semibold">Crear</span></td>
+						<td class="px-4 py-3 text-gray-600 dark:text-gray-400">2024-01-15 09:15</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
 </template>
 
 <script setup>
 </script>
-
-<style scoped>
-</style>
-
