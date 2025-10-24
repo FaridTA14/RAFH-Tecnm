@@ -1,226 +1,208 @@
 <template>
-	<section class="container">
-		<div class="is-flex">
-			<label for="" class="is-size-7-mobile is-size-6-tablet is-size-6-desktop is-size-6-fullhd">Bienes Materiales</label>
-			<label for="" class="is-size-7-mobile is-size-6-tablet is-size-6-desktop is-size-6-fullhd ml-auto">Instituto Tecnológico de Chetumal</label>
+	<div class="space-y-6">
+		<!-- Header -->
+		<div class="flex justify-between items-center">
+			<label class="text-sm md:text-base text-gray-600 dark:text-gray-400">Bienes Materiales</label>
+			<label class="text-sm md:text-base text-gray-600 dark:text-gray-400">Instituto Tecnológico de Chetumal</label>
 		</div>
-		<div class="container">
-			<div class="container is-flex mt-3 p-2 is-align-items-center">
+
+		<!-- Filters and Actions -->
+		<div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4 space-y-4">
+			<div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+				<!-- Search -->
 				<div>
-					<label class="label">Nombre del bien</label>
-					<form action="" class="is-flex">
-						<input type="text" name="" id="" placeholder="Bien" class="input">
-						<input type="submit" value="Buscar" class="button">
-					</form>
-				</div>
-				<div>
-					<label class="label">Filtrar por área</label>
-					<div class="control">
-						<div class="select">
-							<select>
-								<option>Sin filtro</option>
-								<option>Laboratorio de sistemas</option>
-								<option>RR.HH</option>
-							</select>
-						</div>
+					<label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Nombre del bien</label>
+					<div class="flex gap-2">
+						<input type="text" placeholder="Bien" class="flex-1 px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+						<button class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors">Buscar</button>
 					</div>
 				</div>
+
+				<!-- Filter by Area -->
 				<div>
-					<label class="label">Filtrar por categoria</label>
-					<div class="control">
-						<div class="select">
-							<select>
-								<option>Sin filtro</option>
-								<option>Electronicos</option>
-								<option>Oficina</option>
-								<option>Jardinería</option>
-							</select>
-						</div>
-					</div>
+					<label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Filtrar por área</label>
+					<select class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+						<option>Sin filtro</option>
+						<option>Laboratorio de sistemas</option>
+						<option>RR.HH</option>
+					</select>
 				</div>
-				<div class="ml-auto">
-					<button class="button is-primary open-modal" data-target="modal-bien-new">Nuevo Bien</button>
-					<button class="button is-link open-modal">
-						<i class="fa-solid fa-print mr-1" style="color: #ffffff;"></i>
+
+				<!-- Filter by Category -->
+				<div>
+					<label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Filtrar por categoría</label>
+					<select class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+						<option>Sin filtro</option>
+						<option>Electrónicos</option>
+						<option>Oficina</option>
+						<option>Jardinería</option>
+					</select>
+				</div>
+
+				<!-- Actions -->
+				<div class="flex items-end gap-2">
+					<button @click="showNewBienModal = true" class="flex-1 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors font-medium">Nuevo Bien</button>
+					<button class="flex-1 px-4 py-2 bg-cyan-600 hover:bg-cyan-700 text-white rounded-lg transition-colors font-medium flex items-center justify-center gap-2">
+						<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4H7a2 2 0 01-2-2v-4a2 2 0 012-2h10a2 2 0 012 2v4a2 2 0 01-2 2zm2-6a2 2 0 11-4 0 2 2 0 014 0z"></path>
+						</svg>
 						Reporte
 					</button>
 				</div>
-				<div class="modal" id="modal-bien-new">
-					<div class="modal-background"></div>
-					<div class="modal-card">
-						<header class="modal-card-head">
-							<p class="modal-card-title">Nuevo Bien</p>
-							<button class="delete close-modal" aria-label="close"></button>
-						</header>
-						<section class="modal-card-body">
-							<form action="">
-								<div class="field">
-									<label class="label">Número de serie</label>
-									<div class="control">
-										<input class="input" type="text" placeholder="Número de serie">
-									</div>
-								</div>
-								<div class="field">
-									<label class="label">Modelo</label>
-									<div class="control">
-										<input class="input" type="text" placeholder="Modelo">
-									</div>
-								</div>
-								<div class="field">
-									<label class="label">Marca</label>
-									<div class="control">
-										<input class="input" type="text" placeholder="Marca">
-									</div>
-								</div>
-								<div class="field">
-									<label class="label">Fecha de adquisición</label>
-									<div class="control">
-										<input class="input" type="date" placeholder="Marca">
-									</div>
-								</div>
-								<div class="field">
-									<label class="label">Valor del bien</label>
-									<div class="control">
-										<input class="input" type="text" placeholder="Marca">
-									</div>
-								</div>
-								<div class="field">
-									<label class="label">Documento soporte</label>
-									<div class="control">
-										<div class="select">
-											<select>
-												<option>Seleccionar un tipo</option>
-												<option>Factura</option>
-												<option>Proveedor</option>
-												<option>Donación</option>
-												<option>Otros conceptos</option>
-											</select>
-										</div>
-									</div>
-								</div>
-								<div class="field">
-									<label class="label">Categoria</label>
-									<div class="control">
-										<div class="select">
-											<select>
-												<option>Seleccionar categoria</option>
-												<option>Mueble de oficina</option>
-												<option>Equipo de computo</option>
-												<option>Equipo de laboratorio</option>
-											</select>
-										</div>
-									</div>
-								</div>
-								<div class="field">
-									<label class="label">Área</label>
-									<div class="control">
-										<div class="select">
-											<select>
-												<option>Seleccionar área</option>
-												<option>RR.HH</option>
-												<option>Sistemas</option>
-												<option>Administración</option>
-											</select>
-										</div>
-									</div>
-								</div>
-								<div class="field">
-									<label class="label">Resguardante</label>
-									<div class="control">
-										<div class="select">
-											<select>
-												<option>Seleccionar resguardante</option>
-												<option>Juan Pérez</option>
-												<option>María García</option>
-												<option>Carlos López</option>
-											</select>
-										</div>
-									</div>
-								</div>
-								<div class="field">
-									<label class="label">Estado</label>
-									<div class="control">
-										<div class="select">
-											<select>
-												<option>Seleccionar estado</option>
-												<option>Bueno</option>
-												<option>Regular</option>
-												<option>Malo</option>
-											</select>
-										</div>
-									</div>
-								</div>
-								<div class="field">
-									<label class="label">Observaciones</label>
-									<div class="control">
-										<textarea class="textarea" placeholder="Observaciones"></textarea>
-									</div>
-								</div>
-							</form>
-						</section>
-						<footer class="modal-card-foot">
-							<button class="button is-success">Guardar</button>
-							<button class="button close-modal">Cancelar</button>
-						</footer>
-					</div>
-				</div>
-			</div>
-			<div class="table-container">
-				<table class="table is-fullwidth custom-table">
-					<thead>
-						<tr>
-							<th>Número de serie</th>
-							<th>Modelo</th>
-							<th>Marca</th>
-							<th>Área</th>
-							<th>Resguardante</th>
-							<th>Estado</th>
-							<th>Acciones</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td>ABC123456</td>
-							<td>OptiPlex 7090</td>
-							<td>Dell</td>
-							<td>Sistemas</td>
-							<td>Juan Pérez</td>
-							<td><span class="tag is-success">Bueno</span></td>
-							<td class="is-flex">
-								<button class="button is-small is-info">
-									<svg xmlns="http://www.w3.org/2000/svg" height="16px" viewBox="0 -960 960 960" width="16px" fill="#ffffff"><path d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h357l-80 80H200v560h560v-278l80-80v358q0 33-23.5 56.5T760-120H200Zm280-360ZM360-360v-170l367-367q12-12 27-18t30-6q16 0 30.5 6t26.5 18l56 57q11 12 17 26.5t6 29.5q0 15-5.5 29.5T897-728L530-360H360Zm481-424-56-56 56 56ZM440-440h56l232-232-28-28-29-28-231 231v57Zm260-260-29-28 29 28 28 28-28-28Z"/></svg>
-								</button>
-								<button class="button is-small is-danger ml-2">
-									<svg xmlns="http://www.w3.org/2000/svg" height="16px" viewBox="0 -960 960 960" width="16px" fill="#ffffff"><path d="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z"/></svg>
-								</button>
-							</td>
-						</tr>
-						<tr>
-							<td>XYZ789012</td>
-							<td>ThinkPad E15</td>
-							<td>Lenovo</td>
-							<td>RR.HH</td>
-							<td>María García</td>
-							<td><span class="tag is-warning">Regular</span></td>
-							<td class="is-flex">
-								<button class="button is-small is-info">
-									<svg xmlns="http://www.w3.org/2000/svg" height="16px" viewBox="0 -960 960 960" width="16px" fill="#ffffff"><path d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h357l-80 80H200v560h560v-278l80-80v358q0 33-23.5 56.5T760-120H200Zm280-360ZM360-360v-170l367-367q12-12 27-18t30-6q16 0 30.5 6t26.5 18l56 57q11 12 17 26.5t6 29.5q0 15-5.5 29.5T897-728L530-360H360Zm481-424-56-56 56 56ZM440-440h56l232-232-28-28-29-28-231 231v57Zm260-260-29-28 29 28 28 28-28-28Z"/></svg>
-								</button>
-								<button class="button is-small is-danger ml-2">
-									<svg xmlns="http://www.w3.org/2000/svg" height="16px" viewBox="0 -960 960 960" width="16px" fill="#ffffff"><path d="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z"/></svg>
-								</button>
-							</td>
-						</tr>
-					</tbody>
-				</table>
 			</div>
 		</div>
-	</section>
+
+		<!-- Table -->
+		<div class="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-x-auto">
+			<table class="w-full text-sm">
+				<thead class="bg-gray-100 dark:bg-gray-700">
+					<tr>
+						<th class="px-4 py-3 text-left font-semibold text-gray-900 dark:text-white">Número de serie</th>
+						<th class="px-4 py-3 text-left font-semibold text-gray-900 dark:text-white">Modelo</th>
+						<th class="px-4 py-3 text-left font-semibold text-gray-900 dark:text-white">Marca</th>
+						<th class="px-4 py-3 text-left font-semibold text-gray-900 dark:text-white">Área</th>
+						<th class="px-4 py-3 text-left font-semibold text-gray-900 dark:text-white">Resguardante</th>
+						<th class="px-4 py-3 text-left font-semibold text-gray-900 dark:text-white">Estado</th>
+						<th class="px-4 py-3 text-left font-semibold text-gray-900 dark:text-white">Acciones</th>
+					</tr>
+				</thead>
+				<tbody class="divide-y divide-gray-200 dark:divide-gray-600">
+					<tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+						<td class="px-4 py-3 text-gray-600 dark:text-gray-400">ABC123456</td>
+						<td class="px-4 py-3 text-gray-600 dark:text-gray-400">OptiPlex 7090</td>
+						<td class="px-4 py-3 text-gray-600 dark:text-gray-400">Dell</td>
+						<td class="px-4 py-3 text-gray-600 dark:text-gray-400">Sistemas</td>
+						<td class="px-4 py-3 text-gray-600 dark:text-gray-400">Juan Pérez</td>
+						<td class="px-4 py-3"><span class="inline-block px-3 py-1 bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 rounded-full text-xs font-semibold">Bueno</span></td>
+						<td class="px-4 py-3 flex gap-2">
+							<button class="p-2 bg-blue-600 hover:bg-blue-700 text-white rounded transition-colors">
+								<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+								</svg>
+							</button>
+							<button class="p-2 bg-red-600 hover:bg-red-700 text-white rounded transition-colors">
+								<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+								</svg>
+							</button>
+						</td>
+					</tr>
+					<tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+						<td class="px-4 py-3 text-gray-600 dark:text-gray-400">XYZ789012</td>
+						<td class="px-4 py-3 text-gray-600 dark:text-gray-400">ThinkPad E15</td>
+						<td class="px-4 py-3 text-gray-600 dark:text-gray-400">Lenovo</td>
+						<td class="px-4 py-3 text-gray-600 dark:text-gray-400">RR.HH</td>
+						<td class="px-4 py-3 text-gray-600 dark:text-gray-400">María García</td>
+						<td class="px-4 py-3"><span class="inline-block px-3 py-1 bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-200 rounded-full text-xs font-semibold">Regular</span></td>
+						<td class="px-4 py-3 flex gap-2">
+							<button class="p-2 bg-blue-600 hover:bg-blue-700 text-white rounded transition-colors">
+								<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+								</svg>
+							</button>
+							<button class="p-2 bg-red-600 hover:bg-red-700 text-white rounded transition-colors">
+								<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+								</svg>
+							</button>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+		<!-- New Bien Modal -->
+		<div v-if="showNewBienModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+			<div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+				<div class="flex items-center justify-between border-b border-gray-300 dark:border-gray-600 p-6">
+					<h2 class="text-lg font-bold text-gray-900 dark:text-white">Nuevo Bien</h2>
+					<button @click="showNewBienModal = false" class="text-gray-400 hover:text-gray-600 text-2xl">&times;</button>
+				</div>
+				<div class="p-6 space-y-4">
+					<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+						<div>
+							<label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Número de serie</label>
+							<input type="text" placeholder="Número de serie" class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+						</div>
+						<div>
+							<label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Modelo</label>
+							<input type="text" placeholder="Modelo" class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+						</div>
+						<div>
+							<label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Marca</label>
+							<input type="text" placeholder="Marca" class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+						</div>
+						<div>
+							<label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Fecha de adquisición</label>
+							<input type="date" class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+						</div>
+						<div>
+							<label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Valor del bien</label>
+							<input type="text" placeholder="Valor" class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+						</div>
+						<div>
+							<label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Documento soporte</label>
+							<select class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+								<option>Seleccionar un tipo</option>
+								<option>Factura</option>
+								<option>Proveedor</option>
+								<option>Donación</option>
+								<option>Otros conceptos</option>
+							</select>
+						</div>
+						<div>
+							<label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Categoría</label>
+							<select class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+								<option>Seleccionar categoría</option>
+								<option>Mueble de oficina</option>
+								<option>Equipo de computo</option>
+								<option>Equipo de laboratorio</option>
+							</select>
+						</div>
+						<div>
+							<label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Área</label>
+							<select class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+								<option>Seleccionar área</option>
+								<option>RR.HH</option>
+								<option>Sistemas</option>
+								<option>Administración</option>
+							</select>
+						</div>
+						<div>
+							<label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Resguardante</label>
+							<select class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+								<option>Seleccionar resguardante</option>
+								<option>Juan Pérez</option>
+								<option>María García</option>
+								<option>Carlos López</option>
+							</select>
+						</div>
+						<div>
+							<label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Estado</label>
+							<select class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+								<option>Seleccionar estado</option>
+								<option>Bueno</option>
+								<option>Regular</option>
+								<option>Malo</option>
+							</select>
+						</div>
+						<div class="md:col-span-2">
+							<label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Observaciones</label>
+							<textarea placeholder="Observaciones" rows="3" class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"></textarea>
+						</div>
+					</div>
+				</div>
+				<div class="flex gap-2 justify-end border-t border-gray-300 dark:border-gray-600 p-6">
+					<button @click="showNewBienModal = false" class="px-4 py-2 bg-gray-300 dark:bg-gray-600 text-gray-900 dark:text-white rounded-lg hover:bg-gray-400 dark:hover:bg-gray-500 transition-colors">Cancelar</button>
+					<button class="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg transition-colors font-medium">Guardar</button>
+				</div>
+			</div>
+		</div>
+	</div>
 </template>
 
 <script setup>
+import { ref } from 'vue'
+
+const showNewBienModal = ref(false)
 </script>
-
-<style scoped>
-</style>
-
