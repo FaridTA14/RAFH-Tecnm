@@ -39,7 +39,7 @@ const router = createRouter({
       component: () => import('../views/dashboard/dashboard-view.vue'),
     },
     {
-      path: '/dashboard/:component',
+      path: '/dashboard/:component?',
       name: 'dashboard-component',
       component: () => import('../views/dashboard/dashboard-view.vue'),
       props: true,
