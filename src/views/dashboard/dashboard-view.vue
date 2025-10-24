@@ -184,11 +184,11 @@
 
 <script setup>
 import { computed, onMounted, onUnmounted, ref, defineAsyncComponent } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
+import { useRoute, useRouter, RouterLink } from 'vue-router'
 import { logout } from '../../config/api.js'
-import { RouterLink } from 'vue-router'
 
 const isSidebarActive = ref(false)
+const isProfileMenuOpen = ref(false)
 const toggleSidebar = () => { isSidebarActive.value = !isSidebarActive.value }
 const closeSidebar = () => { isSidebarActive.value = false }
 
@@ -204,7 +204,13 @@ onUnmounted(() => {
 })
 
 const route = useRoute()
+const router = useRouter()
 const componentParam = computed(() => route.params.component)
+
+// Get user data from localStorage
+const userData = JSON.parse(localStorage.getItem('user') || '{}')
+const userName = computed(() => userData.usuario_nombre || 'Usuario')
+const userEmail = computed(() => userData.usuario_correo || 'email@example.com')
 
 const componentMap = {
 	areas: defineAsyncComponent(() => import('./modules/areas.vue')),
@@ -219,6 +225,7 @@ const componentMap = {
 	solicitudes: defineAsyncComponent(() => import('./modules/solicitudes.vue')),
 	"user-resg": defineAsyncComponent(() => import('./modules/user-resg.vue')),
 	workcenter: defineAsyncComponent(() => import('./modules/workcenter.vue')),
+	"profile-edit": defineAsyncComponent(() => import('./modules/profile-edit.vue')),
 }
 
 const currentComponent = computed(() => {
@@ -226,16 +233,15 @@ const currentComponent = computed(() => {
 	return componentMap[key] ? componentMap[key] : componentMap['main']
 })
 
-const router = useRouter()
 const handleLogout = async () => {
 	try {
 		await logout()
-		router.push('/')
+		router.push('/login')
 	} catch (error) {
 		console.error('Error al cerrar sesión:', error)
 		localStorage.removeItem('auth_token')
 		localStorage.removeItem('user')
-		router.push('/')
+		router.push('/login')
 	}
 }
 </script>
