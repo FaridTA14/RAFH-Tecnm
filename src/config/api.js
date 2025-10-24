@@ -61,3 +61,18 @@ export const logout = async () => {
     localStorage.removeItem('user')
     return response
 }
+
+// Función para obtener el perfil del usuario
+export const getUserProfile = async () => {
+    const response = await authenticatedFetch(API_CONFIG.ENDPOINTS.USER)
+    return response
+}
+
+// Función para actualizar el perfil del usuario
+export const updateUserProfile = async (userData) => {
+    const response = await authenticatedFetch(API_CONFIG.ENDPOINTS.USER, {
+        method: 'PUT',
+        body: JSON.stringify(userData)
+    })
+    return response
+}
