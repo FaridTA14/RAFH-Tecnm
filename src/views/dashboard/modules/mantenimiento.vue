@@ -1,172 +1,105 @@
 <template>
-	<section class="container">
-		<div class="is-flex">
-			<label for="" class="is-size-7-mobile is-size-6-tablet is-size-6-desktop is-size-6-fullhd">Gestión de Mantenimientos</label>
-			<label for="" class="is-size-7-mobile is-size-6-tablet is-size-6-desktop is-size-6-fullhd ml-auto">Instituto Tecnológico de Chetumal</label>
+	<div class="space-y-6">
+		<div class="flex justify-between items-center">
+			<label class="text-sm md:text-base text-gray-600 dark:text-gray-400">Mantenimiento</label>
+			<label class="text-sm md:text-base text-gray-600 dark:text-gray-400">Instituto Tecnológico de Chetumal</label>
 		</div>
 
-		<div class="container is-flex mb-3 mt-3">
-			<form action="" class="is-flex">
-				<input type="text" placeholder="Buscar plan de mantenimiento" class="input">
-				<input type="submit" value="Buscar" class="button">
-			</form>
-			<button class="button is-primary ml-auto open-modal" data-target="modal-mantenimiento-new">Nuevo Plan de Mantenimiento</button>
-		</div>
-
-		<!-- Modal para crear nuevo plan de mantenimiento -->
-		<div class="modal" id="modal-mantenimiento-new">
-			<div class="modal-background"></div>
-			<div class="modal-card">
-				<header class="modal-card-head">
-					<p class="modal-card-title">Nuevo Plan de Mantenimiento</p>
-					<button class="delete close-modal" aria-label="close"></button>
-				</header>
-				<section class="modal-card-body">
-					<form action="">
-						<div class="field">
-							<label class="label">Nombre del Plan</label>
-							<div class="control">
-								<input class="input" type="text" placeholder="Nombre del plan de mantenimiento">
-							</div>
-						</div>
-						<div class="field">
-							<label class="label">Descripción</label>
-							<div class="control">
-								<textarea class="textarea" placeholder="Descripción del plan de mantenimiento"></textarea>
-							</div>
-						</div>
-						<div class="field">
-							<label class="label">Frecuencia</label>
-							<div class="control">
-								<div class="select">
-									<select>
-										<option>Seleccionar frecuencia</option>
-										<option>Diario</option>
-										<option>Semanal</option>
-										<option>Mensual</option>
-										<option>Trimestral</option>
-										<option>Semestral</option>
-										<option>Anual</option>
-									</select>
-								</div>
-							</div>
-						</div>
-						<div class="field">
-							<label class="label">Tipo de Mantenimiento</label>
-							<div class="control">
-								<div class="select">
-									<select>
-										<option>Seleccionar tipo</option>
-										<option>Preventivo</option>
-										<option>Correctivo</option>
-										<option>Predictivo</option>
-									</select>
-								</div>
-							</div>
-						</div>
-						<div class="field">
-							<label class="label">Responsable</label>
-							<div class="control">
-								<div class="select">
-									<select>
-										<option>Seleccionar responsable</option>
-										<option>Juan Pérez</option>
-										<option>María García</option>
-										<option>Carlos López</option>
-									</select>
-								</div>
-							</div>
-						</div>
-						<div class="field">
-							<label class="label">Fecha de Inicio</label>
-							<div class="control">
-								<input class="input" type="date">
-							</div>
-						</div>
-						<div class="field">
-							<label class="label">Fecha de Fin</label>
-							<div class="control">
-								<input class="input" type="date">
-							</div>
-						</div>
-					</form>
-				</section>
-				<footer class="modal-card-foot">
-					<button class="button is-primary">Guardar</button>
-					<button class="button close-modal">Cancelar</button>
-				</footer>
+		<div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4 flex flex-col md:flex-row gap-4 items-end">
+			<div class="flex-1">
+				<form class="flex gap-2">
+					<input type="text" placeholder="Buscar bien" class="flex-1 px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+					<button type="submit" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors">Buscar</button>
+				</form>
 			</div>
+			<button @click="showNewMantenimientoModal = true" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors font-medium whitespace-nowrap">Nuevo Mantenimiento</button>
+			<button class="px-4 py-2 bg-cyan-600 hover:bg-cyan-700 text-white rounded-lg transition-colors font-medium flex items-center gap-2 whitespace-nowrap">
+				<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4H7a2 2 0 01-2-2v-4a2 2 0 012-2h10a2 2 0 012 2v4a2 2 0 01-2 2zm2-6a2 2 0 11-4 0 2 2 0 014 0z"></path>
+				</svg>
+				Reporte
+			</button>
 		</div>
 
-		<!-- Lista de planes de mantenimiento -->
-		<div class="columns is-multiline">
-			<div class="column is-4">
-				<div class="card">
-					<div class="card-content">
-						<div class="media">
-							<div class="media-left">
-								<span class="icon is-large">
-									<i class="fas fa-tools fa-2x has-text-primary"></i>
-								</span>
-							</div>
-							<div class="media-content">
-								<p class="title is-4">Mantenimiento Preventivo</p>
-								<p class="subtitle is-6">Frecuencia: Mensual</p>
-								<p class="subtitle is-6">Responsable: Juan Pérez</p>
-								<p class="subtitle is-6">Estado: <span class="tag is-success">Activo</span></p>
-							</div>
-						</div>
-						<div class="content">
-							<p>Plan de mantenimiento preventivo para equipos de cómputo.</p>
-							<div class="is-flex is-justify-content-space-between">
-								<button class="button is-small is-info">
-									<i class="fa-solid fa-pen-to-square"></i>
-								</button>
-								<button class="button is-small is-danger">
-									<i class="fa-solid fa-trash"></i>
-								</button>
-							</div>
-						</div>
+		<div class="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-x-auto">
+			<table class="w-full text-sm">
+				<thead class="bg-gray-100 dark:bg-gray-700">
+					<tr>
+						<th class="px-4 py-3 text-left font-semibold text-gray-900 dark:text-white">Bien</th>
+						<th class="px-4 py-3 text-left font-semibold text-gray-900 dark:text-white">Tipo de Mantenimiento</th>
+						<th class="px-4 py-3 text-left font-semibold text-gray-900 dark:text-white">Fecha</th>
+						<th class="px-4 py-3 text-left font-semibold text-gray-900 dark:text-white">Estado</th>
+						<th class="px-4 py-3 text-left font-semibold text-gray-900 dark:text-white">Acciones</th>
+					</tr>
+				</thead>
+				<tbody class="divide-y divide-gray-200 dark:divide-gray-600">
+					<tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+						<td class="px-4 py-3 text-gray-600 dark:text-gray-400">COMPUTADORA DELL</td>
+						<td class="px-4 py-3 text-gray-600 dark:text-gray-400">Limpieza</td>
+						<td class="px-4 py-3 text-gray-600 dark:text-gray-400">2024-02-15</td>
+						<td class="px-4 py-3"><span class="inline-block px-3 py-1 bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 rounded-full text-xs font-semibold">Completado</span></td>
+						<td class="px-4 py-3 flex gap-2">
+							<button class="p-2 bg-blue-600 hover:bg-blue-700 text-white rounded transition-colors">
+								<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+								</svg>
+							</button>
+							<button class="p-2 bg-red-600 hover:bg-red-700 text-white rounded transition-colors">
+								<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+								</svg>
+							</button>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+		<!-- New Mantenimiento Modal -->
+		<div v-if="showNewMantenimientoModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+			<div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg max-w-md w-full">
+				<div class="flex items-center justify-between border-b border-gray-300 dark:border-gray-600 p-6">
+					<h2 class="text-lg font-bold text-gray-900 dark:text-white">Nuevo Mantenimiento</h2>
+					<button @click="showNewMantenimientoModal = false" class="text-gray-400 hover:text-gray-600 text-2xl">&times;</button>
+				</div>
+				<div class="p-6 space-y-4">
+					<div>
+						<label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Bien</label>
+						<select class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+							<option>Seleccionar bien</option>
+							<option>COMPUTADORA DELL</option>
+							<option>IMPRESORA HP</option>
+						</select>
+					</div>
+					<div>
+						<label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Tipo de Mantenimiento</label>
+						<select class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+							<option>Seleccionar tipo</option>
+							<option>Preventivo</option>
+							<option>Correctivo</option>
+							<option>Limpieza</option>
+						</select>
+					</div>
+					<div>
+						<label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Fecha</label>
+						<input type="date" class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+					</div>
+					<div>
+						<label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Observaciones</label>
+						<textarea rows="3" placeholder="Observaciones" class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"></textarea>
 					</div>
 				</div>
-			</div>
-			<div class="column is-4">
-				<div class="card">
-					<div class="card-content">
-						<div class="media">
-							<div class="media-left">
-								<span class="icon is-large">
-									<i class="fas fa-wrench fa-2x has-text-warning"></i>
-								</span>
-							</div>
-							<div class="media-content">
-								<p class="title is-4">Mantenimiento Correctivo</p>
-								<p class="subtitle is-6">Frecuencia: Según necesidad</p>
-								<p class="subtitle is-6">Responsable: María García</p>
-								<p class="subtitle is-6">Estado: <span class="tag is-warning">Pendiente</span></p>
-							</div>
-						</div>
-						<div class="content">
-							<p>Plan de mantenimiento correctivo para equipos dañados.</p>
-							<div class="is-flex is-justify-content-space-between">
-								<button class="button is-small is-info">
-									<i class="fa-solid fa-pen-to-square"></i>
-								</button>
-								<button class="button is-small is-danger">
-									<i class="fa-solid fa-trash"></i>
-								</button>
-							</div>
-						</div>
-					</div>
+				<div class="flex gap-2 justify-end border-t border-gray-300 dark:border-gray-600 p-6">
+					<button @click="showNewMantenimientoModal = false" class="px-4 py-2 bg-gray-300 dark:bg-gray-600 text-gray-900 dark:text-white rounded-lg hover:bg-gray-400 dark:hover:bg-gray-500 transition-colors">Cancelar</button>
+					<button class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors font-medium">Guardar</button>
 				</div>
 			</div>
 		</div>
-	</section>
+	</div>
 </template>
 
 <script setup>
+import { ref } from 'vue'
+
+const showNewMantenimientoModal = ref(false)
 </script>
-
-<style scoped>
-</style>
-
