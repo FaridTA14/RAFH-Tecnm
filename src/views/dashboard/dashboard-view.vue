@@ -90,16 +90,6 @@
 					Mantenimiento
 				</RouterLink>
 			</nav>
-
-			<!-- Logout Button -->
-			<div class="absolute bottom-6 left-4 right-4">
-				<button
-					@click="handleLogout"
-					class="w-full px-4 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700 dark:bg-red-700 dark:hover:bg-red-800 transition font-semibold"
-				>
-					Cerrar Sesión
-				</button>
-			</div>
 		</aside>
 
 		<!-- Overlay for mobile -->
