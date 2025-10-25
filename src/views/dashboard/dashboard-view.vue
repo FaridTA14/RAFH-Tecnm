@@ -190,7 +190,9 @@
 import { computed, onMounted, onUnmounted, ref, defineAsyncComponent } from 'vue'
 import { useRoute, useRouter, RouterLink } from 'vue-router'
 import { logout } from '../../config/api.js'
+import { useTheme } from '../../composables/useTheme.js'
 
+const { isDark, toggleTheme } = useTheme()
 const isSidebarActive = ref(false)
 const isProfileMenuOpen = ref(false)
 const toggleSidebar = () => { isSidebarActive.value = !isSidebarActive.value }
