@@ -101,6 +101,18 @@ const roles = ref([
 const newRolData = ref({ nombre: '', descripcion: '', permisos: [] })
 const editingRol = ref({ nombre: '', descripcion: '', permisos: [] })
 
+const saveNewRol = () => {
+	if (newRolData.value.nombre.trim()) {
+		roles.value.push({
+			nombre: newRolData.value.nombre,
+			descripcion: newRolData.value.descripcion,
+			permisos: ['Nuevo permiso'],
+		})
+		showNewRolModal.value = false
+		newRolData.value = { nombre: '', descripcion: '', permisos: [] }
+	}
+}
+
 const editRol = (index) => {
 	editingIndex.value = index
 	editingRol.value = { ...roles.value[index] }
