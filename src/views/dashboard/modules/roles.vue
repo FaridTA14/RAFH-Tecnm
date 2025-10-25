@@ -46,16 +46,16 @@
 				<div class="p-6 space-y-4">
 					<div>
 						<label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Nombre del Rol</label>
-						<input type="text" placeholder="Nombre" class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+						<input v-model="newRolData.nombre" type="text" placeholder="Nombre" class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
 					</div>
 					<div>
 						<label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Descripción</label>
-						<textarea rows="3" placeholder="Descripción" class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"></textarea>
+						<textarea v-model="newRolData.descripcion" rows="3" placeholder="Descripción" class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"></textarea>
 					</div>
 				</div>
 				<div class="flex gap-2 justify-end border-t border-gray-300 dark:border-gray-600 p-6">
 					<button @click="showNewRolModal = false" class="px-4 py-2 bg-gray-300 dark:bg-gray-600 text-gray-900 dark:text-white rounded-lg hover:bg-gray-400 dark:hover:bg-gray-500 transition-colors">Cancelar</button>
-					<button class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors font-medium">Guardar</button>
+					<button @click="saveNewRol" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors font-medium">Guardar</button>
 				</div>
 			</div>
 		</div>
