@@ -70,16 +70,16 @@
 				<div class="p-6 space-y-4">
 					<div>
 						<label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Nombre del Rol</label>
-						<input type="text" value="Administrador" class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+						<input v-model="editingRol.nombre" type="text" class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
 					</div>
 					<div>
 						<label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Descripción</label>
-						<textarea rows="3" class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white">Acceso total al sistema</textarea>
+						<textarea v-model="editingRol.descripcion" rows="3" class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"></textarea>
 					</div>
 				</div>
 				<div class="flex gap-2 justify-end border-t border-gray-300 dark:border-gray-600 p-6">
 					<button @click="showEditRolModal = false" class="px-4 py-2 bg-gray-300 dark:bg-gray-600 text-gray-900 dark:text-white rounded-lg hover:bg-gray-400 dark:hover:bg-gray-500 transition-colors">Cancelar</button>
-					<button class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors font-medium">Guardar</button>
+					<button @click="saveEditRol" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors font-medium">Guardar</button>
 				</div>
 			</div>
 		</div>
@@ -91,4 +91,31 @@ import { ref } from 'vue'
 
 const showNewRolModal = ref(false)
 const showEditRolModal = ref(false)
+const editingIndex = ref(null)
+
+const roles = ref([
+	{ nombre: 'Administrador', descripcion: 'Acceso total al sistema', permisos: ['Ver reportes', 'Crear usuarios', 'Eliminar items'] },
+	{ nombre: 'Gestor', descripcion: 'Acceso a gestión de bienes', permisos: ['Ver reportes', 'Crear bienes'] },
+])
+
+const editingRol = ref({ nombre: '', descripcion: '', permisos: [] })
+
+const editRol = (index) => {
+	editingIndex.value = index
+	editingRol.value = { ...roles.value[index] }
+	showEditRolModal.value = true
+}
+
+const saveEditRol = () => {
+	if (editingIndex.value !== null) {
+		roles.value[editingIndex.value] = { ...editingRol.value }
+		showEditRolModal.value = false
+	}
+}
+
+const deleteRol = (index) => {
+	if (confirm('¿Estás seguro de que quieres eliminar este rol?')) {
+		roles.value.splice(index, 1)
+	}
+}
 </script>
