@@ -669,34 +669,137 @@
 
 		<!-- Information Modal -->
 		<div v-if="showInformationModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-			<div class="bg-gray-900 dark:bg-gray-800 rounded-lg shadow-lg max-w-lg w-full">
+			<div class="bg-gray-900 dark:bg-gray-800 rounded-lg shadow-lg max-w-lg w-full max-h-[90vh] overflow-y-auto">
 				<div class="flex items-center justify-between border-b border-gray-700 dark:border-gray-600 p-6">
 					<h2 class="text-xl font-bold text-white">Información de los bienes</h2>
 					<button @click="showInformationModal = false" class="text-gray-400 hover:text-gray-300 text-2xl transition">&times;</button>
 				</div>
 
 				<div class="p-6 space-y-4">
-					<div>
-						<label class="block text-gray-300 text-sm font-medium mb-2">Descripción General</label>
-						<textarea 
-							class="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white focus:outline-none focus:border-blue-500 transition"
-							rows="4"
-							placeholder="Ingrese información de los bienes..."
-						></textarea>
+					<p class="text-gray-300 text-sm">Selecciona qué información mostrar en los detalles de los bienes:</p>
+
+					<div class="space-y-3 bg-gray-800/50 rounded-lg p-4 border border-gray-700">
+						<label class="flex items-center gap-3 cursor-pointer hover:bg-gray-700/50 p-2 rounded transition">
+							<input
+								v-model="assetInfoFields.imagen"
+								type="checkbox"
+								class="w-5 h-5 accent-blue-600 rounded"
+							/>
+							<span class="text-gray-300">Imagen del bien</span>
+						</label>
+
+						<label class="flex items-center gap-3 cursor-pointer hover:bg-gray-700/50 p-2 rounded transition">
+							<input
+								v-model="assetInfoFields.marca"
+								type="checkbox"
+								class="w-5 h-5 accent-blue-600 rounded"
+							/>
+							<span class="text-gray-300">Marca del bien</span>
+						</label>
+
+						<label class="flex items-center gap-3 cursor-pointer hover:bg-gray-700/50 p-2 rounded transition">
+							<input
+								v-model="assetInfoFields.modelo"
+								type="checkbox"
+								class="w-5 h-5 accent-blue-600 rounded"
+							/>
+							<span class="text-gray-300">Modelo del bien</span>
+						</label>
+
+						<label class="flex items-center gap-3 cursor-pointer hover:bg-gray-700/50 p-2 rounded transition">
+							<input
+								v-model="assetInfoFields.numeroSerie"
+								type="checkbox"
+								class="w-5 h-5 accent-blue-600 rounded"
+							/>
+							<span class="text-gray-300">Número de serie</span>
+						</label>
+
+						<label class="flex items-center gap-3 cursor-pointer hover:bg-gray-700/50 p-2 rounded transition">
+							<input
+								v-model="assetInfoFields.categoria"
+								type="checkbox"
+								class="w-5 h-5 accent-blue-600 rounded"
+							/>
+							<span class="text-gray-300">Categoría</span>
+						</label>
+
+						<label class="flex items-center gap-3 cursor-pointer hover:bg-gray-700/50 p-2 rounded transition">
+							<input
+								v-model="assetInfoFields.area"
+								type="checkbox"
+								class="w-5 h-5 accent-blue-600 rounded"
+							/>
+							<span class="text-gray-300">Área</span>
+						</label>
+
+						<label class="flex items-center gap-3 cursor-pointer hover:bg-gray-700/50 p-2 rounded transition">
+							<input
+								v-model="assetInfoFields.resguardante"
+								type="checkbox"
+								class="w-5 h-5 accent-blue-600 rounded"
+							/>
+							<span class="text-gray-300">Resguardante</span>
+						</label>
+
+						<label class="flex items-center gap-3 cursor-pointer hover:bg-gray-700/50 p-2 rounded transition">
+							<input
+								v-model="assetInfoFields.fechaAdquisicion"
+								type="checkbox"
+								class="w-5 h-5 accent-blue-600 rounded"
+							/>
+							<span class="text-gray-300">Fecha de adquisición</span>
+						</label>
+
+						<label class="flex items-center gap-3 cursor-pointer hover:bg-gray-700/50 p-2 rounded transition">
+							<input
+								v-model="assetInfoFields.valor"
+								type="checkbox"
+								class="w-5 h-5 accent-blue-600 rounded"
+							/>
+							<span class="text-gray-300">Valor del bien</span>
+						</label>
+
+						<label class="flex items-center gap-3 cursor-pointer hover:bg-gray-700/50 p-2 rounded transition">
+							<input
+								v-model="assetInfoFields.documentoSoporte"
+								type="checkbox"
+								class="w-5 h-5 accent-blue-600 rounded"
+							/>
+							<span class="text-gray-300">Documento soporte</span>
+						</label>
+
+						<label class="flex items-center gap-3 cursor-pointer hover:bg-gray-700/50 p-2 rounded transition">
+							<input
+								v-model="assetInfoFields.historialMantenimiento"
+								type="checkbox"
+								class="w-5 h-5 accent-blue-600 rounded"
+							/>
+							<span class="text-gray-300">Historial de Mantenimiento</span>
+						</label>
+
+						<label class="flex items-center gap-3 cursor-pointer hover:bg-gray-700/50 p-2 rounded transition">
+							<input
+								v-model="assetInfoFields.ubicacionesRegistradas"
+								type="checkbox"
+								class="w-5 h-5 accent-blue-600 rounded"
+							/>
+							<span class="text-gray-300">Ubicaciones Registradas</span>
+						</label>
 					</div>
 				</div>
 
 				<!-- Modal Footer -->
 				<div class="border-t border-gray-700 p-6 flex gap-3 justify-end bg-gray-900/50">
-					<button 
+					<button
 						@click="showInformationModal = false"
 						class="px-6 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-lg transition-colors font-semibold"
 					>
 						Cancelar
 					</button>
-					<button 
-						@click="showInformationModal = false"
-						class="px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors font-semibold"
+					<button
+						@click="saveAssetInfoSettings"
+						class="px-6 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg transition-colors font-semibold"
 					>
 						Aceptar
 					</button>
@@ -811,6 +914,39 @@ const transferPolicies = ref({
 	byAuthorization: true,
 	byNotification: true,
 })
+
+// Asset information fields visibility settings
+const assetInfoFields = ref({
+	imagen: true,
+	marca: true,
+	modelo: true,
+	numeroSerie: true,
+	categoria: true,
+	area: true,
+	resguardante: true,
+	fechaAdquisicion: true,
+	valor: true,
+	documentoSoporte: true,
+	historialMantenimiento: true,
+	ubicacionesRegistradas: true,
+})
+
+// Load asset info settings from localStorage on component mount
+const loadAssetInfoSettings = () => {
+	const saved = localStorage.getItem('assetInfoFields')
+	if (saved) {
+		assetInfoFields.value = JSON.parse(saved)
+	}
+}
+
+// Save asset info settings to localStorage
+const saveAssetInfoSettings = () => {
+	localStorage.setItem('assetInfoFields', JSON.stringify(assetInfoFields.value))
+	showInformationModal.value = false
+}
+
+// Initialize on mount
+loadAssetInfoSettings()
 
 // Category methods
 const addCategory = () => {
