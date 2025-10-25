@@ -75,6 +75,12 @@
 						<td class="px-4 py-3 text-gray-600 dark:text-gray-400">{{ bien.resguardante }}</td>
 						<td class="px-4 py-3"><span :class="['inline-block px-3 py-1 rounded-full text-xs font-semibold', bien.estado === 'Bueno' ? 'bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200' : bien.estado === 'Regular' ? 'bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-200' : 'bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200']">{{ bien.estado }}</span></td>
 						<td class="px-4 py-3 flex gap-2">
+							<button @click="viewBienDetails(index)" class="p-2 bg-purple-600 hover:bg-purple-700 text-white rounded transition-colors" title="Ver detalles">
+								<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+								</svg>
+							</button>
 							<button @click="editBien(index)" class="p-2 bg-blue-600 hover:bg-blue-700 text-white rounded transition-colors" title="Editar">
 								<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
@@ -253,6 +259,144 @@
 				</div>
 			</div>
 		</div>
+
+		<!-- View Details Modal -->
+		<div v-if="showDetailsBienModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+			<div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+				<div class="flex items-center justify-between border-b border-gray-300 dark:border-gray-600 p-6">
+					<h2 class="text-lg font-bold text-gray-900 dark:text-white">Detalles del Bien</h2>
+					<button @click="showDetailsBienModal = false" class="text-gray-400 hover:text-gray-600 text-2xl">&times;</button>
+				</div>
+				<div v-if="selectedBienDetails" class="p-6 space-y-6">
+					<!-- Asset Information Section -->
+					<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+						<!-- Left Column: Basic Info -->
+						<div class="space-y-4">
+							<div>
+								<h3 class="text-sm font-semibold text-gray-900 dark:text-white mb-3">Información del Bien</h3>
+								<div class="space-y-2 text-sm">
+									<div class="flex justify-between">
+										<span class="text-gray-600 dark:text-gray-400">Clave de bien:</span>
+										<span class="text-gray-900 dark:text-white font-medium">{{ selectedBienDetails.serie }}</span>
+									</div>
+									<div class="flex justify-between">
+										<span class="text-gray-600 dark:text-gray-400">Área:</span>
+										<span class="text-gray-900 dark:text-white font-medium">{{ selectedBienDetails.area }}</span>
+									</div>
+									<div class="flex justify-between">
+										<span class="text-gray-600 dark:text-gray-400">Número de serie:</span>
+										<span class="text-gray-900 dark:text-white font-medium">{{ selectedBienDetails.serie }}</span>
+									</div>
+									<div class="flex justify-between">
+										<span class="text-gray-600 dark:text-gray-400">Categoría:</span>
+										<span class="text-gray-900 dark:text-white font-medium">{{ selectedBienDetails.categoria }}</span>
+									</div>
+									<div class="flex justify-between">
+										<span class="text-gray-600 dark:text-gray-400">Modelo:</span>
+										<span class="text-gray-900 dark:text-white font-medium">{{ selectedBienDetails.modelo }}</span>
+									</div>
+									<div class="flex justify-between">
+										<span class="text-gray-600 dark:text-gray-400">Marca:</span>
+										<span class="text-gray-900 dark:text-white font-medium">{{ selectedBienDetails.marca }}</span>
+									</div>
+									<div class="flex justify-between">
+										<span class="text-gray-600 dark:text-gray-400">Fecha de adquisición:</span>
+										<span class="text-gray-900 dark:text-white font-medium">{{ selectedBienDetails.fechaAdquisicion }}</span>
+									</div>
+									<div class="flex justify-between">
+										<span class="text-gray-600 dark:text-gray-400">Valor del bien:</span>
+										<span class="text-gray-900 dark:text-white font-medium">{{ selectedBienDetails.valor }}</span>
+									</div>
+									<div class="flex justify-between">
+										<span class="text-gray-600 dark:text-gray-400">Documento soporte:</span>
+										<span class="text-gray-900 dark:text-white font-medium">{{ selectedBienDetails.documentoSoporte }}</span>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<!-- Right Column: Status Info -->
+						<div class="space-y-4">
+							<div>
+								<h3 class="text-sm font-semibold text-gray-900 dark:text-white mb-3">Estado del Bien</h3>
+								<div class="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-4 mb-4">
+									<p class="text-xs text-gray-600 dark:text-gray-400 mb-2">En Mantenimiento</p>
+									<div class="flex items-center gap-2">
+										<svg class="w-5 h-5 text-blue-600 dark:text-blue-400" fill="currentColor" viewBox="0 0 24 24">
+											<path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"></path>
+										</svg>
+										<span class="text-blue-700 dark:text-blue-300 font-medium">Reporte</span>
+									</div>
+								</div>
+								<div class="space-y-2 text-sm">
+									<div class="flex justify-between">
+										<span class="text-gray-600 dark:text-gray-400">Resguardante:</span>
+										<span class="text-gray-900 dark:text-white font-medium">{{ selectedBienDetails.resguardante }}</span>
+									</div>
+									<div class="flex justify-between">
+										<span class="text-gray-600 dark:text-gray-400">Estado actual:</span>
+										<span :class="['font-medium', selectedBienDetails.estado === 'Bueno' ? 'text-green-600 dark:text-green-400' : selectedBienDetails.estado === 'Regular' ? 'text-yellow-600 dark:text-yellow-400' : 'text-red-600 dark:text-red-400']">
+											{{ selectedBienDetails.estado }}
+										</span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!-- Maintenance History Section -->
+					<div class="border-t border-gray-200 dark:border-gray-700 pt-6">
+						<h3 class="text-sm font-semibold text-gray-900 dark:text-white mb-4">Historial de Mantenimiento</h3>
+						<div class="bg-gray-50 dark:bg-gray-700/50 rounded-lg overflow-x-auto">
+							<table class="w-full text-xs">
+								<thead class="bg-gray-100 dark:bg-gray-700">
+									<tr>
+										<th class="px-4 py-2 text-left text-gray-700 dark:text-gray-300 font-medium">Fecha de mantenimiento</th>
+										<th class="px-4 py-2 text-left text-gray-700 dark:text-gray-300 font-medium">Responsable del mantenimiento</th>
+										<th class="px-4 py-2 text-left text-gray-700 dark:text-gray-300 font-medium">Estado del mantenimiento</th>
+									</tr>
+								</thead>
+								<tbody class="divide-y divide-gray-200 dark:divide-gray-600">
+									<tr v-for="(mant, index) in selectedBienDetails.historialMantenimiento" :key="index" class="hover:bg-gray-100 dark:hover:bg-gray-600">
+										<td class="px-4 py-2 text-gray-600 dark:text-gray-400">{{ mant.fecha }}</td>
+										<td class="px-4 py-2 text-gray-600 dark:text-gray-400">{{ mant.responsable }}</td>
+										<td class="px-4 py-2">
+											<span class="inline-block px-2 py-1 rounded text-xs font-semibold" :class="mant.estado === 'Finalizado' ? 'bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300' : 'bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-300'">
+												{{ mant.estado }}
+											</span>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+
+					<!-- Locations Registry Section -->
+					<div class="border-t border-gray-200 dark:border-gray-700 pt-6">
+						<h3 class="text-sm font-semibold text-gray-900 dark:text-white mb-4">Ubicaciones Registradas</h3>
+						<div class="bg-gray-50 dark:bg-gray-700/50 rounded-lg overflow-x-auto">
+							<table class="w-full text-xs">
+								<thead class="bg-gray-100 dark:bg-gray-700">
+									<tr>
+										<th class="px-4 py-2 text-left text-gray-700 dark:text-gray-300 font-medium">Fecha de registro</th>
+										<th class="px-4 py-2 text-left text-gray-700 dark:text-gray-300 font-medium">Ubicación</th>
+									</tr>
+								</thead>
+								<tbody class="divide-y divide-gray-200 dark:divide-gray-600">
+									<tr v-for="(ubicacion, index) in selectedBienDetails.ubicacionesRegistradas" :key="index" class="hover:bg-gray-100 dark:hover:bg-gray-600">
+										<td class="px-4 py-2 text-gray-600 dark:text-gray-400">{{ ubicacion.fecha }}</td>
+										<td class="px-4 py-2 text-gray-600 dark:text-gray-400">{{ ubicacion.ubicacion }}</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+				<div class="flex gap-2 justify-end border-t border-gray-300 dark:border-gray-600 p-6">
+					<button @click="showDetailsBienModal = false" class="px-4 py-2 bg-gray-300 dark:bg-gray-600 text-gray-900 dark:text-white rounded-lg hover:bg-gray-400 dark:hover:bg-gray-500 transition-colors">Cerrar</button>
+				</div>
+			</div>
+		</div>
 	</div>
 </template>
 
@@ -262,16 +406,65 @@ import { ref } from 'vue'
 const showNewBienModal = ref(false)
 const showEditBienModal = ref(false)
 const showReportModal = ref(false)
+const showDetailsBienModal = ref(false)
 const editingIndex = ref(null)
+const selectedBienDetails = ref(null)
 
 const bienes = ref([
-	{ serie: 'ABC123456', modelo: 'OptiPlex 7090', marca: 'Dell', area: 'Sistemas', resguardante: 'Juan Pérez', estado: 'Bueno' },
-	{ serie: 'XYZ789012', modelo: 'ThinkPad E15', marca: 'Lenovo', area: 'RR.HH', resguardante: 'María García', estado: 'Regular' },
+	{
+		serie: 'ABC123456',
+		modelo: 'OptiPlex 7090',
+		marca: 'Dell',
+		area: 'Sistemas',
+		resguardante: 'Juan Pérez',
+		estado: 'Bueno',
+		categoria: 'Equipo de computo',
+		fechaAdquisicion: '23/01/2025',
+		valor: '$8,500 MXN',
+		documentoSoporte: 'Factura',
+		historialMantenimiento: [
+			{ fecha: '15/02/2025', responsable: 'John Doe', estado: 'Finalizado' },
+			{ fecha: '17/02/2025', responsable: 'John Doe', estado: 'Finalizado' },
+			{ fecha: '22/02/2025', responsable: 'John Doe', estado: 'Finalizado' },
+			{ fecha: '01/04/2025', responsable: 'Juan Doe', estado: 'En Curso' },
+		],
+		ubicacionesRegistradas: [
+			{ fecha: '15/02/2025', ubicacion: 'Edificio P' },
+			{ fecha: '17/02/2025', ubicacion: 'Laboratorio de computo' },
+			{ fecha: '22/02/2025', ubicacion: 'Edificio P' },
+			{ fecha: '01/04/2025', ubicacion: 'Laboratorio de computo', actualmenteLocalizacion: true },
+		]
+	},
+	{
+		serie: 'XYZ789012',
+		modelo: 'ThinkPad E15',
+		marca: 'Lenovo',
+		area: 'RR.HH',
+		resguardante: 'María García',
+		estado: 'Regular',
+		categoria: 'Equipo de computo',
+		fechaAdquisicion: '15/03/2024',
+		valor: '$12,000 MXN',
+		documentoSoporte: 'Factura',
+		historialMantenimiento: [
+			{ fecha: '10/02/2025', responsable: 'John Doe', estado: 'Finalizado' },
+			{ fecha: '25/02/2025', responsable: 'John Doe', estado: 'Finalizado' },
+		],
+		ubicacionesRegistradas: [
+			{ fecha: '10/02/2025', ubicacion: 'Edificio A' },
+			{ fecha: '25/02/2025', ubicacion: 'Edificio B', actualmenteLocalizacion: true },
+		]
+	},
 ])
 
 const editingBien = ref({
 	serie: '', modelo: '', marca: '', area: '', resguardante: '', estado: ''
 })
+
+const viewBienDetails = (index) => {
+	selectedBienDetails.value = { ...bienes.value[index] }
+	showDetailsBienModal.value = true
+}
 
 const editBien = (index) => {
 	editingIndex.value = index
