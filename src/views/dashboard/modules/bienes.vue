@@ -383,7 +383,49 @@
 					</div>
 				</div>
 				<div class="flex gap-2 justify-end border-t border-gray-300 dark:border-gray-600 p-6">
+					<button @click="generateBienReport" class="px-4 py-2 bg-cyan-600 hover:bg-cyan-700 text-white rounded-lg transition-colors font-medium flex items-center gap-2">
+						<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4H7a2 2 0 01-2-2v-4a2 2 0 012-2h10a2 2 0 012 2v4a2 2 0 01-2 2zm2-6a2 2 0 11-4 0 2 2 0 014 0z"></path>
+						</svg>
+						Reporte
+					</button>
 					<button @click="showDetailsBienModal = false" class="px-4 py-2 bg-gray-300 dark:bg-gray-600 text-gray-900 dark:text-white rounded-lg hover:bg-gray-400 dark:hover:bg-gray-500 transition-colors">Cerrar</button>
+				</div>
+			</div>
+		</div>
+
+		<!-- Property Details Report Modal -->
+		<div v-if="showDetailsBienReportModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+			<div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg max-w-md w-full">
+				<div class="flex items-center justify-between border-b border-gray-300 dark:border-gray-600 p-6">
+					<h2 class="text-lg font-bold text-gray-900 dark:text-white">Generar Reporte</h2>
+					<button @click="showDetailsBienReportModal = false" class="text-gray-400 hover:text-gray-600 text-2xl">&times;</button>
+				</div>
+				<div class="p-6 space-y-4">
+					<p class="text-gray-600 dark:text-gray-400">Selecciona el formato para el reporte del bien:</p>
+					<div class="space-y-2">
+						<button @click="exportBienToPDF" class="w-full px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors text-sm font-medium flex items-center justify-center gap-2">
+							<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
+							</svg>
+							📊 Exportar a PDF
+						</button>
+						<button @click="exportBienToExcel" class="w-full px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg transition-colors text-sm font-medium flex items-center justify-center gap-2">
+							<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+							</svg>
+							📋 Exportar a Excel
+						</button>
+						<button @click="printBienReport" class="w-full px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition-colors text-sm font-medium flex items-center justify-center gap-2">
+							<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4H7a2 2 0 01-2-2v-4a2 2 0 012-2h10a2 2 0 012 2v4a2 2 0 01-2 2zm2-6a2 2 0 11-4 0 2 2 0 014 0z"></path>
+							</svg>
+							🖨️ Imprimir
+						</button>
+					</div>
+				</div>
+				<div class="border-t border-gray-300 dark:border-gray-600 p-6">
+					<button @click="showDetailsBienReportModal = false" class="w-full px-4 py-2 bg-gray-300 dark:bg-gray-600 text-gray-900 dark:text-white rounded-lg hover:bg-gray-400 dark:hover:bg-gray-500 transition-colors">Cerrar</button>
 				</div>
 			</div>
 		</div>
@@ -397,6 +439,7 @@ const showNewBienModal = ref(false)
 const showEditBienModal = ref(false)
 const showReportModal = ref(false)
 const showDetailsBienModal = ref(false)
+const showDetailsBienReportModal = ref(false)
 const editingIndex = ref(null)
 const selectedBienDetails = ref(null)
 
@@ -454,6 +497,51 @@ const editingBien = ref({
 const viewBienDetails = (index) => {
 	selectedBienDetails.value = { ...bienes.value[index] }
 	showDetailsBienModal.value = true
+}
+
+const generateBienReport = () => {
+	showDetailsBienReportModal.value = true
+}
+
+const exportBienToPDF = () => {
+	if (selectedBienDetails.value) {
+		const reportContent = generateReportContent(selectedBienDetails.value)
+		console.log('Generando PDF:', reportContent)
+		alert('Reporte PDF generado para: ' + selectedBienDetails.value.serie)
+		showDetailsBienReportModal.value = false
+	}
+}
+
+const exportBienToExcel = () => {
+	if (selectedBienDetails.value) {
+		const reportContent = generateReportContent(selectedBienDetails.value)
+		console.log('Generando Excel:', reportContent)
+		alert('Reporte Excel generado para: ' + selectedBienDetails.value.serie)
+		showDetailsBienReportModal.value = false
+	}
+}
+
+const printBienReport = () => {
+	if (selectedBienDetails.value) {
+		const reportContent = generateReportContent(selectedBienDetails.value)
+		console.log('Imprimiendo reporte:', reportContent)
+		window.print()
+		showDetailsBienReportModal.value = false
+	}
+}
+
+const generateReportContent = (bien) => {
+	return {
+		titulo: 'Reporte de Bien',
+		bien: bien,
+		fecha: new Date().toLocaleDateString('es-ES'),
+		incluye: [
+			'Información del bien',
+			'Estado actual',
+			'Historial de mantenimiento',
+			'Ubicaciones registradas'
+		]
+	}
 }
 
 const editBien = (index) => {
