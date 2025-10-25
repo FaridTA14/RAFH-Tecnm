@@ -84,6 +84,26 @@
 					Mantenimiento
 				</RouterLink>
 			</nav>
+
+			<!-- Theme Toggle - Centered on Sidebar -->
+			<div class="absolute left-4 right-4 top-1/2 transform -translate-y-1/2">
+				<button
+					@click="toggleTheme"
+					:class="[
+						'w-full flex items-center justify-center gap-2 px-4 py-3 rounded-lg transition-colors',
+						isDark ? 'bg-yellow-100 text-yellow-900 hover:bg-yellow-200' : 'bg-gray-700 text-white hover:bg-gray-600'
+					]"
+					title="Cambiar tema"
+				>
+					<svg v-if="isDark" class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+						<path d="M12 18a6 6 0 100-12 6 6 0 000 12zM12 2v6m0 6v6M4.22 4.22l4.24 4.24m5.08 0l4.24-4.24M2 12h6m6 0h6M4.22 19.78l4.24-4.24m5.08 0l4.24 4.24"/>
+					</svg>
+					<svg v-else class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+						<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+					</svg>
+					<span class="text-sm font-semibold">{{ isDark ? 'Claro' : 'Oscuro' }}</span>
+				</button>
+			</div>
 		</aside>
 
 		<!-- Overlay for mobile -->
