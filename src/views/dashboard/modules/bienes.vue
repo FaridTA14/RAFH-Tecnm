@@ -318,26 +318,16 @@
 						<!-- Right Column: Status Info -->
 						<div class="space-y-4">
 							<div>
-								<h3 class="text-sm font-semibold text-gray-900 dark:text-white mb-3">Estado del Bien</h3>
-								<div class="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-4 mb-4">
-									<p class="text-xs text-gray-600 dark:text-gray-400 mb-2">En Mantenimiento</p>
-									<div class="flex items-center gap-2">
-										<svg class="w-5 h-5 text-blue-600 dark:text-blue-400" fill="currentColor" viewBox="0 0 24 24">
-											<path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"></path>
-										</svg>
-										<span class="text-blue-700 dark:text-blue-300 font-medium">Reporte</span>
-									</div>
+								<div class="flex items-center justify-between mb-4">
+									<h3 class="text-sm font-semibold text-gray-900 dark:text-white">Estado del Bien</h3>
+									<span :class="['inline-block px-3 py-1 rounded-full text-xs font-semibold', selectedBienDetails.estado === 'Bueno' ? 'bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200' : selectedBienDetails.estado === 'Regular' ? 'bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-200' : 'bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200']">
+										{{ selectedBienDetails.estado }}
+									</span>
 								</div>
 								<div class="space-y-2 text-sm">
 									<div class="flex justify-between">
 										<span class="text-gray-600 dark:text-gray-400">Resguardante:</span>
 										<span class="text-gray-900 dark:text-white font-medium">{{ selectedBienDetails.resguardante }}</span>
-									</div>
-									<div class="flex justify-between">
-										<span class="text-gray-600 dark:text-gray-400">Estado actual:</span>
-										<span :class="['font-medium', selectedBienDetails.estado === 'Bueno' ? 'text-green-600 dark:text-green-400' : selectedBienDetails.estado === 'Regular' ? 'text-yellow-600 dark:text-yellow-400' : 'text-red-600 dark:text-red-400']">
-											{{ selectedBienDetails.estado }}
-										</span>
 									</div>
 								</div>
 							</div>
