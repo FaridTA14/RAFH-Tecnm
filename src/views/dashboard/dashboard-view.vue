@@ -17,7 +17,7 @@
 					@click="closeSidebar"
 					class="block px-4 py-3 mb-2 text-blue-900 dark:text-gray-300 rounded-lg hover:bg-blue-200 dark:hover:bg-gray-700 transition"
 				>
-					Dashboard
+					Principal
 				</RouterLink>
 				
 				<RouterLink
