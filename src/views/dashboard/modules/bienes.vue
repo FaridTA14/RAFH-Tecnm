@@ -269,45 +269,46 @@
 				</div>
 				<div v-if="selectedBienDetails" class="p-6 space-y-6">
 					<!-- Asset Information Section -->
+					<div v-if="showLoadingSettings" class="text-center text-gray-600 dark:text-gray-400">Cargando configuración...</div>
 					<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 						<!-- Left Column: Basic Info -->
 						<div class="space-y-4">
 							<div>
 								<h3 class="text-sm font-semibold text-gray-900 dark:text-white mb-3">Información del Bien</h3>
 								<div class="space-y-2 text-sm">
-									<div class="flex justify-between">
+									<div v-if="assetInfoSettings.imagen" class="flex justify-between">
 										<span class="text-gray-600 dark:text-gray-400">Clave de bien:</span>
 										<span class="text-gray-900 dark:text-white font-medium">{{ selectedBienDetails.serie }}</span>
 									</div>
-									<div class="flex justify-between">
+									<div v-if="assetInfoSettings.area" class="flex justify-between">
 										<span class="text-gray-600 dark:text-gray-400">Área:</span>
 										<span class="text-gray-900 dark:text-white font-medium">{{ selectedBienDetails.area }}</span>
 									</div>
-									<div class="flex justify-between">
+									<div v-if="assetInfoSettings.numeroSerie" class="flex justify-between">
 										<span class="text-gray-600 dark:text-gray-400">Número de serie:</span>
 										<span class="text-gray-900 dark:text-white font-medium">{{ selectedBienDetails.serie }}</span>
 									</div>
-									<div class="flex justify-between">
+									<div v-if="assetInfoSettings.categoria" class="flex justify-between">
 										<span class="text-gray-600 dark:text-gray-400">Categoría:</span>
 										<span class="text-gray-900 dark:text-white font-medium">{{ selectedBienDetails.categoria }}</span>
 									</div>
-									<div class="flex justify-between">
+									<div v-if="assetInfoSettings.modelo" class="flex justify-between">
 										<span class="text-gray-600 dark:text-gray-400">Modelo:</span>
 										<span class="text-gray-900 dark:text-white font-medium">{{ selectedBienDetails.modelo }}</span>
 									</div>
-									<div class="flex justify-between">
+									<div v-if="assetInfoSettings.marca" class="flex justify-between">
 										<span class="text-gray-600 dark:text-gray-400">Marca:</span>
 										<span class="text-gray-900 dark:text-white font-medium">{{ selectedBienDetails.marca }}</span>
 									</div>
-									<div class="flex justify-between">
+									<div v-if="assetInfoSettings.fechaAdquisicion" class="flex justify-between">
 										<span class="text-gray-600 dark:text-gray-400">Fecha de adquisición:</span>
 										<span class="text-gray-900 dark:text-white font-medium">{{ selectedBienDetails.fechaAdquisicion }}</span>
 									</div>
-									<div class="flex justify-between">
+									<div v-if="assetInfoSettings.valor" class="flex justify-between">
 										<span class="text-gray-600 dark:text-gray-400">Valor del bien:</span>
 										<span class="text-gray-900 dark:text-white font-medium">{{ selectedBienDetails.valor }}</span>
 									</div>
-									<div class="flex justify-between">
+									<div v-if="assetInfoSettings.documentoSoporte" class="flex justify-between">
 										<span class="text-gray-600 dark:text-gray-400">Documento soporte:</span>
 										<span class="text-gray-900 dark:text-white font-medium">{{ selectedBienDetails.documentoSoporte }}</span>
 									</div>
@@ -324,7 +325,7 @@
 										{{ selectedBienDetails.estado }}
 									</span>
 								</div>
-								<div class="space-y-2 text-sm">
+								<div v-if="assetInfoSettings.resguardante" class="space-y-2 text-sm">
 									<div class="flex justify-between">
 										<span class="text-gray-600 dark:text-gray-400">Resguardante:</span>
 										<span class="text-gray-900 dark:text-white font-medium">{{ selectedBienDetails.resguardante }}</span>
@@ -335,7 +336,7 @@
 					</div>
 
 					<!-- Maintenance History Section -->
-					<div class="border-t border-gray-200 dark:border-gray-700 pt-6">
+					<div v-if="assetInfoSettings.historialMantenimiento" class="border-t border-gray-200 dark:border-gray-700 pt-6">
 						<h3 class="text-sm font-semibold text-gray-900 dark:text-white mb-4">Historial de Mantenimiento</h3>
 						<div class="bg-gray-50 dark:bg-gray-700/50 rounded-lg overflow-x-auto">
 							<table class="w-full text-xs">
@@ -362,7 +363,7 @@
 					</div>
 
 					<!-- Locations Registry Section -->
-					<div class="border-t border-gray-200 dark:border-gray-700 pt-6">
+					<div v-if="assetInfoSettings.ubicacionesRegistradas" class="border-t border-gray-200 dark:border-gray-700 pt-6">
 						<h3 class="text-sm font-semibold text-gray-900 dark:text-white mb-4">Ubicaciones Registradas</h3>
 						<div class="bg-gray-50 dark:bg-gray-700/50 rounded-lg overflow-x-auto">
 							<table class="w-full text-xs">
@@ -442,6 +443,29 @@ const showDetailsBienModal = ref(false)
 const showDetailsBienReportModal = ref(false)
 const editingIndex = ref(null)
 const selectedBienDetails = ref(null)
+const assetInfoSettings = ref({
+	imagen: true,
+	marca: true,
+	modelo: true,
+	numeroSerie: true,
+	categoria: true,
+	area: true,
+	resguardante: true,
+	fechaAdquisicion: true,
+	valor: true,
+	documentoSoporte: true,
+	historialMantenimiento: true,
+	ubicacionesRegistradas: true,
+})
+const showLoadingSettings = ref(false)
+
+// Load asset info settings from localStorage
+const loadAssetInfoSettings = () => {
+	const saved = localStorage.getItem('assetInfoFields')
+	if (saved) {
+		assetInfoSettings.value = JSON.parse(saved)
+	}
+}
 
 const bienes = ref([
 	{
@@ -495,6 +519,7 @@ const editingBien = ref({
 })
 
 const viewBienDetails = (index) => {
+	loadAssetInfoSettings()
 	selectedBienDetails.value = { ...bienes.value[index] }
 	showDetailsBienModal.value = true
 }
