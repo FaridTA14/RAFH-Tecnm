@@ -174,7 +174,82 @@
 				</div>
 				<div class="flex gap-2 justify-end border-t border-gray-300 dark:border-gray-600 p-6">
 					<button @click="showNewBienModal = false" class="px-4 py-2 bg-gray-300 dark:bg-gray-600 text-gray-900 dark:text-white rounded-lg hover:bg-gray-400 dark:hover:bg-gray-500 transition-colors">Cancelar</button>
-					<button class="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg transition-colors font-medium">Guardar</button>
+					<button @click="saveNewBien" class="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg transition-colors font-medium">Guardar</button>
+				</div>
+			</div>
+		</div>
+
+		<!-- Edit Bien Modal -->
+		<div v-if="showEditBienModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+			<div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+				<div class="flex items-center justify-between border-b border-gray-300 dark:border-gray-600 p-6">
+					<h2 class="text-lg font-bold text-gray-900 dark:text-white">Editar Bien</h2>
+					<button @click="showEditBienModal = false" class="text-gray-400 hover:text-gray-600 text-2xl">&times;</button>
+				</div>
+				<div class="p-6 space-y-4">
+					<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+						<div>
+							<label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Número de serie</label>
+							<input v-model="editingBien.serie" type="text" placeholder="Número de serie" class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+						</div>
+						<div>
+							<label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Modelo</label>
+							<input v-model="editingBien.modelo" type="text" placeholder="Modelo" class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+						</div>
+						<div>
+							<label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Marca</label>
+							<input v-model="editingBien.marca" type="text" placeholder="Marca" class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+						</div>
+						<div>
+							<label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Área</label>
+							<select v-model="editingBien.area" class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+								<option>Sistemas</option>
+								<option>RR.HH</option>
+								<option>Administración</option>
+							</select>
+						</div>
+						<div>
+							<label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Resguardante</label>
+							<select v-model="editingBien.resguardante" class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+								<option>Juan Pérez</option>
+								<option>María García</option>
+								<option>Carlos López</option>
+							</select>
+						</div>
+						<div>
+							<label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Estado</label>
+							<select v-model="editingBien.estado" class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+								<option>Bueno</option>
+								<option>Regular</option>
+								<option>Malo</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="flex gap-2 justify-end border-t border-gray-300 dark:border-gray-600 p-6">
+					<button @click="showEditBienModal = false" class="px-4 py-2 bg-gray-300 dark:bg-gray-600 text-gray-900 dark:text-white rounded-lg hover:bg-gray-400 dark:hover:bg-gray-500 transition-colors">Cancelar</button>
+					<button @click="saveEditBien" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors font-medium">Guardar</button>
+				</div>
+			</div>
+		</div>
+
+		<!-- Report Modal -->
+		<div v-if="showReportModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+			<div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg max-w-md w-full">
+				<div class="flex items-center justify-between border-b border-gray-300 dark:border-gray-600 p-6">
+					<h2 class="text-lg font-bold text-gray-900 dark:text-white">Generar Reporte</h2>
+					<button @click="showReportModal = false" class="text-gray-400 hover:text-gray-600 text-2xl">&times;</button>
+				</div>
+				<div class="p-6 space-y-4">
+					<p class="text-gray-600 dark:text-gray-400">Selecciona el formato del reporte:</p>
+					<div class="space-y-2">
+						<button class="w-full px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors text-sm font-medium">📊 Exportar a PDF</button>
+						<button class="w-full px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg transition-colors text-sm font-medium">📋 Exportar a Excel</button>
+						<button class="w-full px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition-colors text-sm font-medium">🖨️ Imprimir</button>
+					</div>
+				</div>
+				<div class="border-t border-gray-300 dark:border-gray-600 p-6">
+					<button @click="showReportModal = false" class="w-full px-4 py-2 bg-gray-300 dark:bg-gray-600 text-gray-900 dark:text-white rounded-lg hover:bg-gray-400 dark:hover:bg-gray-500 transition-colors">Cerrar</button>
 				</div>
 			</div>
 		</div>
@@ -185,4 +260,39 @@
 import { ref } from 'vue'
 
 const showNewBienModal = ref(false)
+const showEditBienModal = ref(false)
+const showReportModal = ref(false)
+const editingIndex = ref(null)
+
+const bienes = ref([
+	{ serie: 'ABC123456', modelo: 'OptiPlex 7090', marca: 'Dell', area: 'Sistemas', resguardante: 'Juan Pérez', estado: 'Bueno' },
+	{ serie: 'XYZ789012', modelo: 'ThinkPad E15', marca: 'Lenovo', area: 'RR.HH', resguardante: 'María García', estado: 'Regular' },
+])
+
+const editingBien = ref({
+	serie: '', modelo: '', marca: '', area: '', resguardante: '', estado: ''
+})
+
+const editBien = (index) => {
+	editingIndex.value = index
+	editingBien.value = { ...bienes.value[index] }
+	showEditBienModal.value = true
+}
+
+const saveEditBien = () => {
+	if (editingIndex.value !== null) {
+		bienes.value[editingIndex.value] = { ...editingBien.value }
+		showEditBienModal.value = false
+	}
+}
+
+const deleteBien = (index) => {
+	if (confirm('¿Estás seguro de que quieres eliminar este bien?')) {
+		bienes.value.splice(index, 1)
+	}
+}
+
+const saveNewBien = () => {
+	showNewBienModal.value = false
+}
 </script>
