@@ -98,6 +98,7 @@ const roles = ref([
 	{ nombre: 'Gestor', descripcion: 'Acceso a gestión de bienes', permisos: ['Ver reportes', 'Crear bienes'] },
 ])
 
+const newRolData = ref({ nombre: '', descripcion: '', permisos: [] })
 const editingRol = ref({ nombre: '', descripcion: '', permisos: [] })
 
 const editRol = (index) => {
