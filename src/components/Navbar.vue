@@ -4,11 +4,7 @@
 			<div class="flex justify-between items-center h-16">
 				<!-- Logo -->
 				<RouterLink to="/" class="flex items-center space-x-2 hover:opacity-80 transition-opacity">
-<<<<<<< HEAD
-					<img src="/icons/favicon.png" alt="RAFH Logo" class="w-8 h-8">
-=======
 					<img src="/favicon.ico" alt="RAFH Logo" class="w-18 h-20">
->>>>>>> 3635517 (Cambios de Api y diseño)
 				</RouterLink>
 
 				<!-- Desktop Menu -->

@@ -39,11 +39,7 @@ const router = createRouter({
       component: () => import('../views/dashboard/dashboard-view.vue'),
     },
     {
-<<<<<<< HEAD
-      path: '/dashboard/:component',
-=======
       path: '/dashboard/:component?',
->>>>>>> 3635517 (Cambios de Api y diseño)
       name: 'dashboard-component',
       component: () => import('../views/dashboard/dashboard-view.vue'),
       props: true,

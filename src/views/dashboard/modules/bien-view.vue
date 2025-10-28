@@ -56,9 +56,3 @@
 
 <script setup>
 </script>
-<<<<<<< HEAD
-
-<style scoped>
-</style>
-=======
->>>>>>> 3635517 (Cambios de Api y diseño)
