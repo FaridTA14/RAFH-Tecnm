@@ -55,9 +55,28 @@ export const logout = async () => {
     const response = await authenticatedFetch(API_CONFIG.ENDPOINTS.LOGOUT, {
     method: 'POST'
     })
+<<<<<<< HEAD
 
     // Limpiar el localStorage
     localStorage.removeItem('auth_token')
     localStorage.removeItem('user')
+=======
+    
+    return response
+}
+
+// Función para obtener el perfil del usuario
+export const getUserProfile = async () => {
+    const response = await authenticatedFetch(API_CONFIG.ENDPOINTS.USER)
+    return response
+}
+
+// Función para actualizar el perfil del usuario
+export const updateUserProfile = async (userData) => {
+    const response = await authenticatedFetch(API_CONFIG.ENDPOINTS.USER, {
+        method: 'PUT',
+        body: JSON.stringify(userData)
+    })
+>>>>>>> 3635517 (Cambios de Api y diseño)
     return response
 }
