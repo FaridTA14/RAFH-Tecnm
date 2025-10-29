@@ -39,6 +39,8 @@
 								<img src="/icons/bien.png" alt="Bien" class="w-4 h-4">
 								<h2 class="ml-3 font-semibold">{{ dashboardData.ultimo_bien_registrado.nombre }}</h2>
 							</a>
+							<label class="text-gray-600 dark:text-gray-400 text-xs">Cantidad: {{
+								dashboardData.ultimo_bien_registrado.cantidad }}</label>
 						</div>
 					</div>
 
@@ -99,7 +101,7 @@
 										Resguardante responsable</th>
 									<th class="text-left py-3 px-2 font-semibold text-gray-900 dark:text-white">Bien
 										involucrado</th>
-									<th class="text-left py-3 px-2 font-semibold text-gray-900 dark:text-white">Área
+									<th class="text-left py-3 px-2 font-semibold text-gray-900 dark:text-white">Departamento
 									</th>
 								</tr>
 							</thead>
