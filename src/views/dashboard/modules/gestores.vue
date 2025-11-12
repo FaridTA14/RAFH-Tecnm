@@ -5,44 +5,37 @@
 	</div>
 
 	<div v-else-if="error" class="p-6 bg-red-100 dark:bg-red-900 rounded-lg text-red-700 dark:text-red-200">
-		<h3 class="font-bold">Error al cargar los errores</h3>
+		<h3 class="font-bold">Error al cargar los gestores</h3>
 		<p>{{ error.message || 'No se pudo conectar con la API.' }}</p>
-		<button @click="fetchAreas" class="mt-4 px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700">
+		<button @click="fetchGestoresData" class="mt-4 px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700">
 			Reintentar
 		</button>
 	</div>
 	<div v-else class="space-y-6">
 		<div class="flex justify-between items-center">
 			<label class="text-sm md:text-base text-gray-600 dark:text-gray-400">Gestores</label>
-			<label class="text-sm md:text-base text-gray-600 dark:text-gray-400">Instituto Tecnológico de
-				Chetumal</label>
+			<label class="text-sm md:text-base text-gray-600 dark:text-gray-400">Instituto Tecnológico de Chetumal</label>
 		</div>
 
-		<div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4 flex flex-col md:flex-row gap-4 items-end">
-			<div class="flex-1">
-				<form class="flex gap-2" @submit.prevent>
-					<input type="text" placeholder="Buscar gestor"
-						class="flex-1 px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
-					<button type="submit"
-						class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors">Buscar</button>
-				</form>
+		<div class="bg-white dark:bg-dark-bg rounded-lg shadow-md dark:shadow-stone-950  p-4 space-y-4">
+			<div class="flex flex-col md:flex-row gap-4 items-end">
+				<div class="flex-1">
+					<label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Buscar gestor</label>
+					<input v-model="searchTerm" type="text" placeholder="Escribe para buscar..." class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+				</div>
+				<button @click="openNewGestorModal" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors font-medium whitespace-nowrap">
+					Nuevo Gestor
+				</button>
+				<button @click="showReportModal = true" class="px-4 py-2 bg-cyan-600 hover:bg-cyan-700 text-white rounded-lg transition-colors font-medium flex items-center gap-2 whitespace-nowrap">
+					<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4H7a2 2 0 01-2-2v-4a2 2 0 012-2h10a2 2 0 012 2v4a2 2 0 01-2 2zm2-6a2 2 0 11-4 0 2 2 0 014 0z"></path>
+					</svg>
+					Reporte
+				</button>
 			</div>
-			<button @click="openNewGestorModal"
-				class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors font-medium whitespace-nowrap">Nuevo
-				Gestor
-			</button>
-			<button @click="showReportModal = true"
-				class="px-4 py-2 bg-cyan-600 hover:bg-cyan-700 text-white rounded-lg transition-colors font-medium flex items-center gap-2 whitespace-nowrap">
-				<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-						d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4H7a2 2 0 01-2-2v-4a2 2 0 012-2h10a2 2 0 012 2v4a2 2 0 01-2 2zm2-6a2 2 0 11-4 0 2 2 0 014 0z">
-					</path>
-				</svg>
-				Reporte
-			</button>
 		</div>
 		<!-- TABLA DE GESTORES-->
-		<div class="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-x-auto">
+		<div class="bg-white dark:bg-dark-bg rounded-lg shadow-md dark:shadow-stone-950  overflow-x-auto">
 			<div v-if="filteredGestores.length === 0" class="flex items-center justify-center h-64">
 				<p class="text-center text-gray-500 dark:text-gray-400 text-lg font-medium">No existen registros</p>
 			</div>
@@ -51,36 +44,24 @@
 					<tr>
 						<th class="px-4 py-3 text-left font-semibold text-gray-900 dark:text-white">Nombre</th>
 						<th class="px-4 py-3 text-left font-semibold text-gray-900 dark:text-white">Apellidos</th>
+						<th class="px-4 py-3 text-left font-semibold text-gray-900 dark:text-white">Correo</th>
 						<th class="px-4 py-3 text-right font-semibold text-gray-900 dark:text-white">Acciones</th>
 					</tr>
 				</thead>
 				<tbody class="divide-y divide-gray-200 dark:divide-gray-600">
-					<tr v-if="gestores.length === 0">
-						<td colspan="4" class="px-4 py-3 text-center text-gray-500 dark:text-gray-400">
-							No se encontraron gestores.
-						</td>
-					</tr>
-					<tr v-else v-for="(gestor, index) in gestores" :key="gestor.id"
-						class="hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+					<tr v-for="gestor in filteredGestores" :key="gestor.id" class="hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
 						<td class="px-4 py-3 text-gray-600 dark:text-gray-400">{{ gestor.gestor_nombre }}</td>
 						<td class="px-4 py-3 text-gray-600 dark:text-gray-400">{{ gestor.gestor_apellidos }}</td>
+						<td class="px-4 py-3 text-gray-600 dark:text-gray-400">{{ gestor.gestor_correo }}</td>
 						<td class="px-4 py-3 flex gap-2 justify-end">
-							<button @click="openEditGestorModal(gestor)"
-								class="p-2 bg-blue-600 hover:bg-blue-700 text-white rounded transition-colors"
-								title="Editar">
+							<button @click="openEditGestorModal(gestor)" class="p-2 bg-blue-600 hover:bg-blue-700 text-white rounded transition-colors" title="Editar">
 								<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-										d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z">
-									</path>
+									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
 								</svg>
 							</button>
-							<button @click="openDeleteGestorModal(gestor)"
-								class="p-2 bg-red-600 hover:bg-red-700 text-white rounded transition-colors"
-								title="Eliminar">
+							<button @click="openDeleteGestorModal(gestor)" class="p-2 bg-red-600 hover:bg-red-700 text-white rounded transition-colors" title="Eliminar">
 								<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-										d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16">
-									</path>
+									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
 								</svg>
 							</button>
 						</td>
@@ -90,54 +71,40 @@
 		</div>
 
 		<!-- New Gestor Modal -->
-		<div v-if="showNewGestorModal"
-			class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-			<div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg max-w-md w-full">
+		<div v-if="showNewGestorModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+			<div class="bg-white dark:bg-dark-bg rounded-lg shadow-lg max-w-md w-full">
 				<div class="flex items-center justify-between border-b border-gray-300 dark:border-gray-600 p-6">
 					<h2 class="text-lg font-bold text-gray-900 dark:text-white">Nuevo Gestor</h2>
-					<button @click="showNewGestorModal = false"
-						class="text-gray-400 hover:text-gray-600 text-2xl">&times;</button>
+					<button @click="showNewGestorModal = false" class="text-gray-400 hover:text-gray-600 text-2xl">&times;</button>
 				</div>
 
-				<div v-if="newGestorError"
-					class="bg-red-700 text-white px-6 py-4 border-b border-red-900 flex justify-between items-center"
-					role="alert">
+				<div v-if="newGestorError" class="bg-red-700 text-white px-6 py-4 border-b border-red-900 flex justify-between items-center" role="alert">
 					<span class="font-medium text-sm">{{ newGestorError }}</span>
-					<button @click="newGestorError = null"
-						class="font-bold text-2xl text-white opacity-70 hover:opacity-100 leading-none">&times;</button>
+					<button @click="newGestorError = null" class="font-bold text-2xl text-white opacity-70 hover:opacity-100 leading-none">&times;</button>
 				</div>
 
 				<div class="p-6 space-y-4 max-h-[60vh] overflow-y-auto">
 					<div>
 						<label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Nombre</label>
-						<input v-model="newGestorData.nombre" type="text" placeholder="Nombre"
-							class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+						<input v-model="newGestorData.nombre" type="text" placeholder="Nombre" class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
 					</div>
 					<div>
 						<label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Apellidos</label>
-						<input v-model="newGestorData.apellidos" type="text" placeholder="Apellido"
-							class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+						<input v-model="newGestorData.apellidos" type="text" placeholder="Apellido" class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
 					</div>
 					<div>
-						<label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Correo
-							Electrónico</label>
-						<input v-model="newGestorData.correo" type="email" placeholder="correo@institucion.com"
-							class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+						<label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Correo Electrónico</label>
+						<input v-model="newGestorData.correo" type="email" placeholder="correo@institucion.com" class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
 					</div>
 					<div>
-						<label
-							class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Contraseña</label>
-						<input v-model="newGestorData.password" type="password" placeholder="Contraseña"
-							class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+						<label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Contraseña</label>
+						<input v-model="newGestorData.password" type="password" placeholder="Contraseña" class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
 					</div>
 				</div>
 
 				<div class="flex gap-2 justify-end border-t border-gray-300 dark:border-gray-600 p-6">
-					<button @click="showNewGestorModal = false"
-						class="px-4 py-2 bg-gray-300 dark:bg-gray-600 text-gray-900 dark:text-white rounded-lg hover:bg-gray-400 dark:hover:bg-gray-500 transition-colors">Cancelar</button>
-
-					<button @click="saveNewGestor" :disabled="isSubmitting"
-						class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors font-medium disabled:opacity-50">
+					<button @click="showNewGestorModal = false" class="px-4 py-2 bg-gray-300 dark:bg-gray-600 text-gray-900 dark:text-white rounded-lg hover:bg-gray-400 dark:hover:bg-gray-500 transition-colors">Cancelar</button>
+					<button @click="saveNewGestor" :disabled="isSubmitting" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors font-medium disabled:opacity-50">
 						{{ isSubmitting ? 'Guardando...' : 'Guardar' }}
 					</button>
 				</div>
@@ -145,47 +112,35 @@
 		</div>
 
 		<!-- Edit Gestor Modal -->
-		<div v-if="showEditGestorModal && editingGestor"
-			class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-			<div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg max-w-md w-full max-h-[90vh] overflow-y-auto">
+		<div v-if="showEditGestorModal && editingGestor.id" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+			<div class="bg-white dark:bg-dark-bg rounded-lg shadow-lg max-w-md w-full max-h-[90vh] overflow-y-auto">
 				<div class="flex items-center justify-between border-b border-gray-300 dark:border-gray-600 p-6">
 					<h2 class="text-lg font-bold text-gray-900 dark:text-white">Editar Gestor</h2>
-					<button @click="showEditGestorModal = false"
-						class="text-gray-400 hover:text-gray-600 text-2xl">&times;</button>
+					<button @click="showEditGestorModal = false" class="text-gray-400 hover:text-gray-600 text-2xl">&times;</button>
 				</div>
 
-				<div v-if="editGestorError"
-					class="bg-red-700 text-white px-6 py-4 border-b border-red-900 flex justify-between items-center"
-					role="alert">
+				<div v-if="editGestorError" class="bg-red-700 text-white px-6 py-4 border-b border-red-900 flex justify-between items-center" role="alert">
 					<span class="font-medium text-sm">{{ editGestorError }}</span>
-					<button @click="editGestorError = null"
-						class="font-bold text-2xl text-white opacity-70 hover:opacity-100 leading-none">&times;</button>
+					<button @click="editGestorError = null" class="font-bold text-2xl text-white opacity-70 hover:opacity-100 leading-none">&times;</button>
 				</div>
 
 				<div class="p-6 space-y-4">
 					<div>
 						<label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Nombre</label>
-						<input v-model="editingGestor.nombre" type="text" placeholder="Nombre"
-							class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+						<input v-model="editingGestor.nombre" type="text" placeholder="Nombre" class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
 					</div>
 					<div>
 						<label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Apellidos</label>
-						<input v-model="editingGestor.apellidos" type="text" placeholder="Apellido"
-							class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+						<input v-model="editingGestor.apellidos" type="text" placeholder="Apellido" class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
 					</div>
 					<div>
-						<label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Correo
-							Electrónico</label>
-						<input v-model="editingGestor.correo" type="email" placeholder="correo@institucion.com"
-							class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+						<label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Correo Electrónico</label>
+						<input v-model="editingGestor.correo" type="email" placeholder="correo@institucion.com" class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
 					</div>
-					
 				</div>
 				<div class="flex gap-2 justify-end border-t border-gray-300 dark:border-gray-600 p-6">
-					<button @click="showEditGestorModal = false" :disabled="isSubmitting"
-						class="px-4 py-2 bg-gray-300 dark:bg-gray-600 text-gray-900 dark:text-white rounded-lg hover:bg-gray-400 dark:hover:bg-gray-500 transition-colors disabled:opacity-50">Cancelar</button>
-					<button @click="saveEditGestor" :disabled="isSubmitting"
-						class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors font-medium disabled:opacity-50">
+					<button @click="showEditGestorModal = false" :disabled="isSubmitting" class="px-4 py-2 bg-gray-300 dark:bg-gray-600 text-gray-900 dark:text-white rounded-lg hover:bg-gray-400 dark:hover:bg-gray-500 transition-colors disabled:opacity-50">Cancelar</button>
+					<button @click="saveEditGestor" :disabled="isSubmitting" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors font-medium disabled:opacity-50">
 						{{ isSubmitting ? 'Guardando...' : 'Guardar Cambios' }}
 					</button>
 				</div>
@@ -193,35 +148,25 @@
 		</div>
 
 		<!-- Report Modal -->
-		<div v-if="showReportModal"
-			class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-			<div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg max-w-md w-full">
+		<div v-if="showReportModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+			<div class="bg-white dark:bg-dark-bg rounded-lg shadow-lg max-w-md w-full">
 				<div class="flex items-center justify-between border-b border-gray-300 dark:border-gray-600 p-6">
 					<h2 class="text-lg font-bold text-gray-900 dark:text-white">Generar Reporte</h2>
-					<button @click="showReportModal = false"
-						class="text-gray-400 hover:text-gray-600 text-2xl">&times;</button>
+					<button @click="showReportModal = false" class="text-gray-400 hover:text-gray-600 text-2xl">&times;</button>
 				</div>
 				<div class="p-6 space-y-4">
 					<p class="text-gray-600 dark:text-gray-400">Seleccione el formato de exportación:</p>
 					<div class="space-y-2">
-						<button
-							class="w-full px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors font-medium">Exportar
-							a PDF</button>
-						<button
-							class="w-full px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg transition-colors font-medium">Exportar
-							a Excel</button>
+						<button class="w-full px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors font-medium">Exportar a PDF</button>
+						<button class="w-full px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg transition-colors font-medium">Exportar a Excel</button>
 					</div>
 				</div>
 				<div class="flex gap-2 justify-end border-t border-gray-300 dark:border-gray-600 p-6">
-					<button @click="showReportModal = false"
-						class="px-4 py-2 bg-gray-300 dark:bg-gray-600 text-gray-900 dark:text-white rounded-lg hover:bg-gray-400 dark:hover:bg-gray-500 transition-colors">Cerrar</button>
+					<button @click="showReportModal = false" class="px-4 py-2 bg-gray-300 dark:bg-gray-600 text-gray-900 dark:text-white rounded-lg hover:bg-gray-400 dark:hover:bg-gray-500 transition-colors">Cerrar</button>
 				</div>
 			</div>
 		</div>
-		<ConfirmModal :show="showDeleteGestorModal" :isSubmitting="isSubmitting" :errorMessage="deleteGestorError"
-			title="Confirmar Eliminación" :message="deleteGestorMessage" confirmText="Sí, Eliminar"
-			confirmClass="bg-red-600 hover:bg-red-700" @confirm="handleConfirmDelete" @cancel="cancelDelete"
-			@clearError="deleteGestorError = null" />
+		<ConfirmModal :show="showDeleteGestorModal" :isSubmitting="isSubmitting" :errorMessage="deleteGestorError" title="Confirmar Eliminación" :message="deleteGestorMessage" confirmText="Sí, Eliminar" confirmClass="bg-red-600 hover:bg-red-700" @confirm="handleConfirmDelete" @cancel="cancelDelete" @clearError="deleteGestorError = null" />
 	</div>
 </template>
 <script setup>
@@ -231,13 +176,12 @@ import ConfirmModal from '@/components/ConfirmModal.vue'
 
 // --- Estados de carga y error ---
 const isLoading = ref(true)
-const fetchError = ref(null)
+const error = ref(null)
 const isSubmitting = ref(false)
-const error = ref(null) // <-- Este 'error' general no parece usarse, pero lo mantengo por si acaso.
 
 // --- Estados de datos ---
 const gestores = ref([])
-//const rolesList = ref([])
+const searchTerm = ref('')
 
 // --- Estados de Modales ---
 const showNewGestorModal = ref(false)
@@ -245,56 +189,62 @@ const showEditGestorModal = ref(false)
 const showReportModal = ref(false)
 const newGestorError = ref(null)
 const showDeleteGestorModal = ref(false)
-const deletingGestor = ref(null) // Guardará el objeto gestor a eliminar
+const deletingGestor = ref(null)
 const deleteGestorError = ref(null)
 const editGestorError = ref(null)
 
-// --- newGestorData (Corregido) ---
+const filteredGestores = computed(() => {
+	return gestores.value.filter(gestor => {
+		return !searchTerm.value ||
+			(gestor.gestor_nombre && gestor.gestor_nombre.toLowerCase().includes(searchTerm.value.toLowerCase())) ||
+			(gestor.gestor_apellidos && gestor.gestor_apellidos.toLowerCase().includes(searchTerm.value.toLowerCase())) ||
+			(gestor.gestor_correo && gestor.gestor_correo.toLowerCase().includes(searchTerm.value.toLowerCase()))
+	})
+})
+
+// --- newGestorData ---
 const newGestorData = ref({
 	nombre: '',
 	apellidos: '',
 	correo: '',
 	password: '',
-	rol: '',
 })
 
-// --- editingGestor (Corregido) ---
-// Sincronizado con newGestorData. 'puesto' y 'area' eliminados.
+// --- editingGestor ---
 const editingGestor = ref({
-	id: null, // <-- Importante para el PUT
+	id: null,
 	nombre: '',
 	apellidos: '',
+	correo: '',
 })
 
-// --- fetchGestoresData (Corregido) ---
+// --- fetchGestoresData ---
 const fetchGestoresData = async () => {
 	isLoading.value = true
-	fetchError.value = null
+	error.value = null
 	try {
-		// --- Petición de departamentos eliminada ---
 		const [gestoresRes] = await Promise.all([
 			authenticatedFetch('/gestores'),
-		]);
+		])
 
-		if (!gestoresRes.ok) throw new Error('Error al cargar gestores');
-		const gestoresData = await gestoresRes.json();
+		if (!gestoresRes.ok) throw new Error('Error al cargar gestores')
+		const gestoresData = await gestoresRes.json()
 
-		gestores.value = gestoresData.data || gestoresData;
-
+		gestores.value = gestoresData.data || gestoresData
 	} catch (e) {
 		console.error('Error al cargar datos:', e)
-		fetchError.value = e.message;
+		error.value = e
 	} finally {
-		isLoading.value = false;
+		isLoading.value = false
 	}
 }
 
 // --- Cargar datos al montar ---
 onMounted(() => {
-	fetchGestoresData();
-});
+	fetchGestoresData()
+})
 
-// --- openNewGestorModal (Corregido) ---
+// --- openNewGestorModal ---
 const openNewGestorModal = () => {
 	newGestorData.value = {
 		nombre: '',
@@ -306,10 +256,9 @@ const openNewGestorModal = () => {
 	showNewGestorModal.value = true
 }
 
-// --- saveNewGestor (Corregido) ---
+// --- saveNewGestor ---
 const saveNewGestor = async () => {
 	newGestorError.value = null
-	// Validación actualizada (puedes ajustar si 'rol' no es obligatorio)
 	if (!newGestorData.value.nombre || !newGestorData.value.apellidos || !newGestorData.value.correo || !newGestorData.value.password) {
 		newGestorError.value = 'Todos los campos son obligatorios.'
 		return
@@ -317,27 +266,24 @@ const saveNewGestor = async () => {
 
 	isSubmitting.value = true
 	try {
-		// Payload actualizado
 		const payload = {
 			gestor_nombre: newGestorData.value.nombre,
 			gestor_apellidos: newGestorData.value.apellidos,
 			gestor_correo: newGestorData.value.correo,
 			usuario_pass: newGestorData.value.password,
-			usuario_id_rol: 2,
 		}
 		const response = await authenticatedFetch('/gestores', {
 			method: 'POST',
 			body: JSON.stringify(payload)
-		});
+		})
 
 		if (!response.ok) {
-			const errData = await response.json().catch(() => ({}));
-			throw new Error(errData.message || 'No se pudo crear el gestor.');
+			const errData = await response.json().catch(() => ({}))
+			throw new Error(errData.message || 'No se pudo crear el gestor.')
 		}
 
 		showNewGestorModal.value = false
 		await fetchGestoresData()
-
 	} catch (err) {
 		console.error('Error al guardar gestor:', err)
 		newGestorError.value = err.message
@@ -346,59 +292,48 @@ const saveNewGestor = async () => {
 	}
 }
 
-// --- Lógica de Editar y Eliminar (sin cambios, pero lista para el Paso 3 y 4) ---
 const openEditGestorModal = (gestor) => {
-	// Mapeamos los datos de la API (ej. gestor_nombre) 
-	// al formulario (ej. nombre)
 	editingGestor.value = {
 		id: gestor.id,
 		nombre: gestor.gestor_nombre,
-		apellidos: gestor.gestor_apellidos, // Ajusta esto si tienes apellido1 y apellido2
+		apellidos: gestor.gestor_apellidos,
 		correo: gestor.gestor_correo,
-		rol: gestor.ges_rol
-		// Nota: No cargamos la contraseña por seguridad
 	}
 
-	editGestorError.value = null // Limpia errores
-	showEditGestorModal.value = true // Muestra el modal
+	editGestorError.value = null
+	showEditGestorModal.value = true
 }
+
 const saveEditGestor = async () => {
-	if (!editingGestor.value) return;
+	if (!editingGestor.value.id) return
 
 	editGestorError.value = null
 
-	// Validación
 	if (!editingGestor.value.nombre || !editingGestor.value.apellidos || !editingGestor.value.correo) {
-		editGestorError.value = 'Nombre, Apellidos, Correo y Rol son obligatorios.'
+		editGestorError.value = 'Nombre, Apellidos y Correo son obligatorios.'
 		return
 	}
 
 	isSubmitting.value = true
 	try {
-		// Mapeamos el formulario de vuelta a la API
 		const payload = {
 			gestor_nombre: editingGestor.value.nombre,
 			gestor_apellidos: editingGestor.value.apellidos,
 			gestor_correo: editingGestor.value.correo,
-			ges_rol: editingGestor.value.rol,
-			// (No enviamos la contraseña a menos que haya cambiado)
 		}
 
-		// Llamada PUT a la API
 		const response = await authenticatedFetch(`/gestores/${editingGestor.value.id}`, {
 			method: 'PUT',
 			body: JSON.stringify(payload)
-		});
+		})
 
 		if (!response.ok) {
-			const errData = await response.json().catch(() => ({}));
-			throw new Error(errData.message || 'No se pudo actualizar el gestor.');
+			const errData = await response.json().catch(() => ({}))
+			throw new Error(errData.message || 'No se pudo actualizar el gestor.')
 		}
 
-		// Éxito
 		showEditGestorModal.value = false
-		await fetchGestoresData() // Recarga la tabla
-
+		await fetchGestoresData()
 	} catch (err) {
 		console.error('Error al actualizar gestor:', err)
 		editGestorError.value = err.message
@@ -406,28 +341,25 @@ const saveEditGestor = async () => {
 		isSubmitting.value = false
 	}
 }
+
 const deleteGestorMessage = computed(() => {
 	if (!deletingGestor.value) return ''
-	// Usa los campos de la tabla (gestor_nombre, gestor_apellidos)
-	const name = `${deletingGestor.value.gestor_nombre} ${deletingGestor.value.gestor_apellidos || ''}`
-	return `¿Está seguro de que desea eliminar al gestor:<br><strong class='font-medium text-lg text-gray-900 dark:text-white'>${name.trim()}</strong>?`
+	const name = `${deletingGestor.value.gestor_nombre} ${deletingGestor.value.gestor_apellidos || ''}`.trim()
+	return `¿Está seguro de que desea eliminar al gestor:<br><strong class='font-medium text-lg text-gray-900 dark:text-white'>${name}</strong>?`
 })
 
-// REEMPLAZA 'deleteGestor(index)' con esta función
 const openDeleteGestorModal = (gestor) => {
-	deletingGestor.value = gestor // Guarda el objeto, no el índice
-	deleteGestorError.value = null // Limpia errores
-	showDeleteGestorModal.value = true // Muestra el nuevo modal
+	deletingGestor.value = gestor
+	deleteGestorError.value = null
+	showDeleteGestorModal.value = true
 }
 
-// NUEVO: Función para el botón "Cancelar"
 const cancelDelete = () => {
 	showDeleteGestorModal.value = false
 	deletingGestor.value = null
 	deleteGestorError.value = null
 }
 
-// REEMPLAZA 'confirmDelete()' con esta función (que llama a la API)
 const handleConfirmDelete = async () => {
 	if (!deletingGestor.value) return
 
@@ -435,24 +367,21 @@ const handleConfirmDelete = async () => {
 	deleteGestorError.value = null
 
 	try {
-		// Llama a la API para eliminar
 		const response = await authenticatedFetch(`/gestores/${deletingGestor.value.id}`, {
 			method: 'DELETE'
-		});
+		})
 
 		if (!response.ok) {
-			const errData = await response.json().catch(() => ({}));
-			throw new Error(errData.message || 'No se pudo eliminar el gestor.');
+			const errData = await response.json().catch(() => ({}))
+			throw new Error(errData.message || 'No se pudo eliminar el gestor.')
 		}
 
-		// Éxito
 		showDeleteGestorModal.value = false
-		await fetchGestoresData() // Recarga la tabla
+		await fetchGestoresData()
 		deletingGestor.value = null
-
 	} catch (err) {
 		console.error('Error al eliminar gestor:', err)
-		deleteGestorError.value = err.message // Muestra el error en el modal
+		deleteGestorError.value = err.message
 	} finally {
 		isSubmitting.value = false
 	}

@@ -5,7 +5,7 @@
 			<label class="text-sm md:text-base text-gray-600 dark:text-gray-400">Instituto Tecnológico de Chetumal</label>
 		</div>
 
-		<div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4 flex flex-col md:flex-row gap-4 items-end">
+		<div class="bg-white dark:bg-dark-bg rounded-lg shadow-md dark:shadow-stone-950 p-4 flex flex-col md:flex-row gap-4 items-end">
 			<div class="flex-1">
 				<input v-model="searchTerm" type="text" placeholder="Buscar bien" class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
 			</div>
@@ -18,7 +18,7 @@
 			</button>
 		</div>
 
-		<div class="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-x-auto">
+		<div class="bg-white dark:bg-dark-bg rounded-lg shadow-md dark:shadow-stone-950 overflow-x-auto">
 			<div v-if="filteredMantenimientos.length === 0" class="flex items-center justify-center h-64">
 				<p class="text-center text-gray-500 dark:text-gray-400 text-lg font-medium">No existen registros</p>
 			</div>
@@ -76,7 +76,7 @@
 
 		<!-- New Mantenimiento Modal -->
 		<div v-if="showNewMantenimientoModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-			<div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg max-w-md w-full">
+			<div class="bg-white dark:bg-dark-bg rounded-lg shadow-lg max-w-md w-full">
 				<div class="flex items-center justify-between border-b border-gray-300 dark:border-gray-600 p-6">
 					<h2 class="text-lg font-bold text-gray-900 dark:text-white">Nuevo Mantenimiento</h2>
 					<button @click="showNewMantenimientoModal = false" class="text-gray-400 hover:text-gray-600 text-2xl">&times;</button>
@@ -127,7 +127,7 @@
 
 		<!-- Edit Mantenimiento Modal -->
 		<div v-if="showEditMantenimientoModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-			<div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg max-w-md w-full">
+			<div class="bg-white dark:bg-dark-bg rounded-lg shadow-lg max-w-md w-full">
 				<div class="flex items-center justify-between border-b border-gray-300 dark:border-gray-600 p-6">
 					<h2 class="text-lg font-bold text-gray-900 dark:text-white">Editar Mantenimiento</h2>
 					<button @click="showEditMantenimientoModal = false" class="text-gray-400 hover:text-gray-600 text-2xl">&times;</button>
@@ -175,7 +175,7 @@
 
 		<!-- Report Modal -->
 		<div v-if="showReportModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-			<div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg max-w-md w-full">
+			<div class="bg-white dark:bg-dark-bg rounded-lg shadow-lg max-w-md w-full">
 				<div class="flex items-center justify-between border-b border-gray-300 dark:border-gray-600 p-6">
 					<h2 class="text-lg font-bold text-gray-900 dark:text-white">Generar Reporte</h2>
 					<button @click="showReportModal = false" class="text-gray-400 hover:text-gray-600 text-2xl">&times;</button>
@@ -195,7 +195,7 @@
 
 		<!-- Delete Confirmation Modal -->
 		<div v-if="showDeleteConfirm" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-			<div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg max-w-md w-full">
+			<div class="bg-white dark:bg-dark-bg rounded-lg shadow-lg max-w-md w-full">
 				<div class="flex items-center justify-between border-b border-gray-300 dark:border-gray-600 p-6">
 					<h2 class="text-lg font-bold text-gray-900 dark:text-white">Confirmar Eliminación</h2>
 					<button @click="showDeleteConfirm = false" class="text-gray-400 hover:text-gray-600 text-2xl">&times;</button>

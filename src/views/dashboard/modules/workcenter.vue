@@ -1,7 +1,7 @@
 <template>
 	<div class="space-y-6">
 		<!-- Institution Header with Logo -->
-		<div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+		<div class="bg-white dark:bg-dark-bg rounded-lg shadow-md  p-6">
 			<div class="flex items-center justify-center gap-6">
 				<img src="/images/logoEscuela.png" alt="Institution Logo" class="w-20 h-20 rounded-lg object-cover">
 				<div class="text-center flex-1">
@@ -57,7 +57,7 @@
 		</div>
 
 		<!-- Configuration Section -->
-		<div class="bg-gray-900 dark:bg-gray-800 rounded-lg border border-gray-700 dark:border-gray-600 p-6 space-y-3">
+		<div class="bg-gray-900 dark:bg-dark-bg rounded-lg border border-gray-700 dark:border-gray-600 p-6 space-y-3">
 			<div class="flex items-center gap-3 mb-4">
 				<svg class="w-5 h-5 text-gray-400" fill="currentColor" viewBox="0 0 24 24">
 					<path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/>
@@ -112,7 +112,7 @@
 		</div>
 
 		<!-- Permissions and Users Section -->
-		<div class="bg-gray-900 dark:bg-gray-800 rounded-lg border border-gray-700 dark:border-gray-600 p-6 space-y-3">
+		<div class="bg-gray-900 dark:bg-dark-bg rounded-lg border border-gray-700 dark:border-gray-600 p-6 space-y-3">
 			<div class="flex items-center gap-3 mb-4">
 				<svg class="w-5 h-5 text-gray-400" fill="currentColor" viewBox="0 0 24 24">
 					<path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
@@ -152,7 +152,7 @@
 		</div>
 
 		<!-- Areas Configuration Section -->
-		<div class="bg-gray-900 dark:bg-gray-800 rounded-lg border border-gray-700 dark:border-gray-600 p-6 space-y-3">
+		<div class="bg-gray-900 dark:bg-dark-bg rounded-lg border border-gray-700 dark:border-gray-600 p-6 space-y-3">
 			<div class="flex items-center gap-3 mb-4">
 				<svg class="w-5 h-5 text-gray-400" fill="currentColor" viewBox="0 0 24 24">
 					<path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
@@ -180,7 +180,7 @@
 
 		<!-- Categories Modal -->
 		<div v-if="showCategoriesModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-			<div class="bg-gray-900 dark:bg-gray-800 rounded-lg shadow-lg max-w-2xl w-full max-h-96 overflow-y-auto">
+			<div class="bg-gray-900 dark:bg-dark-bg rounded-lg shadow-lg max-w-2xl w-full max-h-96 overflow-y-auto">
 				<div class="sticky top-0 flex items-center justify-between border-b border-gray-700 dark:border-gray-600 p-6 bg-gray-900">
 					<h2 class="text-xl font-bold text-white">Categorías de los bienes registrados</h2>
 					<button @click="showCategoriesModal = false" class="text-gray-400 hover:text-gray-300 text-2xl transition">&times;</button>
@@ -271,7 +271,7 @@
 
 		<!-- Edit Category Modal -->
 		<div v-if="showEditCategoryModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-			<div class="bg-gray-900 dark:bg-gray-800 rounded-lg shadow-lg max-w-md w-full">
+			<div class="bg-gray-900 dark:bg-dark-bg rounded-lg shadow-lg max-w-md w-full">
 				<div class="flex items-center justify-between border-b border-gray-700 p-6">
 					<h2 class="text-xl font-bold text-white">Editar Categoría</h2>
 					<button @click="showEditCategoryModal = false" class="text-gray-400 hover:text-gray-300 text-2xl">&times;</button>
@@ -304,7 +304,7 @@
 
 		<!-- Keys Modal -->
 		<div v-if="showKeysModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-			<div class="bg-gray-900 dark:bg-gray-800 rounded-lg shadow-lg max-w-3xl w-full max-h-96 overflow-y-auto">
+			<div class="bg-gray-900 dark:bg-dark-bg rounded-lg shadow-lg max-w-3xl w-full max-h-96 overflow-y-auto">
 				<div class="sticky top-0 flex items-center justify-between border-b border-gray-700 dark:border-gray-600 p-6 bg-gray-900">
 					<h2 class="text-xl font-bold text-white">Claves de identificación de los bienes</h2>
 					<button @click="showKeysModal = false" class="text-gray-400 hover:text-gray-300 text-2xl transition">&times;</button>
@@ -396,7 +396,7 @@
 
 		<!-- Edit Key Modal -->
 		<div v-if="showEditKeyModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-			<div class="bg-gray-900 dark:bg-gray-800 rounded-lg shadow-lg max-w-md w-full">
+			<div class="bg-gray-900 dark:bg-dark-bg rounded-lg shadow-lg max-w-md w-full">
 				<div class="flex items-center justify-between border-b border-gray-700 p-6">
 					<h2 class="text-xl font-bold text-white">Editar Clave</h2>
 					<button @click="showEditKeyModal = false" class="text-gray-400 hover:text-gray-300 text-2xl">&times;</button>
@@ -440,7 +440,7 @@
 
 		<!-- Roles Modal -->
 		<div v-if="showRolesModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4 overflow-y-auto">
-			<div class="bg-gray-900 dark:bg-gray-800 rounded-lg shadow-lg max-w-5xl w-full my-8">
+			<div class="bg-gray-900 dark:bg-dark-bg rounded-lg shadow-lg max-w-5xl w-full my-8">
 				<div class="flex items-center justify-between border-b border-gray-700 dark:border-gray-600 p-6">
 					<h2 class="text-xl font-bold text-white">Centro de trabajo — Roles y permiso</h2>
 					<button @click="showRolesModal = false" class="text-gray-400 hover:text-gray-300 text-2xl transition">&times;</button>
@@ -573,7 +573,7 @@
 
 		<!-- Edit Role Modal -->
 		<div v-if="showEditRoleModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-			<div class="bg-gray-900 dark:bg-gray-800 rounded-lg shadow-lg max-w-md w-full">
+			<div class="bg-gray-900 dark:bg-dark-bg rounded-lg shadow-lg max-w-md w-full">
 				<div class="flex items-center justify-between border-b border-gray-700 p-6">
 					<h2 class="text-xl font-bold text-white">Editar Rol</h2>
 					<button @click="showEditRoleModal = false" class="text-gray-400 hover:text-gray-300 text-2xl">&times;</button>
@@ -606,7 +606,7 @@
 
 		<!-- Transfer Policies Modal -->
 		<div v-if="showTransferPoliciesModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-			<div class="bg-gray-900 dark:bg-gray-800 rounded-lg shadow-lg max-w-lg w-full">
+			<div class="bg-gray-900 dark:bg-dark-bg rounded-lg shadow-lg max-w-lg w-full">
 				<div class="flex items-center justify-between border-b border-gray-700 dark:border-gray-600 p-6">
 					<h2 class="text-xl font-bold text-white">Políticas de transferencias</h2>
 					<button @click="showTransferPoliciesModal = false" class="text-gray-400 hover:text-gray-300 text-2xl transition">&times;</button>
@@ -666,7 +666,7 @@
 
 		<!-- Information Modal -->
 		<div v-if="showInformationModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-			<div class="bg-gray-900 dark:bg-gray-800 rounded-lg shadow-lg max-w-lg w-full max-h-[90vh] overflow-y-auto">
+			<div class="bg-gray-900 dark:bg-dark-bg rounded-lg shadow-lg max-w-lg w-full max-h-[90vh] overflow-y-auto">
 				<div class="flex items-center justify-between border-b border-gray-700 dark:border-gray-600 p-6">
 					<h2 class="text-xl font-bold text-white">Información de los bienes</h2>
 					<button @click="showInformationModal = false" class="text-gray-400 hover:text-gray-300 text-2xl transition">&times;</button>
@@ -806,7 +806,7 @@
 
 		<!-- Areas Modal -->
 		<div v-if="showAreasModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-			<div class="bg-gray-900 dark:bg-gray-800 rounded-lg shadow-lg max-w-lg w-full">
+			<div class="bg-gray-900 dark:bg-dark-bg rounded-lg shadow-lg max-w-lg w-full">
 				<div class="flex items-center justify-between border-b border-gray-700 dark:border-gray-600 p-6">
 					<h2 class="text-xl font-bold text-white">Información de las áreas</h2>
 					<button @click="showAreasModal = false" class="text-gray-400 hover:text-gray-300 text-2xl transition">&times;</button>

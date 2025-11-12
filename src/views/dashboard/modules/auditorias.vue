@@ -1,11 +1,11 @@
 <template>
 	<div class="space-y-6">
 		<div class="flex justify-between items-center">
-			<label class="text-sm md:text-base text-gray-600 dark:text-gray-400">Registro de auditorías</label>
+			<label class="text-sm md:text-base text-gray-600 dark:text-gray-400">Registro de Movimientos</label>
 			<label class="text-sm md:text-base text-gray-600 dark:text-gray-400">Instituto Tecnológico de Chetumal</label>
 		</div>
 
-		<div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+		<div class="bg-white dark:bg-dark-bg rounded-lg shadow-md dark:shadow-stone-950 p-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
 			<div>
 				<label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Filtrar por usuario</label>
 				<input v-model="searchUser" type="text" placeholder="Usuario" class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
@@ -42,7 +42,7 @@
 			</div>
 		</div>
 
-		<div class="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-x-auto">
+		<div class="bg-white dark:bg-dark-bg rounded-lg shadow-md dark:shadow-stone-950 overflow-x-auto">
 			<div v-if="filteredAuditorias.length === 0" class="flex items-center justify-center h-64">
 				<p class="text-center text-gray-500 dark:text-gray-400 text-lg font-medium">No existen registros</p>
 			</div>

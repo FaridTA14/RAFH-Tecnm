@@ -7,7 +7,7 @@
 		</div>
 
 		<!-- Filters and Actions -->
-		<div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4 space-y-4">
+		<div class="bg-white dark:bg-dark-bg rounded-lg shadow-md dark:shadow-stone-950  p-4 space-y-4">
 			<div class="grid grid-cols-1 md:grid-cols-4 gap-4">
 				<!-- Search -->
 				<div>
@@ -50,7 +50,7 @@
 		</div>
 
 		<!-- Table -->
-		<div class="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-x-auto">
+		<div class="bg-white dark:bg-dark-bg rounded-lg shadow-md dark:shadow-stone-950  overflow-x-auto">
 			<div v-if="filteredBienes.length === 0" class="flex items-center justify-center h-64">
 				<p class="text-center text-gray-500 dark:text-gray-400 text-lg font-medium">No existen registros</p>
 			</div>
@@ -99,7 +99,7 @@
 
 		<!-- New Bien Modal -->
 		<div v-if="showNewBienModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-			<div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+			<div class="bg-white dark:bg-dark-bg rounded-lg shadow-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto">
 				<div class="flex items-center justify-between border-b border-gray-300 dark:border-gray-600 p-6">
 					<h2 class="text-lg font-bold text-gray-900 dark:text-white">Nuevo Bien</h2>
 					<button @click="showNewBienModal = false" class="text-gray-400 hover:text-gray-600 text-2xl">&times;</button>
@@ -187,7 +187,7 @@
 
 		<!-- Edit Bien Modal -->
 		<div v-if="showEditBienModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-			<div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+			<div class="bg-white dark:bg-dark-bg rounded-lg shadow-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto">
 				<div class="flex items-center justify-between border-b border-gray-300 dark:border-gray-600 p-6">
 					<h2 class="text-lg font-bold text-gray-900 dark:text-white">Editar Bien</h2>
 					<button @click="showEditBienModal = false" class="text-gray-400 hover:text-gray-600 text-2xl">&times;</button>
@@ -241,7 +241,7 @@
 
 		<!-- Report Modal -->
 		<div v-if="showReportModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-			<div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg max-w-md w-full">
+			<div class="bg-white dark:bg-dark-bg rounded-lg shadow-lg max-w-md w-full">
 				<div class="flex items-center justify-between border-b border-gray-300 dark:border-gray-600 p-6">
 					<h2 class="text-lg font-bold text-gray-900 dark:text-white">Generar Reporte</h2>
 					<button @click="showReportModal = false" class="text-gray-400 hover:text-gray-600 text-2xl">&times;</button>
@@ -262,7 +262,7 @@
 
 		<!-- View Details Modal -->
 		<div v-if="showDetailsBienModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-			<div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+			<div class="bg-white dark:bg-dark-bg rounded-lg shadow-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto">
 				<div class="flex items-center justify-between border-b border-gray-300 dark:border-gray-600 p-6">
 					<h2 class="text-lg font-bold text-gray-900 dark:text-white">Detalles del Bien</h2>
 					<button @click="showDetailsBienModal = false" class="text-gray-400 hover:text-gray-600 text-2xl">&times;</button>
@@ -397,7 +397,7 @@
 
 		<!-- Property Details Report Modal -->
 		<div v-if="showDetailsBienReportModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-			<div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg max-w-md w-full">
+			<div class="bg-white dark:bg-dark-bg rounded-lg shadow-lg max-w-md w-full">
 				<div class="flex items-center justify-between border-b border-gray-300 dark:border-gray-600 p-6">
 					<h2 class="text-lg font-bold text-gray-900 dark:text-white">Generar Reporte</h2>
 					<button @click="showDetailsBienReportModal = false" class="text-gray-400 hover:text-gray-600 text-2xl">&times;</button>

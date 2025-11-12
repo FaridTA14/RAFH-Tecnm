@@ -7,7 +7,6 @@
 			<p class="mt-4 text-gray-600 dark:text-gray-400">Cargando...</p>
 		</div>
 	</div>
-
 	<div v-else-if="error" class="p-4 bg-red-100 dark:bg-red-900 rounded-lg text-red-700 dark:text-red-200">
 		<h3 class="font-bold">Error al cargar el dashboard</h3>
 		<p>{{ error }}</p>
@@ -15,79 +14,50 @@
 			Reintentar
 		</button>
 	</div>
-
 	<div v-else-if="dashboardData" class="space-y-6">
 		<div>
 			<label class="text-sm md:text-base text-gray-600 dark:text-gray-400">Vista general</label>
 		</div>
-
 		<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
 			<div class="lg:col-span-2 space-y-6">
-
 				<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-
 					<div
-						class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4 hover:shadow-lg transition-shadow duration-300">
+						class="bg-white dark:bg-dark-bg rounded-lg shadow-md dark:shadow-stone-950 p-4 hover:shadow-lg transition-shadow duration-300">
 						<div class="flex items-center justify-between mb-4">
 							<h2 class="text-gray-600 dark:text-gray-400 text-sm">Ultimo bien registrado</h2>
-							<a href="#" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300">
-								<img src="/icons/consulta.png" alt="More" class="w-4 h-4">
-							</a>
 						</div>
 						<div class="space-y-2">
-							<a href="#" class="flex items-center text-blue-600 dark:text-blue-400 hover:underline">
+							<div class="flex items-center">
 								<img src="/icons/bien.png" alt="Bien" class="w-4 h-4">
-								<h2 class="ml-3 font-semibold">{{ dashboardData.ultimo_bien_registrado.nombre }}</h2>
-							</a>
-							<label class="text-gray-600 dark:text-gray-400 text-xs">Cantidad: {{
-								dashboardData.ultimo_bien_registrado.cantidad }}</label>
-						</div>
-					</div>
-
-					<div
-						class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4 hover:shadow-lg transition-shadow duration-300">
-						<div class="flex items-center justify-between mb-4">
-							<h2 class="text-gray-600 dark:text-gray-400 text-sm">Próximo mantenimiento</h2>
-							<a href="#" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300">
-								<img src="/icons/consulta.png" alt="More" class="w-4 h-4">
-							</a>
-						</div>
-						<div class="space-y-2">
-							<a href="#" class="flex items-center text-blue-600 dark:text-blue-400 hover:underline">
-								<img src="/icons/fecha.png" alt="Fecha" class="w-4 h-4">
-								<h2 class="ml-3 font-semibold">{{ dashboardData.proximo_mantenimiento.fecha_programada
+								<h2 class="ml-3 font-semibold">{{ dashboardData.ultimo_bien_registrado?.nombre || 'N/A'
 								}}</h2>
-							</a>
-							<label class="text-gray-600 dark:text-gray-400 text-xs">Para: {{
-								dashboardData.proximo_mantenimiento.para_bien_nombre }}</label>
+							</div>
+							<label class="text-gray-600 dark:text-gray-400 text-xs">Cantidad: {{
+								dashboardData.ultimo_bien_registrado?.cantidad || 'N/A' }}</label>
 						</div>
 					</div>
-
-					<div
-						class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4 hover:shadow-lg transition-shadow duration-300">
-						<div class="flex items-center justify-between mb-4">
-							<h2 class="text-gray-600 dark:text-gray-400 text-sm">Última transferencia</h2>
-							<a href="#" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300">
-								<img src="/icons/consulta.png" alt="More" class="w-4 h-4">
-							</a>
+					<div class="bg-gray-50  dark:bg-dark-bg rounded-lg shadow-md dark:shadow-stone-950 p-4">
+						<div class="flex items-center justify-between mb-2">
+							<h5 class="font-medium text-sm text-gray-500 dark:text-gray-400">Última transferencia</h5>
 						</div>
-						<div class="space-y-2">
-							<a href="#" class="flex items-center text-blue-600 dark:text-blue-400 hover:underline">
-								<img src="/icons/enviar.png" alt="Enviar" class="w-4 h-4">
-								<h2 class="ml-3 font-semibold">{{ dashboardData.ultima_transferencia.bien_nombre }}</h2>
-							</a>
-							<label class="text-gray-600 dark:text-gray-400 text-xs">Realizada por: {{
-								dashboardData.ultima_transferencia.realizada_por }}</label>
+						<div v-if="dashboardData.ultima_transferencia">
+							<p class="text-xl font-bold text-gray-900 dark:text-white truncate">
+								{{ dashboardData.ultima_transferencia.bien?.bien_nombre }}
+							</p>
+							<p class="text-sm text-gray-600 dark:text-gray-400">
+								Realizada por: {{ dashboardData.ultima_transferencia.usuario_origen?.usuario_nombre ||
+									'N/A' }}
+							</p>
+						</div>
+						<div v-else>
+							<p class="text-xl font-bold text-gray-900 dark:text-white">N/A</p>
+							<p class="text-sm text-gray-600 dark:text-gray-400">No hay transferencias recientes.</p>
 						</div>
 					</div>
 				</div>
-
-				<div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4">
+				<div class="bg-white dark:bg-dark-bg rounded-lg shadow-md dark:shadow-stone-950  p-4">
 					<div class="flex items-center justify-between mb-4">
 						<h2 class="text-gray-600 dark:text-gray-400 text-sm font-semibold">Últimos movimientos</h2>
-						<a href="#" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300">
-							<img src="/icons/consulta.png" alt="More" class="w-4 h-4">
-						</a>
 					</div>
 					<div class="overflow-x-auto">
 						<table class="w-full text-sm">
@@ -101,7 +71,8 @@
 										Resguardante responsable</th>
 									<th class="text-left py-3 px-2 font-semibold text-gray-900 dark:text-white">Bien
 										involucrado</th>
-									<th class="text-left py-3 px-2 font-semibold text-gray-900 dark:text-white">Departamento
+									<th class="text-left py-3 px-2 font-semibold text-gray-900 dark:text-white">
+										Departamento
 									</th>
 								</tr>
 							</thead>
@@ -130,12 +101,9 @@
 
 			<div class="lg:col-span-1 space-y-6">
 
-				<div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4">
+				<div class="bg-white dark:bg-dark-bg rounded-lg shadow-md dark:shadow-stone-950 p-4">
 					<div class="flex items-center justify-between mb-4">
 						<label class="text-gray-600 dark:text-gray-400 text-sm">Centro de trabajo</label>
-						<a href="#" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300">
-							<img src="/icons/consulta.png" alt="More" class="w-4 h-4">
-						</a>
 					</div>
 					<h5 class="font-bold text-base mb-4 text-gray-800 dark:text-white">Instituto Tecnológico de Chetumal
 					</h5>
@@ -179,62 +147,63 @@
 					</div>
 				</div>
 
-				<div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-1 border-l-4 border-red-500">
-					<div class="flex items-center justify-between mb-4">
-						<label class="text-gray-600 dark:text-gray-400 text-sm">Notificaciones</label>
-						<a href="#" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300">
-							<img src="/icons/consulta.png" alt="More" class="w-4 h-4">
-						</a>
+				<div
+					class=" bg-gray-50 dark:bg-dark-bg rounded-lg shadow-md dark:shadow-stone-950 p-4 border-l-4 border-red-600 dark:border-red-500">
+					<div class="flex items-center justify-between mb-2">
+						<h5 class="font-medium text-sm text-gray-500 dark:text-gray-400">Notificaciones</h5>
 					</div>
 
-					<div v-if="dashboardData.notificaciones.length === 0" class="p-6 text-center">
-						<p class="text-gray-500 dark:text-gray-400 text-sm">No hay notificaciones pendientes.</p>
-					</div>
-
-					<div v-else v-for="notif in dashboardData.notificaciones" :key="notif.id_traspaso"
-						class="p-4 border-b border-gray-200 dark:border-gray-700 last:border-b-0">
+					<div v-if="dashboardData.notificaciones">
 						<h5 class="font-bold text-base mb-4 text-gray-800 dark:text-white">Solicitudes de transferencia
 						</h5>
 						<div class="space-y-2 mb-4">
 							<h3 class="text-orange-600 dark:text-orange-400 font-semibold">Autorización requerida</h3>
+
 							<h3 class="text-gray-600 dark:text-gray-400 text-sm">Transferencia de bien:
 								<a href="#" class="text-blue-600 dark:text-blue-400 hover:underline">{{
-									notif.bien_nombre }}</a>
+									dashboardData.notificaciones.bien?.bien_nombre }}</a>
 							</h3>
 							<h3 class="text-gray-600 dark:text-gray-400 text-sm">Emisor:
-								<a href="#" class="text-blue-600 dark:text-blue-400 hover:underline">{{ notif.emisor
+								<a href="#" class="text-blue-600 dark:text-blue-400 hover:underline">{{
+									dashboardData.notificaciones.usuario_origen?.usuario_nombre
 								}}</a>
 							</h3>
 							<h3 class="text-gray-600 dark:text-gray-400 text-sm">Receptor:
-								<a href="#" class="text-blue-600 dark:text-blue-400 hover:underline">{{ notif.receptor
+								<a href="#" class="text-blue-600 dark:text-blue-400 hover:underline">{{
+									dashboardData.notificaciones.usuario_destino?.usuario_nombre
 								}}</a>
 							</h3>
 						</div>
 						<div class="flex gap-2 mt-4">
-							<button @click="handleAutorizar(notif.id_traspaso)" :disabled="isSubmitting"
+							<button @click="handleAutorizar(dashboardData.notificaciones.id)" :disabled="isSubmitting"
 								class="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg transition-colors disabled:opacity-50">
 								Autorizar
 							</button>
-							<button @click="handleDenegar(notif.id_traspaso)" :disabled="isSubmitting"
+							<button @click="handleDenegar(dashboardData.notificaciones.id)" :disabled="isSubmitting"
 								class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition-colors disabled:opacity-50">
 								Denegar
 							</button>
 						</div>
 					</div>
+
+					<div v-else>
+						<p class="text-gray-900 dark:text-white">Todo al día</p>
+						<p class="text-sm text-gray-600 dark:text-gray-400">No hay notificaciones pendientes.</p>
+					</div>
 				</div>
 
 				<div v-if="showAuthModal"
 					class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-					<div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg max-w-md w-full">
+					<div class="bg-white dark:bg-dark-bg rounded-lg shadow-lg max-w-md w-full">
 						<div
 							class="flex items-center justify-between border-b border-gray-300 dark:border-gray-600 p-4">
-							<h2 class="text-lg font-semibold text-green-600">Solicitud Autorizada</h2>
+							<h2 class="text-lg font-semibold text-green-600">Solicitud Aprobada</h2>
 							<button @click="showAuthModal = false"
 								class="text-gray-400 hover:text-gray-600">&times;</button>
 						</div>
 						<div class="p-8 flex flex-col items-center justify-center">
 							<img src="/icons/lista-de-verificacion.png" alt="Check" class="w-24 h-24 mb-4">
-							<h1 class="text-gray-600 dark:text-gray-400 text-base text-center">Se ha autorizado la
+							<h1 class="text-gray-600 dark:text-gray-400 text-base text-center">Se ha aprobado la
 								transferencia.</h1>
 						</div>
 						<div class="border-t border-gray-300 dark:border-gray-600 p-4">
@@ -246,16 +215,16 @@
 
 				<div v-if="showDenyModal"
 					class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-					<div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg max-w-md w-full">
+					<div class="bg-white dark:bg-dark-bg rounded-lg shadow-lg max-w-md w-full">
 						<div
 							class="flex items-center justify-between border-b border-gray-300 dark:border-gray-600 p-4">
-							<h2 class="text-lg font-semibold text-red-600">Solicitud Denegada</h2>
+							<h2 class="text-lg font-semibold text-red-600">Solicitud Rechazada</h2>
 							<button @click="showDenyModal = false"
 								class="text-gray-400 hover:text-gray-600">&times;</button>
 						</div>
 						<div class="p-8 flex flex-col items-center justify-center">
 							<img src="/icons/prohibido.png" alt="Denied" class="w-24 h-24 mb-4">
-							<h1 class="text-gray-600 dark:text-gray-400 text-base text-center">Se ha negado la
+							<h1 class="text-gray-600 dark:text-gray-400 text-base text-center">Se ha rechazado la
 								transferencia.</h1>
 						</div>
 						<div class="border-t border-gray-300 dark:border-gray-600 p-4">
@@ -264,26 +233,69 @@
 						</div>
 					</div>
 				</div>
+			</div>
+		</div>
+	</div>
+	<div v-if="showAuthModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
 
+		<div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg max-w-sm w-full">
+
+			<div class="flex items-center justify-between border-b border-gray-300 dark:border-gray-600 p-6">
+				<h2 class="text-lg font-bold text-gray-900 dark:text-white">Notificación</h2>
+				<button @click="closeAuthModal" class="text-gray-400 hover:text-gray-600 text-2xl">&times;</button>
+			</div>
+
+			<div class="p-6">
+				<p class="text-gray-700 dark:text-gray-300 text-base">
+					El traspaso ha sido autorizado.
+				</p>
+			</div>
+
+			<div class="flex gap-2 justify-end border-t border-gray-300 dark:border-gray-600 p-6">
+				<button @click="closeAuthModal"
+					class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors font-medium">
+					Aceptar
+				</button>
+			</div>
+		</div>
+	</div>
+
+	<div v-if="showDenyModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+
+		<div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg max-w-sm w-full">
+
+			<div class="flex items-center justify-between border-b border-gray-300 dark:border-gray-600 p-6">
+				<h2 class="text-lg font-bold text-gray-900 dark:text-white">Notificación</h2>
+				<button @click="closeDenyModal" class="text-gray-400 hover:text-gray-600 text-2xl">&times;</button>
+			</div>
+
+			<div class="p-6">
+				<p class="text-gray-700 dark:text-gray-300 text-base">
+					El traspaso ha sido denegado.
+				</p>
+			</div>
+
+			<div class="flex gap-2 justify-end border-t border-gray-300 dark:border-gray-600 p-6">
+				<button @click="closeDenyModal"
+					class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors font-medium">
+					Aceptar
+				</button>
 			</div>
 		</div>
 	</div>
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
-// ❗️ REVISA LA RUTA ❗️
-// Esta ruta (../../../config/api) puede estar incorrecta. 
-// Asegúrate de que apunte a tu archivo api.js
+import { ref, onMounted, onUnmounted } from 'vue'
 import { authenticatedFetch } from '../../../config/api'
 
 // --- Estado Reactivo ---
 const dashboardData = ref(null)
 const isLoading = ref(true)
 const error = ref(null)
-const showAuthModal = ref(false)
-const showDenyModal = ref(false)
-const isSubmitting = ref(false) // Para deshabilitar botones mientras se envía
+const showAuthModal = ref(false); // Variable para el modal "Autorizado"
+const showDenyModal = ref(false); // Variable para el modal "Denegado"
+const isSubmitting = ref(false)   // (Ya lo tenías)
 
 // --- Lógica (Métodos) ---
 const fetchDashboardData = async () => {
@@ -304,65 +316,118 @@ const fetchDashboardData = async () => {
 	}
 }
 
-// --- Lógica para los botones de notificación ---
+// --- FUNCIONES AÑADIDAS (PARA LOS BOTONES Y MODAL) ---
 
-const handleAutorizar = async (id) => {
-	if (isSubmitting.value) return; // Evitar doble click
+/**
+ * Función genérica para enviar la decisión (PUT) a la API.
+ */
+const handleDecision = async (id, nuevoEstado) => {
 	isSubmitting.value = true;
+	error.value = null; // Limpia errores generales
 
 	try {
-		// ❗️ Asumo que tu ruta es así, ajústala si es necesario
-		const response = await authenticatedFetch(`/transferencias/${id}/autorizar`, {
-			method: 'POST'
+		// Asumo la ruta de tu API para actualizar el estado
+		const response = await authenticatedFetch(`/traspasos/${id}`, {
+			method: 'PUT',
+			body: JSON.stringify({ estado: nuevoEstado })
 		});
 
 		if (!response.ok) {
-			// Intentar leer el error del body
-			const errData = await response.json();
-			throw new Error(errData.message || 'Falló la autorización');
+			const errData = await response.json().catch(() => ({}));
+			throw new Error(errData.message || `No se pudo ${nuevoEstado.toLowerCase()} la solicitud.`);
 		}
 
-		// Éxito:
-		showAuthModal.value = true // Mostrar modal de éxito
-		await fetchDashboardData() // Recargar los datos del dashboard (para que desaparezca la notif)
+		// ¡Éxito!
+		// Asigna el mensaje y muestra el modal
+		// ¡ÉXITO!
+		if (nuevoEstado === 'Aprobado') {
+			showAuthModal.value = true; // <-- Muestra el modal de autorización
+		} else {
+			showDenyModal.value = true; // <-- Muestra el modal de denegación
+		}
+
 
 	} catch (err) {
-		console.error('Error al autorizar:', err);
-		alert(err.message || 'Un error ocurrió. Intente de nuevo.'); // Mostrar error
+		console.error('Error al actualizar estado:', err);
+		error.value = err.message; // Muestra el error en el widget
 	} finally {
 		isSubmitting.value = false;
 	}
 }
 
-const handleDenegar = async (id) => {
-	if (isSubmitting.value) return;
-	isSubmitting.value = true;
-
-	try {
-		// ❗️ Asumo que tu ruta es así, ajústala si es necesario
-		const response = await authenticatedFetch(`/transferencias/${id}/denegar`, {
-			method: 'POST'
-		});
-
-		if (!response.ok) {
-			const errData = await response.json();
-			throw new Error(errData.message || 'Falló la denegación');
-		}
-
-		// Éxito:
-		showDenyModal.value = true // Mostrar modal de éxito
-		await fetchDashboardData() // Recargar los datos
-
-	} catch (err) {
-		console.error('Error al denegar:', err);
-		alert(err.message || 'Un error ocurrió. Intente de nuevo.');
-	} finally {
-		isSubmitting.value = false;
-	}
+/**
+ * Función para el botón "Autorizar"
+ */
+const handleAutorizar = (id) => {
+	handleDecision(id, 'Aprobado');
 }
 
-// --- Hook de Ciclo de Vida ---
+/**
+ * Función para el botón "Denegar"
+ */
+const handleDenegar = (id) => {
+	handleDecision(id, 'Rechazado');
+}
+
+/**
+ * Cierra el modal de notificación de éxito.
+ */
+const closeAuthModal = () => {
+	showAuthModal.value = false;
+}
+
+const closeDenyModal = () => {
+	showDenyModal.value = false;
+}
+
+// --- LISTENERS DE WEBSOCKET (Ya los tenías) ---
+// (Definidos aquí para que onMounted y onUnmounted puedan acceder a ellos)
+
+const handleGeneralSolicitudCreada = (eventData) => {
+	console.log('Dashboard: ¡Evento "solicitud.creada" recibido!', eventData);
+
+	const formattedNotification = {
+		id: eventData.id,
+		traspaso_estado: eventData.estado,
+		bien: {
+			bien_nombre: eventData.bien_nombre
+		},
+		usuario_origen: {
+			usuario_nombre: eventData.emisor
+		},
+		usuario_destino: {
+			usuario_nombre: eventData.receptor
+		}
+	};
+	dashboardData.value.notificaciones = formattedNotification;
+};
+
+const handleGeneralSolicitudActualizada = (eventData) => {
+	console.log('Dashboard: ¡Evento "solicitud.actualizada" recibido!', eventData);
+	if (dashboardData.value.notificaciones && eventData.id === dashboardData.value.notificaciones.id) {
+		dashboardData.value.notificaciones = null;
+	}
+};
+
+
+// --- HOOKS DE CICLO DE VIDA (CORREGIDOS) ---
+
 onMounted(() => {
 	fetchDashboardData()
+	const channel = window.Echo.channel('solicitudes');
+	console.log("ENTRANDO AL CANAL EN VISTA GENERAL")
+
+	channel.listen('.solicitud.creada', handleGeneralSolicitudCreada);
+	channel.listen('.solicitud.actualizada', handleGeneralSolicitudActualizada);
+})
+
+onUnmounted(() => {
+	const channel = window.Echo.channel('solicitudes');
+
+	// Esto ahora funcionará porque onMounted usa las mismas funciones.
+	channel.stopListening('.solicitud.creada', handleGeneralSolicitudCreada);
+	channel.stopListening('.solicitud.actualizada', handleGeneralSolicitudActualizada);
+
+	console.log('SALIENDO DEL CANAL EN VISTA GENERAL');
 })
 </script>

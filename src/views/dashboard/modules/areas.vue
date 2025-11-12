@@ -14,24 +14,30 @@
 
 	<div v-else class="space-y-6">
 		<div class="flex justify-between items-center">
-			<label class="text-sm md:text-base text-gray-600 dark:text-gray-400">Control de ��reas</label>
-			<label class="text-sm md:text-base text-gray-600 dark:text-gray-400">Instituto Tecnológico de Chetumal</label>
+			<label class="text-sm md:text-base text-gray-600 dark:text-gray-400">Control de Áreas</label>
+			<label class="text-sm md:text-base text-gray-600 dark:text-gray-400">Instituto Tecnológico de
+				Chetumal</label>
 		</div>
 
-		<div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4 space-y-4">
+		<div class="bg-white dark:bg-dark-bg rounded-lg shadow-md dark:shadow-stone-950  p-4 space-y-4">
 			<div class="flex flex-col md:flex-row gap-4 items-end">
 				<div class="flex-1">
-					<label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Buscar por nombre o código</label>
-					<input v-model="searchQuery" type="text" placeholder="Escribe para buscar..." class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+					<label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Buscar por nombre o
+						código</label>
+					<input v-model="searchQuery" type="text" placeholder="Escribe para buscar..."
+						class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
 				</div>
-				<button @click="openNewAreaModal" class="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition-colors font-medium whitespace-nowrap">
+				<button @click="openNewAreaModal"
+					class="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition-colors font-medium whitespace-nowrap">
 					Nueva Área
 				</button>
 			</div>
 			<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
 				<div>
-					<label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Filtrar por Responsable</label>
-					<select v-model="filterResponsable" class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+					<label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Filtrar por
+						Responsable</label>
+					<select v-model="filterResponsable"
+						class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
 						<option value="">Todos los responsables</option>
 						<option v-for="responsable in resguardantes" :key="responsable.id" :value="responsable.id">
 							{{ responsable.res_nombre }}
@@ -39,8 +45,10 @@
 					</select>
 				</div>
 				<div>
-					<label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Filtrar por Edificio</label>
-					<select v-model="filterEdificio" class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+					<label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Filtrar por
+						Edificio</label>
+					<select v-model="filterEdificio"
+						class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
 						<option value="">Todos los edificios</option>
 						<option v-for="building in buildings" :key="building.id" :value="building.id">
 							{{ building.nombre }}
@@ -52,12 +60,15 @@
 
 		<!-- TARJETAS DE ÁREAS -->
 		<div v-if="filteredAreas.length > 0" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-			<div v-for="area in filteredAreas" :key="area.id" class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4 hover:shadow-lg transition-shadow duration-300">
+			<div v-for="area in filteredAreas" :key="area.id"
+				class="bg-white dark:bg-dark-bg rounded-lg shadow-md dark:shadow-stone-950 p-4 hover:shadow-lg transition-shadow duration-300">
 				<div class="flex gap-4 mb-4">
 					<div class="flex-shrink-0">
-						<div :class="['flex items-center justify-center h-12 w-12 rounded-lg', area.iconBg || 'bg-gray-100', area.iconColor || 'text-gray-600']">
+						<div
+							:class="['flex items-center justify-center h-12 w-12 rounded-lg', area.iconBg || 'bg-gray-100', area.iconColor || 'text-gray-600']">
 							<svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"></path>
+								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+									d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"></path>
 							</svg>
 						</div>
 					</div>
@@ -67,36 +78,44 @@
 					</div>
 				</div>
 				<div class="space-y-1 mb-4 text-sm">
-					<p class="text-gray-600 dark:text-gray-400">Responsable: {{ area.responsable && area.responsable.res_nombre ? area.responsable.res_nombre : 'No asignado' }}</p>
-					<p class="text-gray-600 dark:text-gray-400">Edificio: {{ area.edificio && area.edificio.nombre ? area.edificio.nombre : 'No asignado' }}</p>
+					<p class="text-gray-600 dark:text-gray-400">Responsable: {{ area.responsable &&
+						area.responsable.res_nombre ? area.responsable.res_nombre : 'No asignado' }}</p>
+					<p class="text-gray-600 dark:text-gray-400">Edificio: {{ area.edificio && area.edificio.nombre ?
+						area.edificio.nombre : 'No asignado' }}</p>
 				</div>
 				<div class="flex gap-2">
-					<button @click="editArea(area)" class="flex-1 px-3 py-2 bg-blue-500 hover:bg-blue-700 text-white rounded transition-colors text-sm font-medium">Editar</button>
-					<button @click="openDeleteConfirm(area)" class="flex-1 px-3 py-1 bg-red-600 hover:bg-red-700 text-white rounded-md text-xs font-medium transition-colors">
+					<button @click="editArea(area)"
+						class="flex-1 px-3 py-2 bg-blue-500 hover:bg-blue-700 text-white rounded transition-colors text-sm font-medium">Editar</button>
+					<button @click="openDeleteConfirm(area)"
+						class="flex-1 px-3 py-1 bg-red-600 hover:bg-red-700 text-white rounded-md text-xs font-medium transition-colors">
 						Eliminar
 					</button>
 				</div>
 			</div>
 		</div>
 
-		<div v-else class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 text-center">
+		<div v-else class="bg-white dark:bg-dark-bg rounded-lg shadow-md dark:shadow-stone-950 p-6 text-center">
 			<h3 class="text-lg font-medium text-gray-900 dark:text-white">No existen registros</h3>
-			<p class="text-gray-600 dark:text-gray-400" v-if="areas.length === 0">Aún no se ha registrado ninguna área. Haz clic en "Nueva Área" para comenzar.</p>
+			<p class="text-gray-600 dark:text-gray-400" v-if="areas.length === 0">Aún no se ha registrado ninguna área.
+				Haz clic en "Nueva Área" para comenzar.</p>
 			<p class="text-gray-600 dark:text-gray-400" v-else>No hay áreas que coincidan con tu búsqueda o filtros.</p>
 		</div>
 
 		<!-- TABLA DE DEPARTAMENTOS -->
-		<div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+		<div class="bg-white dark:bg-dark-bg rounded-lg shadow-md dark:shadow-stone-950 p-6">
 			<div class="flex justify-between items-center mb-4">
 				<h2 class="text-xl font-bold text-gray-900 dark:text-white">Departamentos</h2>
-				<button @click="openNewDepartmentModal" class="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition-colors font-medium text-sm">
+				<button @click="openNewDepartmentModal"
+					class="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition-colors font-medium text-sm">
 					Nuevo Departamento
 				</button>
 			</div>
 
 			<div class="mb-4">
-				<label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Buscar departamento</label>
-				<input v-model="searchDepartment" type="text" placeholder="Escribe para buscar..." class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+				<label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Buscar
+					departamento</label>
+				<input v-model="searchDepartment" type="text" placeholder="Escribe para buscar..."
+					class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
 			</div>
 
 			<div class="overflow-x-auto">
@@ -104,6 +123,7 @@
 					<thead class="bg-gray-100 dark:bg-gray-700">
 						<tr>
 							<th class="px-4 py-3 text-left font-semibold text-gray-900 dark:text-white">Nombre</th>
+							<th class="px-4 py-3 text-left font-semibold text-gray-900 dark:text-white">Código</th>
 							<th class="px-4 py-3 text-left font-semibold text-gray-900 dark:text-white">Responsable</th>
 							<th class="px-4 py-3 text-left font-semibold text-gray-900 dark:text-white">Área</th>
 							<th class="px-4 py-3 text-left font-semibold text-gray-900 dark:text-white">Correo</th>
@@ -111,28 +131,42 @@
 						</tr>
 					</thead>
 					<tbody class="divide-y divide-gray-200 dark:divide-gray-600">
-						<tr v-for="dept in filteredDepartments" :key="dept.id" class="hover:bg-gray-50 dark:hover:bg-gray-700">
+						<tr v-for="dept in filteredDepartments" :key="dept.id"
+							class="hover:bg-gray-50 dark:hover:bg-gray-700">
 							<td class="px-4 py-3 text-gray-600 dark:text-gray-400">
 								<div class="font-medium text-gray-900 dark:text-white">{{ dept.dep_nombre }}</div>
 							</td>
-							<td class="px-4 py-3 text-gray-600 dark:text-gray-400">{{ dept.dep_resposable || 'Sin asignación' }}</td>
+							<td class="px-4 py-3 text-gray-600 dark:text-gray-400">
+								{{ dept.dep_codigo || 'N/A' }}
+							</td>
+							<td class="px-4 py-3 text-gray-600 dark:text-gray-400">{{ dept.dep_resposable ||
+								'Sin asignación' }}</td>
 							<td class="px-6 py-4 text-gray-600 dark:text-gray-400">{{ getAreaName(dept.id_area) }}</td>
-							<td class="px-4 py-3 text-gray-600 dark:text-gray-400">{{ dept.dep_correo_institucional || 'Sin asignación' }}</td>
+							<td class="px-4 py-3 text-gray-600 dark:text-gray-400">{{ dept.dep_correo_institucional ||
+								'Sin asignación' }}</td>
 							<td class="px-4 py-3 flex gap-2 justify-end">
-								<button @click="openEditDepartmentModal(dept)" class="p-2 bg-blue-600 hover:bg-blue-700 text-white rounded transition-colors" title="Editar">
+								<button @click="openEditDepartmentModal(dept)"
+									class="p-2 bg-blue-600 hover:bg-blue-700 text-white rounded transition-colors"
+									title="Editar">
 									<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-										<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+										<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+											d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z">
+										</path>
 									</svg>
 								</button>
-								<button @click="openDeleteDepartmentModal(dept)" class="p-2 bg-red-600 hover:bg-red-700 text-white rounded transition-colors" title="Eliminar">
+								<button @click="openDeleteDepartmentModal(dept)"
+									class="p-2 bg-red-600 hover:bg-red-700 text-white rounded transition-colors"
+									title="Eliminar">
 									<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-										<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+										<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+											d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16">
+										</path>
 									</svg>
 								</button>
 							</td>
 						</tr>
 						<tr v-if="filteredDepartments.length === 0">
-							<td colspan="5" class="px-4 py-6 text-center text-gray-500 dark:text-gray-400">
+							<td colspan="6" class="px-4 py-6 text-center text-gray-500 dark:text-gray-400">
 								No existen registros
 							</td>
 						</tr>
@@ -142,17 +176,19 @@
 		</div>
 
 		<!-- TABLA DE EDIFICIOS -->
-		<div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+		<div class="bg-white dark:bg-dark-bg rounded-lg shadow-md dark:shadow-stone-950 p-6">
 			<div class="flex justify-between items-center mb-4">
 				<h2 class="text-xl font-bold text-gray-900 dark:text-white">Edificios</h2>
-				<button @click="openNewBuildingModal" class="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition-colors font-medium text-sm">
+				<button @click="openNewBuildingModal"
+					class="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition-colors font-medium text-sm">
 					Nuevo Edificio
 				</button>
 			</div>
 
 			<div class="mb-4">
 				<label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Buscar edificio</label>
-				<input v-model="searchBuilding" type="text" placeholder="Escribe para buscar..." class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+				<input v-model="searchBuilding" type="text" placeholder="Escribe para buscar..."
+					class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
 			</div>
 
 			<div class="overflow-x-auto">
@@ -164,19 +200,28 @@
 						</tr>
 					</thead>
 					<tbody class="divide-y divide-gray-200 dark:divide-gray-600">
-						<tr v-for="building in filteredBuildings" :key="building.id" class="hover:bg-gray-50 dark:hover:bg-gray-700">
+						<tr v-for="building in filteredBuildings" :key="building.id"
+							class="hover:bg-gray-50 dark:hover:bg-gray-700">
 							<td class="px-4 py-3 text-gray-600 dark:text-gray-400">
 								<div class="font-medium text-gray-900 dark:text-white">{{ building.nombre }}</div>
 							</td>
 							<td class="px-4 py-3 flex gap-2 justify-end">
-								<button @click="openEditBuildingModal(building)" class="p-2 bg-blue-600 hover:bg-blue-700 text-white rounded transition-colors" title="Editar">
+								<button @click="openEditBuildingModal(building)"
+									class="p-2 bg-blue-600 hover:bg-blue-700 text-white rounded transition-colors"
+									title="Editar">
 									<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-										<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+										<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+											d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z">
+										</path>
 									</svg>
 								</button>
-								<button @click="openDeleteBuildingModal(building)" class="p-2 bg-red-600 hover:bg-red-700 text-white rounded transition-colors" title="Eliminar">
+								<button @click="openDeleteBuildingModal(building)"
+									class="p-2 bg-red-600 hover:bg-red-700 text-white rounded transition-colors"
+									title="Eliminar">
 									<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-										<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+										<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+											d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16">
+										</path>
 									</svg>
 								</button>
 							</td>
@@ -193,70 +238,87 @@
 		</div>
 
 		<!-- TABLA DE OFICINAS -->
-		<div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+		<div class="bg-white dark:bg-dark-bg rounded-lg shadow-md dark:shadow-stone-950  p-6">
 			<div class="flex justify-between items-center mb-4">
 				<h2 class="text-xl font-bold text-gray-900 dark:text-white">Oficinas</h2>
-				<button @click="openNewOficinaModal" class="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition-colors font-medium text-sm">
+				<button @click="openNewOficinaModal"
+					class="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition-colors font-medium text-sm">
 					Nueva Oficina
 				</button>
 			</div>
 			<div class="mb-4">
 				<label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Buscar oficina</label>
-				<input v-model="searchOficina" type="text" placeholder="Escribe para buscar..." class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+				<input v-model="searchOficina" type="text" placeholder="Escribe para buscar..."
+					class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
 			</div>
 			<div class="overflow-x-auto">
 				<table class="w-full text-sm">
 					<thead class="bg-gray-100 dark:bg-gray-700">
 						<tr>
 							<th class="px-4 py-3 text-left font-semibold text-gray-900 dark:text-white">Oficina</th>
+							<th class="px-4 py-3 text-left font-semibold text-gray-900 dark:text-white">Código</th>
 							<th class="px-4 py-3 text-left font-semibold text-gray-900 dark:text-white">Edificio</th>
+							<th class="px-4 py-3 text-left font-semibold text-gray-900 dark:text-white">Departamento
+							</th>
 							<th class="px-4 py-3 text-left font-semibold text-gray-900 dark:text-white">Referencia</th>
 							<th class="px-4 py-3 text-right font-semibold text-gray-900 dark:text-white">Acciones</th>
 						</tr>
 					</thead>
 					<tbody class="divide-y divide-gray-200 dark:divide-gray-600">
-
 						<tr v-if="isLoading">
 							<td colspan="4" class="px-4 py-6 text-center text-gray-500 dark:text-gray-400">
 								Cargando oficinas...
 							</td>
 						</tr>
-
 						<tr v-else-if="fetchOficinasError">
 							<td colspan="4" class="px-4 py-6 text-center text-red-500">
 								Error al cargar oficinas: {{ fetchOficinasError.message }}
 							</td>
 						</tr>
-
-						<tr v-else-if="filteredOficinas.length > 0" v-for="oficina in filteredOficinas" :key="oficina.id" class="hover:bg-gray-50 dark:hover:bg-gray-700">
-
+						<tr v-else-if="filteredOficinas.length > 0" v-for="oficina in filteredOficinas"
+							:key="oficina.id" class="hover:bg-gray-50 dark:hover:bg-gray-700">
 							<td class="px-4 py-3 text-gray-600 dark:text-gray-400">
 								<div class="font-medium text-gray-900 dark:text-white">
 									{{ oficina.nombre }}
 								</div>
 							</td>
 							<td class="px-4 py-3 text-gray-600 dark:text-gray-400">
+								{{ oficina.ofi_codigo || 'N/A' }}
+							</td>
+							<td class="px-4 py-3 text-gray-600 dark:text-gray-400">
 								{{ getBuildingName(oficina.id_edificio) }}
+							</td>
+							<td class="px-4 py-3 text-gray-600 dark:text-gray-400">
+								{{ getDepartmentName(oficina.id_departamento) }}
 							</td>
 							<td class="px-4 py-3 text-gray-600 dark:text-gray-400">
 								{{ oficina.referencia || 'Sin referencia' }}
 							</td>
+
 							<td class="px-4 py-3 flex gap-2 justify-end">
-								<button @click="openEditOficinaModal(oficina)" class="p-2 bg-blue-600 hover:bg-blue-700 text-white rounded transition-colors" title="Editar">
+								<button @click="openEditOficinaModal(oficina)"
+									class="p-2 bg-blue-600 hover:bg-blue-700 text-white rounded transition-colors"
+									title="Editar">
 									<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-										<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+										<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+											d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z">
+										</path>
 									</svg>
 								</button>
-								<button @click="openDeleteOficinaModal(oficina)" class="p-2 bg-red-600 hover:bg-red-700 text-white rounded transition-colors" title="Eliminar">
+								<button @click="openDeleteOficinaModal(oficina)"
+									class="p-2 bg-red-600 hover:bg-red-700 text-white rounded transition-colors"
+									title="Eliminar">
 									<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-										<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+										<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+											d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16">
+										</path>
 									</svg>
 								</button>
 							</td>
 						</tr>
 
 						<tr v-else-if="!isLoading && !fetchOficinasError">
-							<td colspan="4" class="px-4 py-6 text-center text-gray-500 dark:text-gray-400">
+							<td colspan="6" class="px-4 py-6 text-center text-gray-500 dark:text-gray-400">
 								No existen registros
 							</td>
 						</tr>
@@ -266,28 +328,42 @@
 		</div>
 
 		<!-- Modal de nuevo Departamento -->
-		<div v-if="showNewDepartmentModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-			<div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg max-w-md w-full max-h-[90vh] overflow-y-auto">
+		<div v-if="showNewDepartmentModal"
+			class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+			<div class="bg-white dark:bg-dark-bg rounded-lg shadow-lg max-w-md w-full max-h-[90vh] overflow-y-auto">
 
 				<div class="flex items-center justify-between border-b border-gray-300 dark:border-gray-600 p-6">
 					<h2 class="text-lg font-bold text-gray-900 dark:text-white">Nuevo Departamento</h2>
-					<button @click="showNewDepartmentModal = false" class="text-gray-400 hover:text-gray-600 text-2xl">&times;</button>
+					<button @click="showNewDepartmentModal = false"
+						class="text-gray-400 hover:text-gray-600 text-2xl">&times;</button>
 				</div>
 
-				<div v-if="newDepartmentError" class="bg-red-700 text-white px-6 py-4 border-b border-red-900 flex justify-between items-center" role="alert">
+				<div v-if="newDepartmentError"
+					class="bg-red-700 text-white px-6 py-4 border-b border-red-900 flex justify-between items-center"
+					role="alert">
 					<span class="font-medium text-sm">{{ newDepartmentError }}</span>
-					<button @click="newDepartmentError = null" class="font-bold text-2xl text-white opacity-70 hover:opacity-100 leading-none">&times;</button>
+					<button @click="newDepartmentError = null"
+						class="font-bold text-2xl text-white opacity-70 hover:opacity-100 leading-none">&times;</button>
 				</div>
 
 				<div class="p-6 space-y-4">
 					<div>
 						<label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Nombre</label>
-						<input v-model="newDepartmentData.name" type="text" placeholder="Nombre del departamento" class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+						<input v-model="newDepartmentData.name" type="text" placeholder="Nombre del departamento"
+							class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
 					</div>
 					<div>
-						<label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Responsable</label>
+						<label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Código del
+							Departamento</label>
+						<input v-model="newDepartmentData.codigo" type="text" placeholder="Ej. 001"
+							class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+					</div>
+					<div>
+						<label
+							class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Responsable</label>
 
-						<select v-model="newDepartmentData.responsable" class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+						<select v-model="newDepartmentData.responsable"
+							class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
 
 							<option :value="null">Seleccionar un responsable</option>
 
@@ -299,14 +375,17 @@
 						</select>
 					</div>
 					<div>
-						<label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Correo Institucional</label>
-						<input v-model="newDepartmentData.correo" type="email" placeholder="correo@institucion.com" class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+						<label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Correo
+							Institucional</label>
+						<input v-model="newDepartmentData.correo" type="email" placeholder="correo@institucion.com"
+							class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
 					</div>
 					<div>
 						<label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
 							Área a la que pertenece
 						</label>
-						<select v-model="newDepartmentData.id_area" class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+						<select v-model="newDepartmentData.id_area"
+							class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
 
 							<option :value="null">Seleccionar un área</option>
 
@@ -322,9 +401,11 @@
 				</div>
 
 				<div class="flex gap-2 justify-end border-t border-gray-300 dark:border-gray-600 p-6">
-					<button @click="showNewDepartmentModal = false" class="px-4 py-2 bg-gray-300 dark:bg-gray-600 text-gray-900 dark:text-white rounded-lg hover:bg-gray-400 dark:hover:bg-gray-500 transition-colors">Cancelar</button>
+					<button @click="showNewDepartmentModal = false"
+						class="px-4 py-2 bg-gray-300 dark:bg-gray-600 text-gray-900 dark:text-white rounded-lg hover:bg-gray-400 dark:hover:bg-gray-500 transition-colors">Cancelar</button>
 
-					<button @click="saveNewDepartment" :disabled="isSubmitting" class="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition-colors font-medium disabled:opacity-50">
+					<button @click="saveNewDepartment" :disabled="isSubmitting"
+						class="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition-colors font-medium disabled:opacity-50">
 						{{ isSubmitting ? 'Guardando...' : 'Guardar' }}
 					</button>
 				</div>
@@ -332,29 +413,44 @@
 		</div>
 
 		<!-- Modal de editar Departamento -->
-		<div v-if="showEditDepartmentModal && editingDepartment" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-			<div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg max-w-md w-full">
+		<div v-if="showEditDepartmentModal && editingDepartment"
+			class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+			<div class="bg-white dark:bg-dark-bg rounded-lg shadow-lg max-w-md w-full">
 
 				<div class="flex items-center justify-between border-b border-gray-300 dark:border-gray-600 p-6">
 					<h2 class="text-lg font-bold text-gray-900 dark:text-white">Editar Departamento</h2>
-					<button @click="showEditDepartmentModal = false" class="text-gray-400 hover:text-gray-600 text-2xl">&times;</button>
+					<button @click="showEditDepartmentModal = false"
+						class="text-gray-400 hover:text-gray-600 text-2xl">&times;</button>
 				</div>
 
-				<div v-if="editDepartmentError" class="bg-red-700 text-white px-6 py-4 border-b border-red-900 flex justify-between items-center" role="alert">
+				<div v-if="editDepartmentError"
+					class="bg-red-700 text-white px-6 py-4 border-b border-red-900 flex justify-between items-center"
+					role="alert">
 					<span class="font-medium text-sm">{{ editDepartmentError }}</span>
-					<button @click="editDepartmentError = null" class="font-bold text-2xl text-white opacity-70 hover:opacity-100 leading-none">&times;</button>
+					<button @click="editDepartmentError = null"
+						class="font-bold text-2xl text-white opacity-70 hover:opacity-100 leading-none">&times;</button>
 				</div>
 
 				<div class="p-6 space-y-4">
 
 					<div>
-						<label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Nombre del Departamento</label>
-						<input v-model="editingDepartment.name" type="text" class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+						<label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Nombre del
+							Departamento</label>
+						<input v-model="editingDepartment.name" type="text"
+							class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+					</div>
+					<div>
+						<label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Código del
+							Departamento</label>
+						<input v-model="editingDepartment.codigo" type="text" placeholder="Ej. DEP-SIST"
+							class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
 					</div>
 
 					<div class="relative z-10">
-						<label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Área a la que pertenece</label>
-						<select v-model="editingDepartment.id_area" class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+						<label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Área a la que
+							pertenece</label>
+						<select v-model="editingDepartment.id_area"
+							class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
 							<option :value="null">Seleccionar un área</option>
 							<option v-if="areasList.length === 0" disabled class="text-gray-400">
 								-- No hay ��reas disponibles --
@@ -366,9 +462,11 @@
 					</div>
 
 					<div>
-						<label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Responsable</label>
+						<label
+							class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Responsable</label>
 
-						<select v-model="editingDepartment.responsable" class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+						<select v-model="editingDepartment.responsable"
+							class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
 
 							<option :value="null" disabled>Seleccionar un responsable</option>
 							<option v-if="jefesDepartamento.length === 0" disabled>-- No hay responsables --</option>
@@ -380,13 +478,17 @@
 					</div>
 
 					<div>
-						<label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Correo Institucional</label>
-						<input v-model="editingDepartment.correo" type="email" class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+						<label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Correo
+							Institucional</label>
+						<input v-model="editingDepartment.correo" type="email"
+							class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
 					</div>
 				</div>
 				<div class="flex gap-2 justify-end border-t border-gray-300 dark:border-gray-600 p-6">
-					<button @click="showEditDepartmentModal = false" class="px-4 py-2 bg-gray-300 dark:bg-gray-600 text-gray-900 dark:text-white rounded-lg hover:bg-gray-400 dark:hover:bg-gray-500 transition-colors">Cancelar</button>
-					<button @click="saveEditDepartment" :disabled="isSubmitting" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors font-medium disabled:opacity-50">
+					<button @click="showEditDepartmentModal = false"
+						class="px-4 py-2 bg-gray-300 dark:bg-gray-600 text-gray-900 dark:text-white rounded-lg hover:bg-gray-400 dark:hover:bg-gray-500 transition-colors">Cancelar</button>
+					<button @click="saveEditDepartment" :disabled="isSubmitting"
+						class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors font-medium disabled:opacity-50">
 						{{ isSubmitting ? 'Guardando...' : 'Guardar Cambios' }}
 					</button>
 				</div>
@@ -394,87 +496,44 @@
 		</div>
 
 		<!-- Modal de nueva Área -->
-		<div v-if="showNewAreaModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-			<div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg max-w-md w-full">
+		<div v-if="showNewAreaModal"
+			class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+			<div class="bg-white dark:bg-dark-bg rounded-lg shadow-lg max-w-md w-full">
 
 				<div class="flex items-center justify-between border-b border-gray-300 dark:border-gray-600 p-6">
 					<h2 class="text-lg font-bold text-gray-900 dark:text-white">Crear Nueva Área</h2>
-					<button @click="showNewAreaModal = false" class="text-gray-400 hover:text-gray-600 text-2xl">&times;</button>
+					<button @click="showNewAreaModal = false"
+						class="text-gray-400 hover:text-gray-600 text-2xl">&times;</button>
 				</div>
 
-				<div v-if="newAreaError" class="bg-red-700 text-white px-6 py-4 border-b border-red-900 flex justify-between items-center" role="alert">
+				<div v-if="newAreaError"
+					class="bg-red-700 text-white px-6 py-4 border-b border-red-900 flex justify-between items-center"
+					role="alert">
 					<span class="font-medium text-sm">{{ newAreaError }}</span>
-					<button @click="newAreaError = null" class="font-bold text-2xl text-white opacity-70 hover:opacity-100 leading-none">&times;</button>
+					<button @click="newAreaError = null"
+						class="font-bold text-2xl text-white opacity-70 hover:opacity-100 leading-none">&times;</button>
 				</div>
 
 				<div class="p-6 space-y-4">
 					<div>
-						<label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Nombre del Área</label>
-						<input v-model="newAreaData.area_nombre" type="text" placeholder="Nombre del área" class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+						<label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Área</label>
+						<input v-model="newAreaData.area_nombre" type="text" placeholder="Nombre del área"
+							class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
 					</div>
 					<div>
-						<label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Código del Área</label>
-						<input v-model="newAreaData.area_codigo" type="text" placeholder="Código (ej. LAB-SIS-001)" class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+						<label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Código del
+							Área</label>
+						<input v-model="newAreaData.area_codigo" type="text" placeholder="Ej: 001"
+							class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
 					</div>
 					<div>
-						<label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Responsable del Área</label>
-						<select v-model="newAreaData.id_resguardante_responsable" class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+						<label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Responsable del
+							Área</label>
+						<select v-model="newAreaData.id_resguardante_responsable"
+							class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
 							<option :value="null">Seleccionar responsable</option>
-							<option v-if="resguardantes.length === 0" disabled class="text-gray-400">-- No hay responsables disponibles --</option>
-							<option v-else v-for="r in resguardantes" :key="r.id" :value="r.id">
-								{{ r.res_nombre}}
-							</option>
-						</select>
-					</div>
-					<div>
-						<label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Edificio</label>
-						<select v-model="newAreaData.id_edificio" class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
-							<option :value="null">Seleccionar edificio</option>
-							<option v-if="buildings.length === 0" disabled class="text-gray-400">-- No hay edificios disponibles --</option>
-							<option v-else v-for="b in buildings" :key="b.id" :value="b.id">
-								{{ b.nombre }}
-							</option>
-						</select>
-					</div>
-				</div>
-
-				<div class="flex gap-2 justify-end border-t border-gray-300 dark:border-gray-600 p-6">
-					<button @click="showNewAreaModal = false" class="px-4 py-2 bg-gray-300 dark:bg-gray-600 text-gray-900 dark:text-white rounded-lg hover:bg-gray-400 dark:hover:bg-gray-500 transition-colors">Cancelar</button>
-					<button @click="saveNewArea" :disabled="isSubmitting" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors font-medium disabled:opacity-50">
-						{{ isSubmitting ? 'Creando...' : 'Crear Área' }}
-					</button>
-				</div>
-			</div>
-		</div>
-
-		<!-- Modal de editar área -->
-		<div v-if="showEditAreaModal && editingArea" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-			<div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg max-w-md w-full">
-
-				<div class="flex items-center justify-between border-b border-gray-300 dark:border-gray-600 p-6">
-					<h2 class="text-lg font-bold text-gray-900 dark:text-white">Editar Área</h2>
-					<button @click="showEditAreaModal = false" class="text-gray-400 hover:text-gray-600 text-2xl">&times;</button>
-				</div>
-
-				<div v-if="editAreaError" class="bg-red-700 text-white px-6 py-4 border-b border-red-900 flex justify-between items-center" role="alert">
-					<span class="font-medium text-sm">{{ editAreaError }}</span>
-					<button @click="editAreaError = null" class="font-bold text-2xl text-white opacity-70 hover:opacity-100 leading-none">&times;</button>
-				</div>
-
-				<div class="p-6 space-y-4">
-					<div>
-						<label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Nombre del Área</label>
-						<input v-model="editingArea.area_nombre" type="text" placeholder="Nombre del área" class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
-					</div>
-					<div>
-						<label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Código del Área</label>
-						<input v-model="editingArea.area_codigo" type="text" placeholder="Código (ej. LAB-SIS-001)" class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
-					</div>
-					<div>
-						<label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Responsable del Área</label>
-						<select v-model="editingArea.id_resguardante_responsable" class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
-							<option :value="null">Seleccionar responsable</option>
-							<option v-if="resguardantes.length === 0" disabled class="text-gray-400">-- No hay responsables disponibles --</option>
+							<option v-if="resguardantes.length === 0" disabled class="text-gray-400">-- No hay
+								responsables disponibles --</option>
 							<option v-else v-for="r in resguardantes" :key="r.id" :value="r.id">
 								{{ r.res_nombre }}
 							</option>
@@ -482,9 +541,11 @@
 					</div>
 					<div>
 						<label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Edificio</label>
-						<select v-model="editingArea.id_edificio" class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+						<select v-model="newAreaData.id_edificio"
+							class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
 							<option :value="null">Seleccionar edificio</option>
-							<option v-if="buildings.length === 0" disabled class="text-gray-400">-- No hay edificios disponibles --</option>
+							<option v-if="buildings.length === 0" disabled class="text-gray-400">-- No hay edificios
+								disponibles --</option>
 							<option v-else v-for="b in buildings" :key="b.id" :value="b.id">
 								{{ b.nombre }}
 							</option>
@@ -493,8 +554,79 @@
 				</div>
 
 				<div class="flex gap-2 justify-end border-t border-gray-300 dark:border-gray-600 p-6">
-					<button @click="showEditAreaModal = false" class="px-4 py-2 bg-gray-300 dark:bg-gray-600 text-gray-900 dark:text-white rounded-lg hover:bg-gray-400 dark:hover:bg-gray-500 transition-colors">Cancelar</button>
-					<button @click="saveEditArea" :disabled="isSubmitting" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors font-medium disabled:opacity-50">
+					<button @click="showNewAreaModal = false"
+						class="px-4 py-2 bg-gray-300 dark:bg-gray-600 text-gray-900 dark:text-white rounded-lg hover:bg-gray-400 dark:hover:bg-gray-500 transition-colors">Cancelar</button>
+					<button @click="saveNewArea" :disabled="isSubmitting"
+						class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors font-medium disabled:opacity-50">
+						{{ isSubmitting ? 'Creando...' : 'Crear Área' }}
+					</button>
+				</div>
+			</div>
+		</div>
+
+		<!-- Modal de editar área -->
+		<div v-if="showEditAreaModal && editingArea"
+			class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+			<div class="bg-white dark:bg-dark-bg rounded-lg shadow-lg max-w-md w-full">
+
+				<div class="flex items-center justify-between border-b border-gray-300 dark:border-gray-600 p-6">
+					<h2 class="text-lg font-bold text-gray-900 dark:text-white">Editar Área</h2>
+					<button @click="showEditAreaModal = false"
+						class="text-gray-400 hover:text-gray-600 text-2xl">&times;</button>
+				</div>
+
+				<div v-if="editAreaError"
+					class="bg-red-700 text-white px-6 py-4 border-b border-red-900 flex justify-between items-center"
+					role="alert">
+					<span class="font-medium text-sm">{{ editAreaError }}</span>
+					<button @click="editAreaError = null"
+						class="font-bold text-2xl text-white opacity-70 hover:opacity-100 leading-none">&times;</button>
+				</div>
+
+				<div class="p-6 space-y-4">
+					<div>
+						<label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Área</label>
+						<input v-model="editingArea.area_nombre" type="text" placeholder="Nombre del área"
+							class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+					</div>
+					<div>
+						<label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Código del
+							Área</label>
+						<input v-model="editingArea.area_codigo" type="text" placeholder="Código (ej. LAB-SIS-001)"
+							class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+					</div>
+					<div>
+						<label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Responsable del
+							Área</label>
+						<select v-model="editingArea.id_resguardante_responsable"
+							class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+							<option :value="null">Seleccionar responsable</option>
+							<option v-if="resguardantes.length === 0" disabled class="text-gray-400">-- No hay
+								responsables disponibles --</option>
+							<option v-else v-for="r in resguardantes" :key="r.id" :value="r.id">
+								{{ r.res_nombre }}
+							</option>
+						</select>
+					</div>
+					<div>
+						<label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Edificio</label>
+						<select v-model="editingArea.id_edificio"
+							class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+							<option :value="null">Seleccionar edificio</option>
+							<option v-if="buildings.length === 0" disabled class="text-gray-400">-- No hay edificios
+								disponibles --</option>
+							<option v-else v-for="b in buildings" :key="b.id" :value="b.id">
+								{{ b.nombre }}
+							</option>
+						</select>
+					</div>
+				</div>
+
+				<div class="flex gap-2 justify-end border-t border-gray-300 dark:border-gray-600 p-6">
+					<button @click="showEditAreaModal = false"
+						class="px-4 py-2 bg-gray-300 dark:bg-gray-600 text-gray-900 dark:text-white rounded-lg hover:bg-gray-400 dark:hover:bg-gray-500 transition-colors">Cancelar</button>
+					<button @click="saveEditArea" :disabled="isSubmitting"
+						class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors font-medium disabled:opacity-50">
 						{{ isSubmitting ? 'Guardando...' : 'Guardar Cambios' }}
 					</button>
 				</div>
@@ -502,29 +634,37 @@
 		</div>
 
 		<!-- Modal de nuevo Edificio -->
-		<div v-if="showNewBuildingModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-			<div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg max-w-md w-full">
+		<div v-if="showNewBuildingModal"
+			class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+			<div class="bg-white dark:bg-dark-bg rounded-lg shadow-lg max-w-md w-full">
 
 				<div class="flex items-center justify-between border-b border-gray-300 dark:border-gray-600 p-6">
 					<h2 class="text-lg font-bold text-gray-900 dark:text-white">Crear Nuevo Edificio</h2>
-					<button @click="showNewBuildingModal = false" class="text-gray-400 hover:text-gray-600 text-2xl">&times;</button>
+					<button @click="showNewBuildingModal = false"
+						class="text-gray-400 hover:text-gray-600 text-2xl">&times;</button>
 				</div>
 
-				<div v-if="newBuildingError" class="bg-red-700 text-white px-6 py-4 border-b border-red-900 flex justify-between items-center" role="alert">
+				<div v-if="newBuildingError"
+					class="bg-red-700 text-white px-6 py-4 border-b border-red-900 flex justify-between items-center"
+					role="alert">
 					<span class="font-medium text-sm">{{ newBuildingError }}</span>
-					<button @click="newBuildingError = null" class="font-bold text-2xl text-white opacity-70 hover:opacity-100 leading-none">&times;</button>
+					<button @click="newBuildingError = null"
+						class="font-bold text-2xl text-white opacity-70 hover:opacity-100 leading-none">&times;</button>
 				</div>
 
 				<div class="p-6 space-y-4">
 
 					<div>
-						<label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Nombre del Edificio</label>
-						<input v-model="newBuildingData.nombre" type="text" placeholder="Ej. Edificio A" class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+						<label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Edificio</label>
+						<input v-model="newBuildingData.nombre" type="text" placeholder="Ej. Edificio A"
+							class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
 					</div>
 				</div>
 				<div class="flex gap-2 justify-end border-t border-gray-300 dark:border-gray-600 p-6">
-					<button @click="showNewBuildingModal = false" class="px-4 py-2 bg-gray-300 dark:bg-gray-600 text-gray-900 dark:text-white rounded-lg hover:bg-gray-400 dark:hover:bg-gray-500 transition-colors">Cancelar</button>
-					<button @click="saveNewBuilding" :disabled="isSubmitting" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors font-medium disabled:opacity-50">
+					<button @click="showNewBuildingModal = false"
+						class="px-4 py-2 bg-gray-300 dark:bg-gray-600 text-gray-900 dark:text-white rounded-lg hover:bg-gray-400 dark:hover:bg-gray-500 transition-colors">Cancelar</button>
+					<button @click="saveNewBuilding" :disabled="isSubmitting"
+						class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors font-medium disabled:opacity-50">
 						{{ isSubmitting ? 'Creando...' : 'Crear Edificio' }}
 					</button>
 				</div>
@@ -532,31 +672,39 @@
 		</div>
 
 		<!-- Modal de editar Edificio -->
-		<div v-if="showEditBuildingModal && editingBuilding" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+		<div v-if="showEditBuildingModal && editingBuilding"
+			class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
 
-			<div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg max-w-md w-full">
+			<div class="bg-white dark:bg-dark-bg rounded-lg shadow-lg max-w-md w-full">
 
 				<div class="flex items-center justify-between border-b border-gray-300 dark:border-gray-600 p-6">
 					<h2 class="text-lg font-bold text-gray-900 dark:text-white">Editar Edificio</h2>
-					<button @click="showEditBuildingModal = false" class="text-gray-400 hover:text-gray-600 text-2xl">&times;</button>
+					<button @click="showEditBuildingModal = false"
+						class="text-gray-400 hover:text-gray-600 text-2xl">&times;</button>
 				</div>
 
-				<div v-if="editBuildingError" class="bg-red-700 text-white px-6 py-4 border-b border-red-900 flex justify-between items-center" role="alert">
+				<div v-if="editBuildingError"
+					class="bg-red-700 text-white px-6 py-4 border-b border-red-900 flex justify-between items-center"
+					role="alert">
 					<span class="font-medium text-sm">{{ editBuildingError }}</span>
-					<button @click="editBuildingError = null" class="font-bold text-2xl text-white opacity-70 hover:opacity-100 leading-none">&times;</button>
+					<button @click="editBuildingError = null"
+						class="font-bold text-2xl text-white opacity-70 hover:opacity-100 leading-none">&times;</button>
 				</div>
 
 				<div class="p-6 space-y-4">
 
 					<div>
-						<label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Nombre del Edificio</label>
-						<input v-model="editingBuilding.nombre" type="text" class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+						<label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Edificio</label>
+						<input v-model="editingBuilding.nombre" type="text"
+							class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
 					</div>
 				</div>
 
 				<div class="flex gap-2 justify-end border-t border-gray-300 dark:border-gray-600 p-6">
-					<button @click="showEditBuildingModal = false" class="px-4 py-2 bg-gray-300 dark:bg-gray-600 text-gray-900 dark:text-white rounded-lg hover:bg-gray-400 dark:hover:bg-gray-500 transition-colors">Cancelar</button>
-					<button @click="saveEditBuilding" :disabled="isSubmitting" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors font-medium disabled:opacity-50">
+					<button @click="showEditBuildingModal = false"
+						class="px-4 py-2 bg-gray-300 dark:bg-gray-600 text-gray-900 dark:text-white rounded-lg hover:bg-gray-400 dark:hover:bg-gray-500 transition-colors">Cancelar</button>
+					<button @click="saveEditBuilding" :disabled="isSubmitting"
+						class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors font-medium disabled:opacity-50">
 						{{ isSubmitting ? 'Guardando...' : 'Guardar Cambios' }}
 					</button>
 				</div>
@@ -564,30 +712,44 @@
 		</div>
 
 		<!-- Modal de nueva Oficina -->
-		<div v-if="showNewOficinaModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+		<div v-if="showNewOficinaModal"
+			class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
 
-			<div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg max-w-md w-full">
+			<div class="bg-white dark:bg-dark-bg rounded-lg shadow-lg max-w-md w-full">
 
 				<div class="flex items-center justify-between border-b border-gray-300 dark:border-gray-600 p-6">
 					<h2 class="text-lg font-bold text-gray-900 dark:text-white">Crear Nueva Oficina</h2>
-					<button @click="showNewOficinaModal = false" class="text-gray-400 hover:text-gray-600 text-2xl">&times;</button>
+					<button @click="showNewOficinaModal = false"
+						class="text-gray-400 hover:text-gray-600 text-2xl">&times;</button>
 				</div>
 
-				<div v-if="newOficinaError" class="bg-red-700 text-white px-6 py-4 border-b border-red-900 flex justify-between items-center" role="alert">
+				<div v-if="newOficinaError"
+					class="bg-red-700 text-white px-6 py-4 border-b border-red-900 flex justify-between items-center"
+					role="alert">
 					<span class="font-medium text-sm">{{ newOficinaError }}</span>
-					<button @click="newOficinaError = null" class="font-bold text-2xl text-white opacity-70 hover:opacity-100 leading-none">&times;</button>
+					<button @click="newOficinaError = null"
+						class="font-bold text-2xl text-white opacity-70 hover:opacity-100 leading-none">&times;</button>
 				</div>
 
 				<div class="p-6 space-y-4">
 
 					<div>
-						<label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Nombre de la Oficina</label>
-						<input v-model="newOficinaData.nombre" type="text" placeholder="Ej. Oficina 101" class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+						<label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Oficina</label>
+						<input v-model="newOficinaData.nombre" type="text" placeholder="Nombre de la oficina"
+							class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+					</div>
+					<div>
+						<label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Código de
+							Oficina</label>
+						<input v-model="newOficinaData.codigo" type="text" placeholder="Ej: 001"
+							class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
 					</div>
 
 					<div class="relative z-10">
-						<label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Edificio al que pertenece</label>
-						<select v-model="newOficinaData.id_edificio" class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+						<label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Edificio al que
+							pertenece</label>
+						<select v-model="newOficinaData.id_edificio"
+							class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
 							<option :value="null" disabled>Seleccionar un edificio</option>
 							<option v-if="buildings.length === 0" disabled>-- No hay edificios --</option>
 							<option v-else v-for="b in buildings" :key="b.id" :value="b.id">
@@ -595,10 +757,31 @@
 							</option>
 						</select>
 					</div>
+					<div>
+						<label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Departamento</label>
+						<select v-model="newOficinaData.id_departamento"
+							class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+							<option :value="null" disabled>Seleccionar un departamento</option>
+							<option v-if="!departments.data || departments.data.length === 0" disabled>-- Cargando... --
+							</option>
+							<option v-else v-for="dept in departments.data" :key="dept.id" :value="dept.id">
+								{{ dept.dep_nombre }}
+							</option>
+						</select>
+					</div>
+					<div>
+						<label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Referencia
+							(Opcional)</label>
+						<input v-model="newOficinaData.referencia" type="text"
+							placeholder="Ej. Planta baja, junto a recepción"
+							class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+					</div>
 				</div>
 				<div class="flex gap-2 justify-end border-t border-gray-300 dark:border-gray-600 p-6">
-					<button @click="showNewOficinaModal = false" class="px-4 py-2 bg-gray-300 dark:bg-gray-600 text-gray-900 dark:text-white rounded-lg hover:bg-gray-400 dark:hover:bg-gray-500 transition-colors">Cancelar</button>
-					<button @click="saveNewOficina" :disabled="isSubmitting" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors font-medium disabled:opacity-50">
+					<button @click="showNewOficinaModal = false"
+						class="px-4 py-2 bg-gray-300 dark:bg-gray-600 text-gray-900 dark:text-white rounded-lg hover:bg-gray-400 dark:hover:bg-gray-500 transition-colors">Cancelar</button>
+					<button @click="saveNewOficina" :disabled="isSubmitting"
+						class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors font-medium disabled:opacity-50">
 						{{ isSubmitting ? 'Creando...' : 'Crear Oficina' }}
 					</button>
 				</div>
@@ -606,30 +789,44 @@
 		</div>
 
 		<!-- Modal de editar oficina -->
-		<div v-if="showEditOficinaModal && editingOficina" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+		<div v-if="showEditOficinaModal && editingOficina"
+			class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
 
-			<div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg max-w-md w-full">
+			<div class="bg-white dark:bg-dark-bg rounded-lg shadow-lg max-w-md w-full">
 
 				<div class="flex items-center justify-between border-b border-gray-300 dark:border-gray-600 p-6">
 					<h2 class="text-lg font-bold text-gray-900 dark:text-white">Editar Oficina</h2>
-					<button @click="showEditOficinaModal = false" class="text-gray-400 hover:text-gray-600 text-2xl">&times;</button>
+					<button @click="showEditOficinaModal = false"
+						class="text-gray-400 hover:text-gray-600 text-2xl">&times;</button>
 				</div>
 
-				<div v-if="editOficinaError" class="bg-red-700 text-white px-6 py-4 border-b border-red-900 flex justify-between items-center" role="alert">
+				<div v-if="editOficinaError"
+					class="bg-red-700 text-white px-6 py-4 border-b border-red-900 flex justify-between items-center"
+					role="alert">
 					<span class="font-medium text-sm">{{ editOficinaError }}</span>
-					<button @click="editOficinaError = null" class="font-bold text-xl text-white opacity-70 hover:opacity-100 leading-none">&times;</button>
+					<button @click="editOficinaError = null"
+						class="font-bold text-xl text-white opacity-70 hover:opacity-100 leading-none">&times;</button>
 				</div>
 
 				<div class="p-6 space-y-4">
 
 					<div>
-						<label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Nombre de la Oficina</label>
-						<input v-model="editingOficina.nombre" type="text" class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+						<label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Nombre de la
+							Oficina</label>
+						<input v-model="editingOficina.nombre" type="text"
+							class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
 					</div>
-
+					<div>
+						<label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Código de
+							Oficina</label>
+						<input v-model="editingOficina.codigo" type="text" placeholder="Ej: 001"
+							class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+					</div>
 					<div class="relative z-10">
-						<label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Edificio al que pertenece</label>
-						<select v-model="editingOficina.id_edificio" class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+						<label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Edificio al que
+							pertenece</label>
+						<select v-model="editingOficina.id_edificio"
+							class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
 							<option :value="null" disabled>Seleccionar un edificio</option>
 							<option v-if="buildings.length === 0" disabled>-- No hay edificios --</option>
 							<option v-else v-for="b in buildings" :key="b.id" :value="b.id">
@@ -639,28 +836,46 @@
 					</div>
 
 					<div>
-						<label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Referencia (Opcional)</label>
-						<input v-model="editingOficina.referencia" type="text" class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+						<label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Referencia
+							(Opcional)</label>
+						<input v-model="editingOficina.referencia" type="text"
+							class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
 					</div>
 
 				</div>
 
 				<div class="flex gap-2 justify-end border-t border-gray-300 dark:border-gray-600 p-6">
-					<button @click="showEditOficinaModal = false" class="px-4 py-2 bg-gray-300 dark:bg-gray-600 text-gray-900 dark:text-white rounded-lg hover:bg-gray-400 dark:hover:bg-gray-500 transition-colors">Cancelar</button>
-					<button @click="saveEditOficina" :disabled="isSubmitting" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors font-medium disabled:opacity-50">
+					<button @click="showEditOficinaModal = false"
+						class="px-4 py-2 bg-gray-300 dark:bg-gray-600 text-gray-900 dark:text-white rounded-lg hover:bg-gray-400 dark:hover:bg-gray-500 transition-colors">Cancelar</button>
+					<button @click="saveEditOficina" :disabled="isSubmitting"
+						class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors font-medium disabled:opacity-50">
 						{{ isSubmitting ? 'Guardando...' : 'Guardar Cambios' }}
 					</button>
 				</div>
 			</div>
 		</div>
 
-		<ConfirmModal :show="!!deletingArea" :isSubmitting="isSubmitting" :errorMessage="deleteError" title="Confirmar Eliminación" :message="`¿Estás seguro de que deseas eliminar el área:<br><strong class='font-medium text-lg text-gray-900 dark:text-white'>${deletingArea?.area_nombre}</strong>?`" confirmText="Sí, Eliminar" confirmClass="bg-red-600 hover:bg-red-700" @confirm="confirmDeleteArea" @cancel="cancelDelete" @clearError="deleteError = null" />
+		<ConfirmModal :show="!!deletingArea" :isSubmitting="isSubmitting" :errorMessage="deleteError"
+			title="Confirmar Eliminación"
+			:message="`¿Estás seguro de que deseas eliminar el área:<br><strong class='font-medium text-lg text-gray-900 dark:text-white'>${deletingArea?.area_nombre}</strong>?`"
+			confirmText="Sí, Eliminar" confirmClass="bg-red-600 hover:bg-red-700" @confirm="confirmDeleteArea"
+			@cancel="cancelDelete" @clearError="deleteError = null" />
 
-		<ConfirmModal :show="showDeleteDepartmentModal" :isSubmitting="isSubmitting" :errorMessage="deleteDepartmentError" title="Confirmar Eliminación" :message="`¿Estás seguro de que deseas eliminar el departamento:<br><strong class='font-medium text-lg text-gray-900 dark:text-white'>${deletingDepartment?.dep_nombre}</strong>?`" confirmText="Sí, Eliminar" confirmClass="bg-red-600 hover:bg-red-700" @confirm="handleConfirmDelete" @cancel="cancelDeleteDepartment" @clearError="deleteDepartmentError = null" />
+		<ConfirmModal :show="showDeleteDepartmentModal" :isSubmitting="isSubmitting"
+			:errorMessage="deleteDepartmentError" title="Confirmar Eliminación"
+			:message="`¿Estás seguro de que deseas eliminar el departamento:<br><strong class='font-medium text-lg text-gray-900 dark:text-white'>${deletingDepartment?.dep_nombre}</strong>?`"
+			confirmText="Sí, Eliminar" confirmClass="bg-red-600 hover:bg-red-700" @confirm="handleConfirmDelete"
+			@cancel="cancelDeleteDepartment" @clearError="deleteDepartmentError = null" />
 
-		<ConfirmModal :show="showDeleteBuildingModal" :isSubmitting="isSubmitting" :errorMessage="deleteBuildingError" title="Confirmar Eliminación" :message="deleteBuildingMessage" confirmText="Sí, Eliminar" confirmClass="bg-red-600 hover:bg-red-700" @confirm="handleConfirmDeleteBuilding" @cancel="cancelDeleteBuilding" @clearError="deleteBuildingError = null" />
+		<ConfirmModal :show="showDeleteBuildingModal" :isSubmitting="isSubmitting" :errorMessage="deleteBuildingError"
+			title="Confirmar Eliminación" :message="deleteBuildingMessage" confirmText="Sí, Eliminar"
+			confirmClass="bg-red-600 hover:bg-red-700" @confirm="handleConfirmDeleteBuilding"
+			@cancel="cancelDeleteBuilding" @clearError="deleteBuildingError = null" />
 
-		<ConfirmModal :show="showDeleteOficinaModal" :isSubmitting="isSubmitting" :errorMessage="deleteOficinaError" title="Confirmar Eliminación" :message="deleteOficinaMessage" confirmText="Sí, Eliminar" confirmClass="bg-red-600 hover:bg-red-700" @confirm="handleConfirmDeleteOficina" @cancel="cancelDeleteOficina" @clearError="deleteOficinaError = null" />
+		<ConfirmModal :show="showDeleteOficinaModal" :isSubmitting="isSubmitting" :errorMessage="deleteOficinaError"
+			title="Confirmar Eliminación" :message="deleteOficinaMessage" confirmText="Sí, Eliminar"
+			confirmClass="bg-red-600 hover:bg-red-700" @confirm="handleConfirmDeleteOficina"
+			@cancel="cancelDeleteOficina" @clearError="deleteOficinaError = null" />
 
 	</div>
 </template>
@@ -733,7 +948,8 @@ const newDepartmentData = ref({
 	name: '',
 	responsable: null,
 	correo: '',
-	id_area: null
+	id_area: null,
+	codigo: ''
 })
 const newDepartmentError = ref(null)
 const showDeleteDepartmentModal = ref(false)
@@ -764,7 +980,9 @@ const fetchOficinasError = ref(null)
 
 const newOficinaData = ref({
 	nombre: '',
-	id_edificio: null
+	codigo: '',
+	id_edificio: null,
+	id_departamento: null
 })
 const newOficinaError = ref(null)
 const showDeleteOficinaModal = ref(false)
@@ -794,7 +1012,7 @@ const filteredAreas = computed(() => {
 })
 
 const filteredDepartments = computed(() => {
-	if (!departments.value || !Array.isArray(departments.value)) {
+	if (!departments.value.data || !Array.isArray(departments.value.data)) {
 		return []
 	}
 	const deptArray = Array.isArray(departments.value.data) ? departments.value.data : departments.value
@@ -840,7 +1058,7 @@ const fetchAllData = async () => {
 			authenticatedFetch('/edificios'),
 			authenticatedFetch('/oficinas')
 		])
-		
+
 		if (!areasRes.ok) throw new Error('Error al cargar áreas')
 		if (!optionsRes.ok) throw new Error('Error al cargar opciones del formulario')
 		if (!departmentsRes.ok) throw new Error('Error al cargar departamentos')
@@ -1068,7 +1286,8 @@ const openNewDepartmentModal = () => {
 		name: '',
 		responsable: null,
 		correo: '',
-		id_area: null
+		id_area: null,
+		codigo: ''
 	}
 	newDepartmentError.value = null
 	showNewDepartmentModal.value = true
@@ -1086,6 +1305,7 @@ const saveNewDepartment = async () => {
 	try {
 		const payload = {
 			dep_nombre: newDepartmentData.value.name,
+			dep_codigo: newDepartmentData.value.codigo,
 			dep_resposable: newDepartmentData.value.responsable,
 			dep_correo_institucional: newDepartmentData.value.correo,
 			id_area: newDepartmentData.value.id_area
@@ -1116,6 +1336,7 @@ const openEditDepartmentModal = (department) => {
 	editingDepartment.value = {
 		id: department.id,
 		name: department.dep_nombre,
+		codigo: department.dep_codigo,
 		responsable: department.dep_responsable,
 		correo: department.dep_correo_institucional,
 		id_area: department.id_area
@@ -1139,6 +1360,7 @@ const saveEditDepartment = async () => {
 	try {
 		const payload = {
 			dep_nombre: editingDepartment.value.name,
+			dep_codigo: editingDepartment.value.codigo,
 			dep_resposable: editingDepartment.value.responsable,
 			dep_correo_institucional: editingDepartment.value.correo,
 			id_area: editingDepartment.value.id_area
@@ -1402,7 +1624,10 @@ const fetchOficinas = async () => {
 const openNewOficinaModal = () => {
 	newOficinaData.value = {
 		nombre: '',
-		id_edificio: null
+		codigo: '',
+		referencia:'',
+		id_edificio: null,
+		id_departamento: null
 	}
 	newOficinaError.value = null
 	showNewOficinaModal.value = true
@@ -1411,8 +1636,8 @@ const openNewOficinaModal = () => {
 const saveNewOficina = async () => {
 	newOficinaError.value = null
 
-	if (!newOficinaData.value.nombre || !newOficinaData.value.id_edificio) {
-		newOficinaError.value = 'Nombre y Edificio son obligatorios.'
+	if (!newOficinaData.value.nombre || !newOficinaData.value.codigo || !newOficinaData.value.id_edificio || !newOficinaData.value.id_departamento) {
+		newOficinaError.value = 'Nombre, Código, Edificio y Departamento son obligatorios.' // <-- Mensaje actualizado
 		return
 	}
 
@@ -1420,22 +1645,21 @@ const saveNewOficina = async () => {
 	try {
 		const payload = {
 			nombre: newOficinaData.value.nombre,
-			id_edificio: newOficinaData.value.id_edificio
+			referencia: newOficinaData.value.referencia,
+			ofi_codigo: newOficinaData.value.codigo,
+			id_edificio: newOficinaData.value.id_edificio,
+			id_departamento: newOficinaData.value.id_departamento
 		}
-
 		const response = await authenticatedFetch('/oficinas', {
 			method: 'POST',
 			body: JSON.stringify(payload)
 		})
-
 		if (!response.ok) {
 			const errData = await response.json().catch(() => ({}))
 			throw new Error(errData.message || 'No se pudo crear la oficina.')
 		}
-
 		showNewOficinaModal.value = false
 		await fetchOficinas()
-
 	} catch (err) {
 		console.error('Error al guardar oficina:', err)
 		newOficinaError.value = err.message
@@ -1502,8 +1726,10 @@ const openEditOficinaModal = (oficina) => {
 	editingOficina.value = {
 		id: oficina.id,
 		nombre: oficina.nombre,
+		codigo: oficina.ofi_codigo,
 		referencia: oficina.referencia,
-		id_edificio: oficina.id_edificio
+		id_edificio: oficina.id_edificio,
+		id_departamento: oficina.id_departamento
 	}
 
 	editOficinaError.value = null
@@ -1515,8 +1741,8 @@ const saveEditOficina = async () => {
 
 	editOficinaError.value = null
 
-	if (!editingOficina.value.nombre || !editingOficina.value.id_edificio) {
-		editOficinaError.value = 'Nombre y Edificio son obligatorios.'
+	if (!editingOficina.value.nombre || !editingOficina.value.codigo || !editingOficina.value.id_edificio || !editingOficina.value.id_departamento) {
+		editOficinaError.value = 'Nombre, Código, Edificio y Departamento son obligatorios.' // <-- Mensaje actualizado
 		return
 	}
 
@@ -1524,8 +1750,10 @@ const saveEditOficina = async () => {
 	try {
 		const payload = {
 			nombre: editingOficina.value.nombre,
+			ofi_codigo: editingOficina.value.codigo,
 			referencia: editingOficina.value.referencia,
-			id_edificio: editingOficina.value.id_edificio
+			id_edificio: editingOficina.value.id_edificio,
+			id_departamento: editingOficina.value.id_departamento
 		}
 
 		const response = await authenticatedFetch(`/oficinas/${editingOficina.value.id}`, {
@@ -1549,8 +1777,13 @@ const saveEditOficina = async () => {
 		isSubmitting.value = false
 	}
 }
+const getDepartmentName = (deptId) => {
+	if (!deptId) return 'N/A';
 
-const searchAreas = () => {
-	// Implement search functionality if needed
-}
+	// Asumiendo que 'departments.value' es paginado ({ data: [...] })
+	const deptList = Array.isArray(departments.value.data) ? departments.value.data : [];
+	const dept = deptList.find(d => d.id === deptId);
+
+	return dept ? dept.dep_nombre : 'ID Desconocido';
+};
 </script>

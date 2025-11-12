@@ -1,7 +1,7 @@
 // Configuración Global de la API
 export const API_CONFIG = {
     // URL base de tu API de Laravel
-    BASE_URL: 'http://127.0.0.1:8080/api',
+    BASE_URL: 'http://127.0.0.1:8081/api',
     // Endpoints
     ENDPOINTS: {
         LOGIN: '/login',

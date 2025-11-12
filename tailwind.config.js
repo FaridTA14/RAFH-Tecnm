@@ -17,8 +17,8 @@ export default {
         // Dark mode palette (adapting existing colors)
         dark: {
           bg: '#14161A', //1a1a1a
-          surface: '#2a2a2a', //2a2a2a
-          border: '#3a3a3a', //3a3a3a
+          surface: '#272B33', //2a2a2a
+          border: '#3A404B', //3a3a3a
         }
       },
       fontFamily: {

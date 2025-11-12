@@ -1,11 +1,11 @@
 <template>
-	<div class="flex h-screen bg-white dark:bg-gray-900">
+	<div class="flex h-screen bg-white dark:bg-dark-bg">
 		<!-- Loading overlay during logout -->
 		<div v-if="isLoggingOut" class="fixed inset-0 bg-black bg-opacity-50 z-[49]"></div>
 
 		<!-- Sidebar -->
 		<aside :class="[
-			'fixed md:static z-40 w-64 h-full bg-gradient-to-b from-blue-50 to-blue-100 dark:from-gray-800 dark:to-gray-900 shadow-lg transition-transform duration-300 ease-in-out',
+			'fixed md:static z-40 w-64 h-full dark:bg-dark-surface shadow-lg transition-transform duration-300 ease-in-out',
 			isSidebarActive ? 'translate-x-0' : '-translate-x-full md:translate-x-0'
 		]">
 			<!-- Sidebar Header -->
@@ -55,7 +55,7 @@
 							d="M15 4h3a1 1 0 0 1 1 1v15a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h3m0 3h6m-6 7 2 2 4-4m-5-9v4h4V3h-4Z" />
 					</svg>
 
-					<label class="px-2" for="">Auditorías</label>
+					<label class="px-2 text-gray-900" for="">Movimientos</label>
 				</RouterLink>
 				<RouterLink to="/dashboard/gestores" @click="closeSidebar"
 					class="flex px-4 py-3 mb-2 text-blue-900 dark:text-gray-300 rounded-lg hover:bg-blue-200 dark:hover:bg-gray-700 transition">
@@ -64,7 +64,6 @@
 						<path stroke="currentColor" stroke-linecap="square" stroke-linejoin="round" stroke-width="2"
 							d="M10 19H5a1 1 0 0 1-1-1v-1a3 3 0 0 1 3-3h2m10 1a3 3 0 0 1-3 3m3-3a3 3 0 0 0-3-3m3 3h1m-4 3a3 3 0 0 1-3-3m3 3v1m-3-4a3 3 0 0 1 3-3m-3 3h-1m4-3v-1m-2.121 1.879-.707-.707m5.656 5.656-.707-.707m-4.242 0-.707.707m5.656-5.656-.707.707M12 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
 					</svg>
-
 					<label class="px-2" for="">Gestores</label>
 				</RouterLink>
 				<RouterLink to="/dashboard/resguardantes" @click="closeSidebar"
@@ -93,16 +92,7 @@
 						<path stroke="currentColor" stroke-linecap="round" stroke-width="2"
 							d="M6 4v10m0 0a2 2 0 1 0 0 4m0-4a2 2 0 1 1 0 4m0 0v2m6-16v2m0 0a2 2 0 1 0 0 4m0-4a2 2 0 1 1 0 4m0 0v10m6-16v10m0 0a2 2 0 1 0 0 4m0-4a2 2 0 1 1 0 4m0 0v2" />
 					</svg>
-					<label class="px-2" for="">Centro de trabajo</label>
-				</RouterLink>
-				<RouterLink to="/dashboard/mantenimiento" @click="closeSidebar"
-					class="flex px-4 py-3 mb-2 text-blue-900 dark:text-gray-300 rounded-lg hover:bg-blue-200 dark:hover:bg-gray-700 transition">
-					<svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
-						xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-						<path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-							d="M3 15v3c0 .5523.44772 1 1 1h9.5M3 15v-4m0 4h9m-9-4V6c0-.55228.44772-1 1-1h16c.5523 0 1 .44772 1 1v5H3Zm5 0v8m4-8v8m7.0999-1.0999L21 16m0 0-1.9001-1.9001M21 16h-5" />
-					</svg>
-					<label class="px-2" for="">Mantenimiento</label>
+					<label class="px-2 text-gray-900" for="">Centro de trabajo</label>
 				</RouterLink>
 			</nav>
 
@@ -114,7 +104,7 @@
 		<!-- Main Content -->
 		<div class="flex-1 flex flex-col">
 			<!-- Top Bar -->
-			<header class="bg-white dark:bg-gray-800 shadow-md">
+			<header class="bg-white dark:bg-dark-bg shadow-md">
 				<div class="p-4 flex items-center justify-between">
 					<button @click="toggleSidebar"
 						class="p-2 text-blue-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg md:hidden">
@@ -151,7 +141,7 @@
 
 						<!-- Profile Dropdown Menu -->
 						<div v-if="isProfileMenuOpen" @click.outside="!isLoggingOut && (isProfileMenuOpen = false)"
-							class="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-700 rounded-lg shadow-lg z-50 border border-gray-200 dark:border-gray-600">
+							class="absolute right-0 mt-2 w-48 bg-white dark:bg-dark-surface rounded-lg shadow-lg z-50 border border-gray-200 dark:border-gray-600">
 							<div class="px-4 py-3 border-b border-gray-200 dark:border-gray-600">
 								<p class="text-sm font-semibold text-gray-900 dark:text-white">{{ userName }}</p>
 								<p class="text-xs text-gray-500 dark:text-gray-400">{{ userEmail }}</p>
@@ -181,7 +171,7 @@
 			</header>
 
 			<!-- Component Display Area -->
-			<section class="p-4 md:p-8 overflow-auto flex-1 bg-gray-50 dark:bg-gray-800">
+			<section class="p-4 md:p-8 overflow-auto flex-1 bg-gray-50 dark:bg-dark-bg">
 				<Suspense>
 					<template #default>
 						<component :is="currentComponent" />
