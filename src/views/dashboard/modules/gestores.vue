@@ -17,7 +17,7 @@
 			<label class="text-sm md:text-base text-gray-600 dark:text-gray-400">Instituto Tecnológico de Chetumal</label>
 		</div>
 
-		<div class="bg-white dark:bg-dark-bg rounded-lg shadow-md dark:shadow-stone-950  p-4 space-y-4">
+		<div class="bg-white dark:bg-dark-bg rounded-lg shadow-md dark:shadow-stone-950 p-4 space-y-4">
 			<div class="flex flex-col md:flex-row gap-4 items-end">
 				<div class="flex-1">
 					<label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Buscar gestor</label>
@@ -35,7 +35,7 @@
 			</div>
 		</div>
 		<!-- TABLA DE GESTORES-->
-		<div class="bg-white dark:bg-dark-bg rounded-lg shadow-md dark:shadow-stone-950  overflow-x-auto">
+		<div class="bg-white dark:bg-dark-bg rounded-lg shadow-md dark:shadow-stone-950 overflow-x-auto">
 			<div v-if="filteredGestores.length === 0" class="flex items-center justify-center h-64">
 				<p class="text-center text-gray-500 dark:text-gray-400 text-lg font-medium">No existen registros</p>
 			</div>
@@ -68,6 +68,35 @@
 					</tr>
 				</tbody>
 			</table>
+		</div>
+
+		<!-- Pagination Controls -->
+		<div v-if="filteredGestores.length > 0" class="flex items-center justify-center gap-4 p-4 border-t border-gray-200 dark:border-gray-700">
+			<button
+				@click="prevPage"
+				:disabled="currentPage === 1"
+				class="px-4 py-2 rounded-lg bg-gray-300 dark:bg-gray-600 text-gray-900 dark:text-white disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-400 dark:hover:bg-gray-500 transition-colors flex items-center gap-2"
+			>
+				<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+				</svg>
+				Atrás
+			</button>
+
+			<span class="text-sm font-medium text-gray-700 dark:text-gray-300">
+				Página {{ currentPage }} de {{ totalPages }} | Total: {{ totalItems }} resultados
+			</span>
+
+			<button
+				@click="nextPage"
+				:disabled="currentPage === totalPages"
+				class="px-4 py-2 rounded-lg bg-gray-300 dark:bg-gray-600 text-gray-900 dark:text-white disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-400 dark:hover:bg-gray-500 transition-colors flex items-center gap-2"
+			>
+				Adelante
+				<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+				</svg>
+			</button>
 		</div>
 
 		<!-- New Gestor Modal -->
@@ -170,7 +199,7 @@
 	</div>
 </template>
 <script setup>
-import { ref, onMounted, computed } from 'vue'
+import { ref, onMounted, computed, watch } from 'vue'
 import { authenticatedFetch } from '../../../config/api.js'
 import ConfirmModal from '@/components/ConfirmModal.vue'
 
@@ -180,8 +209,11 @@ const error = ref(null)
 const isSubmitting = ref(false)
 
 // --- Estados de datos ---
-const gestores = ref([])
+const gestores = ref({ data: [] })
 const searchTerm = ref('')
+const currentPage = ref(1)
+const itemsPerPage = 15
+const totalItems = ref(0)
 
 // --- Estados de Modales ---
 const showNewGestorModal = ref(false)
@@ -193,13 +225,12 @@ const deletingGestor = ref(null)
 const deleteGestorError = ref(null)
 const editGestorError = ref(null)
 
+const totalPages = computed(() => {
+	return Math.ceil(totalItems.value / itemsPerPage) || 1
+})
+
 const filteredGestores = computed(() => {
-	return gestores.value.filter(gestor => {
-		return !searchTerm.value ||
-			(gestor.gestor_nombre && gestor.gestor_nombre.toLowerCase().includes(searchTerm.value.toLowerCase())) ||
-			(gestor.gestor_apellidos && gestor.gestor_apellidos.toLowerCase().includes(searchTerm.value.toLowerCase())) ||
-			(gestor.gestor_correo && gestor.gestor_correo.toLowerCase().includes(searchTerm.value.toLowerCase()))
-	})
+	return gestores.value.data || []
 })
 
 // --- newGestorData ---
@@ -219,29 +250,54 @@ const editingGestor = ref({
 })
 
 // --- fetchGestoresData ---
-const fetchGestoresData = async () => {
+const fetchGestoresData = async (page = 1) => {
 	isLoading.value = true
 	error.value = null
 	try {
-		const [gestoresRes] = await Promise.all([
-			authenticatedFetch('/gestores'),
-		])
+		const params = new URLSearchParams()
+		params.append('page', page)
+
+		if (searchTerm.value.trim()) {
+			params.append('search', searchTerm.value.toUpperCase())
+		}
+
+		const gestoresRes = await authenticatedFetch(`/gestores?${params.toString()}`)
 
 		if (!gestoresRes.ok) throw new Error('Error al cargar gestores')
 		const gestoresData = await gestoresRes.json()
 
-		gestores.value = gestoresData.data || gestoresData
+		gestores.value = gestoresData
+		totalItems.value = gestoresData.total || 0
+		currentPage.value = page
 	} catch (e) {
 		console.error('Error al cargar datos:', e)
 		error.value = e
+		gestores.value = { data: [] }
 	} finally {
 		isLoading.value = false
 	}
 }
 
+const nextPage = () => {
+	if (currentPage.value < totalPages.value) {
+		fetchGestoresData(currentPage.value + 1)
+	}
+}
+
+const prevPage = () => {
+	if (currentPage.value > 1) {
+		fetchGestoresData(currentPage.value - 1)
+	}
+}
+
+watch(searchTerm, () => {
+	currentPage.value = 1
+	fetchGestoresData(1)
+})
+
 // --- Cargar datos al montar ---
 onMounted(() => {
-	fetchGestoresData()
+	fetchGestoresData(1)
 })
 
 // --- openNewGestorModal ---
@@ -271,6 +327,7 @@ const saveNewGestor = async () => {
 			gestor_apellidos: newGestorData.value.apellidos,
 			gestor_correo: newGestorData.value.correo,
 			usuario_pass: newGestorData.value.password,
+			usuario_id_rol: 2,
 		}
 		const response = await authenticatedFetch('/gestores', {
 			method: 'POST',
@@ -345,7 +402,7 @@ const saveEditGestor = async () => {
 const deleteGestorMessage = computed(() => {
 	if (!deletingGestor.value) return ''
 	const name = `${deletingGestor.value.gestor_nombre} ${deletingGestor.value.gestor_apellidos || ''}`.trim()
-	return `¿Está seguro de que desea eliminar al gestor:<br><strong class='font-medium text-lg text-gray-900 dark:text-white'>${name}</strong>?`
+	return `��Está seguro de que desea eliminar al gestor:<br><strong class='font-medium text-lg text-gray-900 dark:text-white'>${name}</strong>?`
 })
 
 const openDeleteGestorModal = (gestor) => {

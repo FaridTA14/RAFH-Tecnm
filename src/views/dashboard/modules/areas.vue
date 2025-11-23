@@ -94,6 +94,35 @@
 			</div>
 		</div>
 
+		<!-- Pagination Controls -->
+		<div v-if="filteredAreas.length > 0" class="flex items-center justify-center gap-4 p-4 border-t border-gray-200 dark:border-gray-700">
+			<button
+				@click="prevPage"
+				:disabled="currentPage === 1"
+				class="px-4 py-2 rounded-lg bg-gray-300 dark:bg-gray-600 text-gray-900 dark:text-white disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-400 dark:hover:bg-gray-500 transition-colors flex items-center gap-2"
+			>
+				<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+				</svg>
+				Atrás
+			</button>
+
+			<span class="text-sm font-medium text-gray-700 dark:text-gray-300">
+				Página {{ currentPage }} de {{ totalPages }} | Total: {{ totalItems }} resultados
+			</span>
+
+			<button
+				@click="nextPage"
+				:disabled="currentPage === totalPages"
+				class="px-4 py-2 rounded-lg bg-gray-300 dark:bg-gray-600 text-gray-900 dark:text-white disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-400 dark:hover:bg-gray-500 transition-colors flex items-center gap-2"
+			>
+				Adelante
+				<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+				</svg>
+			</button>
+		</div>
+
 		<div v-else class="bg-white dark:bg-dark-bg rounded-lg shadow-md dark:shadow-stone-950 p-6 text-center">
 			<h3 class="text-lg font-medium text-gray-900 dark:text-white">No existen registros</h3>
 			<p class="text-gray-600 dark:text-gray-400" v-if="areas.length === 0">Aún no se ha registrado ninguna área.
@@ -131,7 +160,7 @@
 						</tr>
 					</thead>
 					<tbody class="divide-y divide-gray-200 dark:divide-gray-600">
-						<tr v-for="dept in filteredDepartments" :key="dept.id"
+						<tr v-for="dept in departmentPaginatedData" :key="dept.id"
 							class="hover:bg-gray-50 dark:hover:bg-gray-700">
 							<td class="px-4 py-3 text-gray-600 dark:text-gray-400">
 								<div class="font-medium text-gray-900 dark:text-white">{{ dept.dep_nombre }}</div>
@@ -165,13 +194,42 @@
 								</button>
 							</td>
 						</tr>
-						<tr v-if="filteredDepartments.length === 0">
+						<tr v-if="departmentPaginatedData.length === 0">
 							<td colspan="6" class="px-4 py-6 text-center text-gray-500 dark:text-gray-400">
 								No existen registros
 							</td>
 						</tr>
 					</tbody>
 				</table>
+			</div>
+
+			<!-- Pagination Controls for Departamentos -->
+			<div v-if="filteredDepartments.length > 0" class="flex items-center justify-center gap-4 p-4 border-t border-gray-200 dark:border-gray-700">
+				<button
+					@click="departmentCurrentPage = departmentCurrentPage > 1 ? departmentCurrentPage - 1 : 1"
+					:disabled="departmentCurrentPage === 1"
+					class="px-4 py-2 rounded-lg bg-gray-300 dark:bg-gray-600 text-gray-900 dark:text-white disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-400 dark:hover:bg-gray-500 transition-colors flex items-center gap-2"
+				>
+					<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+					</svg>
+					Atrás
+				</button>
+
+				<span class="text-sm font-medium text-gray-700 dark:text-gray-300">
+					Página {{ departmentCurrentPage }} de {{ departmentTotalPages }} | Total: {{ filteredDepartments.length }} resultados
+				</span>
+
+				<button
+					@click="departmentCurrentPage = departmentCurrentPage < departmentTotalPages ? departmentCurrentPage + 1 : departmentTotalPages"
+					:disabled="departmentCurrentPage === departmentTotalPages"
+					class="px-4 py-2 rounded-lg bg-gray-300 dark:bg-gray-600 text-gray-900 dark:text-white disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-400 dark:hover:bg-gray-500 transition-colors flex items-center gap-2"
+				>
+					Adelante
+					<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+					</svg>
+				</button>
 			</div>
 		</div>
 
@@ -200,7 +258,7 @@
 						</tr>
 					</thead>
 					<tbody class="divide-y divide-gray-200 dark:divide-gray-600">
-						<tr v-for="building in filteredBuildings" :key="building.id"
+						<tr v-for="building in buildingPaginatedData" :key="building.id"
 							class="hover:bg-gray-50 dark:hover:bg-gray-700">
 							<td class="px-4 py-3 text-gray-600 dark:text-gray-400">
 								<div class="font-medium text-gray-900 dark:text-white">{{ building.nombre }}</div>
@@ -227,13 +285,42 @@
 							</td>
 						</tr>
 
-						<tr v-if="filteredBuildings.length === 0">
+						<tr v-if="buildingPaginatedData.length === 0">
 							<td colspan="2" class="px-4 py-6 text-center text-gray-500 dark:text-gray-400">
 								No existen registros
 							</td>
 						</tr>
 					</tbody>
 				</table>
+			</div>
+
+			<!-- Pagination Controls for Edificios -->
+			<div v-if="filteredBuildings.length > 0" class="flex items-center justify-center gap-4 p-4 border-t border-gray-200 dark:border-gray-700">
+				<button
+					@click="buildingCurrentPage = buildingCurrentPage > 1 ? buildingCurrentPage - 1 : 1"
+					:disabled="buildingCurrentPage === 1"
+					class="px-4 py-2 rounded-lg bg-gray-300 dark:bg-gray-600 text-gray-900 dark:text-white disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-400 dark:hover:bg-gray-500 transition-colors flex items-center gap-2"
+				>
+					<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+					</svg>
+					Atrás
+				</button>
+
+				<span class="text-sm font-medium text-gray-700 dark:text-gray-300">
+					Página {{ buildingCurrentPage }} de {{ buildingTotalPages }} | Total: {{ filteredBuildings.length }} resultados
+				</span>
+
+				<button
+					@click="buildingCurrentPage = buildingCurrentPage < buildingTotalPages ? buildingCurrentPage + 1 : buildingTotalPages"
+					:disabled="buildingCurrentPage === buildingTotalPages"
+					class="px-4 py-2 rounded-lg bg-gray-300 dark:bg-gray-600 text-gray-900 dark:text-white disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-400 dark:hover:bg-gray-500 transition-colors flex items-center gap-2"
+				>
+					Adelante
+					<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+					</svg>
+				</button>
 			</div>
 		</div>
 
@@ -275,7 +362,7 @@
 								Error al cargar oficinas: {{ fetchOficinasError.message }}
 							</td>
 						</tr>
-						<tr v-else-if="filteredOficinas.length > 0" v-for="oficina in filteredOficinas"
+						<tr v-else-if="oficinaPaginatedData.length > 0" v-for="oficina in oficinaPaginatedData"
 							:key="oficina.id" class="hover:bg-gray-50 dark:hover:bg-gray-700">
 							<td class="px-4 py-3 text-gray-600 dark:text-gray-400">
 								<div class="font-medium text-gray-900 dark:text-white">
@@ -324,6 +411,35 @@
 						</tr>
 					</tbody>
 				</table>
+			</div>
+
+			<!-- Pagination Controls for Oficinas -->
+			<div v-if="filteredOficinas.length > 0" class="flex items-center justify-center gap-4 p-4 border-t border-gray-200 dark:border-gray-700">
+				<button
+					@click="oficinaCurrentPage = oficinaCurrentPage > 1 ? oficinaCurrentPage - 1 : 1"
+					:disabled="oficinaCurrentPage === 1"
+					class="px-4 py-2 rounded-lg bg-gray-300 dark:bg-gray-600 text-gray-900 dark:text-white disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-400 dark:hover:bg-gray-500 transition-colors flex items-center gap-2"
+				>
+					<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+					</svg>
+					Atrás
+				</button>
+
+				<span class="text-sm font-medium text-gray-700 dark:text-gray-300">
+					Página {{ oficinaCurrentPage }} de {{ oficinaTotalPages }} | Total: {{ filteredOficinas.length }} resultados
+				</span>
+
+				<button
+					@click="oficinaCurrentPage = oficinaCurrentPage < oficinaTotalPages ? oficinaCurrentPage + 1 : oficinaTotalPages"
+					:disabled="oficinaCurrentPage === oficinaTotalPages"
+					class="px-4 py-2 rounded-lg bg-gray-300 dark:bg-gray-600 text-gray-900 dark:text-white disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-400 dark:hover:bg-gray-500 transition-colors flex items-center gap-2"
+				>
+					Adelante
+					<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+					</svg>
+				</button>
 			</div>
 		</div>
 
@@ -382,7 +498,7 @@
 					</div>
 					<div>
 						<label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-							Área a la que pertenece
+							��rea a la que pertenece
 						</label>
 						<select v-model="newDepartmentData.id_area"
 							class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
@@ -528,12 +644,65 @@
 					</div>
 					<div>
 						<label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Responsable del
-							Área</label>
+							��rea</label>
 						<select v-model="newAreaData.id_resguardante_responsable"
 							class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
 							<option :value="null">Seleccionar responsable</option>
-							<option v-if="resguardantes.length === 0" disabled class="text-gray-400">-- No hay
-								responsables disponibles --</option>
+							<option v-if="resguardantes.length === 0" disabled class="text-gray-400">-- No hay responsables disponibles --</option>
+							<option v-else v-for="r in resguardantes" :key="r.id" :value="r.id">
+								{{ r.res_nombre }}
+							</option>
+						</select>
+					</div>
+					<div>
+						<label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Edificio</label>
+						<select v-model="newAreaData.id_edificio" class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+							<option :value="null">Seleccionar edificio</option>
+							<option v-if="buildings.length === 0" disabled class="text-gray-400">-- No hay edificios disponibles --</option>
+							<option v-else v-for="b in buildings" :key="b.id" :value="b.id">
+								{{ b.nombre }}
+							</option>
+						</select>
+					</div>
+				</div>
+
+				<div class="flex gap-2 justify-end border-t border-gray-300 dark:border-gray-600 p-6">
+					<button @click="showNewAreaModal = false" class="px-4 py-2 bg-gray-300 dark:bg-gray-600 text-gray-900 dark:text-white rounded-lg hover:bg-gray-400 dark:hover:bg-gray-500 transition-colors">Cancelar</button>
+					<button @click="saveNewArea" :disabled="isSubmitting" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors font-medium disabled:opacity-50">
+						{{ isSubmitting ? 'Creando...' : 'Crear Área' }}
+					</button>
+				</div>
+			</div>
+		</div>
+
+		<!-- Modal de editar área -->
+		<div v-if="showEditAreaModal && editingArea" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+			<div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg max-w-md w-full">
+
+				<div class="flex items-center justify-between border-b border-gray-300 dark:border-gray-600 p-6">
+					<h2 class="text-lg font-bold text-gray-900 dark:text-white">Editar Área</h2>
+					<button @click="showEditAreaModal = false" class="text-gray-400 hover:text-gray-600 text-2xl">&times;</button>
+				</div>
+
+				<div v-if="editAreaError" class="bg-red-700 text-white px-6 py-4 border-b border-red-900 flex justify-between items-center" role="alert">
+					<span class="font-medium text-sm">{{ editAreaError }}</span>
+					<button @click="editAreaError = null" class="font-bold text-2xl text-white opacity-70 hover:opacity-100 leading-none">&times;</button>
+				</div>
+
+				<div class="p-6 space-y-4">
+					<div>
+						<label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Nombre del Área</label>
+						<input v-model="editingArea.area_nombre" type="text" placeholder="Nombre del área" class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+					</div>
+					<div>
+						<label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Código del Área</label>
+						<input v-model="editingArea.area_codigo" type="text" placeholder="Código (ej. LAB-SIS-001)" class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+					</div>
+					<div>
+						<label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Responsable del Área</label>
+						<select v-model="editingArea.id_resguardante_responsable" class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+							<option :value="null">Seleccionar responsable</option>
+							<option v-if="resguardantes.length === 0" disabled class="text-gray-400">-- No hay responsables disponibles --</option>
 							<option v-else v-for="r in resguardantes" :key="r.id" :value="r.id">
 								{{ r.res_nombre }}
 							</option>
@@ -881,7 +1050,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, computed } from 'vue'
+import { ref, onMounted, computed, watch } from 'vue'
 import { authenticatedFetch } from '../../../config/api.js'
 import ConfirmModal from '@/components/ConfirmModal.vue'
 
@@ -911,16 +1080,26 @@ const assignRandomColors = (areaList) => {
 	})
 }
 
-const areas = ref([])
+const areas = ref({ data: [] })
 const isLoading = ref(true)
 const error = ref(null)
 const isSubmitting = ref(false)
 const searchQuery = ref('')
+const currentPage = ref(1)
+const itemsPerPage = 15
+const totalItems = ref(0)
 const filterResponsable = ref('')
 const filterEdificio = ref('')
 const searchDepartment = ref('')
 const searchBuilding = ref('')
 const searchOficina = ref('')
+
+const departmentCurrentPage = ref(1)
+const departmentItemsPerPage = 15
+const buildingCurrentPage = ref(1)
+const buildingItemsPerPage = 15
+const oficinaCurrentPage = ref(1)
+const oficinaItemsPerPage = 15
 
 const showNewAreaModal = ref(false)
 const newAreaData = ref({
@@ -995,19 +1174,50 @@ const showEditOficinaModal = ref(false)
 const editingOficina = ref(null)
 const editOficinaError = ref(null)
 
-const filteredAreas = computed(() => {
-	return areas.value.filter(area => {
-		const matchesSearch = !searchQuery.value ||
-			area.area_nombre.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
-			area.area_codigo.toLowerCase().includes(searchQuery.value.toLowerCase())
+const totalPages = computed(() => {
+	return Math.ceil(totalItems.value / itemsPerPage) || 1
+})
 
+const departmentTotalPages = computed(() => {
+	return Math.ceil(filteredDepartments.value.length / departmentItemsPerPage) || 1
+})
+
+const departmentPaginatedData = computed(() => {
+	const start = (departmentCurrentPage.value - 1) * departmentItemsPerPage
+	const end = start + departmentItemsPerPage
+	return filteredDepartments.value.slice(start, end)
+})
+
+const buildingTotalPages = computed(() => {
+	return Math.ceil(filteredBuildings.value.length / buildingItemsPerPage) || 1
+})
+
+const buildingPaginatedData = computed(() => {
+	const start = (buildingCurrentPage.value - 1) * buildingItemsPerPage
+	const end = start + buildingItemsPerPage
+	return filteredBuildings.value.slice(start, end)
+})
+
+const oficinaTotalPages = computed(() => {
+	return Math.ceil(filteredOficinas.value.length / oficinaItemsPerPage) || 1
+})
+
+const oficinaPaginatedData = computed(() => {
+	const start = (oficinaCurrentPage.value - 1) * oficinaItemsPerPage
+	const end = start + oficinaItemsPerPage
+	return filteredOficinas.value.slice(start, end)
+})
+
+const filteredAreas = computed(() => {
+	const baseAreas = areas.value.data || []
+	return baseAreas.filter(area => {
 		const matchesResponsable = !filterResponsable.value ||
 			(area.responsable && area.responsable.id === parseInt(filterResponsable.value))
 
 		const matchesEdificio = !filterEdificio.value ||
 			(area.edificio && area.edificio.id === parseInt(filterEdificio.value))
 
-		return matchesSearch && matchesResponsable && matchesEdificio
+		return matchesResponsable && matchesEdificio
 	})
 })
 
@@ -1051,7 +1261,7 @@ const fetchAllData = async () => {
 	fetchBuildingsError.value = null
 	try {
 		const [areasRes, optionsRes, departmentsRes, areasListRes, buildingsRes, oficinasRes] = await Promise.all([
-			authenticatedFetch('/areas'),
+			authenticatedFetch('/areas?page=1'),
 			authenticatedFetch('/area-form-options'),
 			authenticatedFetch('/departamentos'),
 			authenticatedFetch('/formularios/departamentos'),
@@ -1067,7 +1277,9 @@ const fetchAllData = async () => {
 		if (!oficinasRes.ok) throw new Error('Error al cargar oficinas')
 
 		const fetchedAreas = await areasRes.json()
-		areas.value = assignRandomColors(fetchedAreas)
+		areas.value = fetchedAreas
+		totalItems.value = fetchedAreas.total || 0
+		currentPage.value = 1
 		const optionsData = await optionsRes.json()
 		departments.value = await departmentsRes.json()
 		buildingsData.value = await buildingsRes.json()
@@ -1089,20 +1301,59 @@ const fetchAllData = async () => {
 	}
 }
 
-const fetchAreas = async () => {
+const fetchAreas = async (page = 1) => {
 	isLoading.value = true
 	try {
-		const response = await authenticatedFetch('/areas')
+		const params = new URLSearchParams()
+		params.append('page', page)
+
+		if (searchQuery.value.trim()) {
+			params.append('search', searchQuery.value.toUpperCase())
+		}
+
+		const response = await authenticatedFetch(`/areas?${params.toString()}`)
 		if (!response.ok) throw new Error('Error al recargar áreas')
 		const fetchedAreas = await response.json()
-		areas.value = assignRandomColors(fetchedAreas)
+		areas.value = fetchedAreas
+		totalItems.value = fetchedAreas.total || 0
+		currentPage.value = page
 	} catch (err) {
 		console.error(err)
 		error.value = err
+		areas.value = { data: [] }
 	} finally {
 		isLoading.value = false
 	}
 }
+
+const nextPage = () => {
+	if (currentPage.value < totalPages.value) {
+		fetchAreas(currentPage.value + 1)
+	}
+}
+
+const prevPage = () => {
+	if (currentPage.value > 1) {
+		fetchAreas(currentPage.value - 1)
+	}
+}
+
+watch(searchQuery, () => {
+	currentPage.value = 1
+	fetchAreas(1)
+})
+
+watch(searchDepartment, () => {
+	departmentCurrentPage.value = 1
+})
+
+watch(searchBuilding, () => {
+	buildingCurrentPage.value = 1
+})
+
+watch(searchOficina, () => {
+	oficinaCurrentPage.value = 1
+})
 
 const fetchAreasList = async () => {
 	try {
@@ -1166,7 +1417,7 @@ const saveNewArea = async () => {
 		}
 
 		showNewAreaModal.value = false
-		await fetchAreas()
+		await fetchAreas(1)
 		await fetchAreasList()
 
 	} catch (err) {
@@ -1221,7 +1472,7 @@ const saveEditArea = async () => {
 		}
 
 		showEditAreaModal.value = false
-		await fetchAreas()
+		await fetchAreas(1)
 		await fetchAreasList()
 		editingArea.value = null
 
@@ -1260,7 +1511,7 @@ const confirmDeleteArea = async () => {
 		}
 
 		cancelDelete()
-		await fetchAreas()
+		await fetchAreas(1)
 		await fetchAreasList()
 	} catch (err) {
 		console.error('Error al eliminar área:', err)

@@ -157,6 +157,35 @@
 			</div>
 		</div>
 
+		<!-- Pagination Controls -->
+		<div v-if="filteredBienes.length > 0" class="flex items-center justify-center gap-4 p-4 border-t border-gray-200 dark:border-gray-700">
+			<button 
+				@click="prevPage"
+				:disabled="currentPage === 1"
+				class="px-4 py-2 rounded-lg bg-gray-300 dark:bg-gray-600 text-gray-900 dark:text-white disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-400 dark:hover:bg-gray-500 transition-colors flex items-center gap-2"
+			>
+				<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+				</svg>
+				Atrás
+			</button>
+
+			<span class="text-sm font-medium text-gray-700 dark:text-gray-300">
+				Página {{ currentPage }} de {{ totalPages }}
+			</span>
+
+			<button 
+				@click="nextPage"
+				:disabled="currentPage === totalPages"
+				class="px-4 py-2 rounded-lg bg-gray-300 dark:bg-gray-600 text-gray-900 dark:text-white disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-400 dark:hover:bg-gray-500 transition-colors flex items-center gap-2"
+			>
+				Adelante
+				<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+				</svg>
+			</button>
+		</div>
+
 		<!-- Generate Request Modal -->
 		<div v-if="showGenerarSolicitudModal && selectedBienParaSolicitud" @click="showGenerarSolicitudModal = false" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
 			<div @click.stop class="bg-white dark:bg-dark-bg rounded-lg shadow-lg max-w-md w-full p-6 max-h-[90vh] overflow-y-auto">
@@ -282,11 +311,12 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, watch, onMounted } from 'vue'
+import { authenticatedFetch } from '../../config/api.js'
 
 const isLoading = ref(true)
 const error = ref('')
-const bienes = ref([])
+const bienesList = ref({ data: [] })
 const searchQuery = ref('')
 const selectedStatus = ref('')
 const selectedCategory = ref('')
@@ -303,107 +333,61 @@ const traspasoData = ref({
 	resguardante: '',
 	oficina: ''
 })
+const currentPage = ref(1)
+const itemsPerPage = 15
+const totalPages = ref(1)
+const searchTimeout = ref(null)
 
 const filteredBienes = computed(() => {
-	return bienes.value.filter(bien => {
-		const matchesSearch = !searchQuery.value || 
-			(bien.nombre && bien.nombre.toLowerCase().includes(searchQuery.value.toLowerCase())) ||
-			(bien.descripcion && bien.descripcion.toLowerCase().includes(searchQuery.value.toLowerCase()))
-		
-		const matchesStatus = !selectedStatus.value || bien.estado === selectedStatus.value
-		const matchesCategory = !selectedCategory.value || bien.categoria === selectedCategory.value
-		
-		return matchesSearch && matchesStatus && matchesCategory
-	})
+	return bienesList.value.data || []
 })
 
-const fetchBienes = () => {
+const fetchBienes = async () => {
 	isLoading.value = true
 	error.value = ''
 
-	setTimeout(() => {
-		bienes.value = [
-			{
-				id: 1,
-				nombre: 'Computadora de Escritorio',
-				descripcion: 'Desktop Dell OptiPlex 5070',
-				categoria: 'electrónica',
-				cantidad: 1,
-				estado: 'activo',
-				numero_serie: 'ITCH-B-001'
-			},
-			{
-				id: 2,
-				nombre: 'Monitor Dell 27"',
-				descripcion: 'Monitor UltraSharp U2723DE',
-				categoria: 'electrónica',
-				cantidad: 2,
-				estado: 'activo',
-				numero_serie: 'ITCH-B-002'
-			},
-			{
-				id: 3,
-				nombre: 'Teclado Mecánico',
-				descripcion: 'Corsair K95 Platinum',
-				categoria: 'electrónica',
-				cantidad: 5,
-				estado: 'activo',
-				numero_serie: 'ITCH-B-003'
-			},
-			{
-				id: 4,
-				nombre: 'Mouse Inalámbrico',
-				descripcion: 'Logitech MX Master 3S',
-				categoria: 'electrónica',
-				cantidad: 3,
-				estado: 'activo',
-				numero_serie: 'ITCH-B-004'
-			},
-			{
-				id: 5,
-				nombre: 'Impresora Láser HP',
-				descripcion: 'HP LaserJet Pro M404n',
-				categoria: 'electrónica',
-				cantidad: 1,
-				estado: 'activo',
-				numero_serie: 'ITCH-B-005'
-			},
-			{
-				id: 6,
-				nombre: 'Escritorio Ajustable',
-				descripcion: 'Escritorio motorizado altura variable',
-				categoria: 'muebles',
-				cantidad: 2,
-				estado: 'inactivo',
-				numero_serie: 'ITCH-M-001'
-			},
-			{
-				id: 7,
-				nombre: 'Silla Ergonómica',
-				descripcion: 'Silla de oficina con apoyo lumbar',
-				categoria: 'muebles',
-				cantidad: 4,
-				estado: 'activo',
-				numero_serie: 'ITCH-M-002'
-			},
-			{
-				id: 8,
-				nombre: 'Proyector',
-				descripcion: 'Epson EB-2250U',
-				categoria: 'electrónica',
-				cantidad: 1,
-				estado: 'activo',
-				numero_serie: 'ITCH-B-006'
-			}
-		]
+	try {
+		const params = new URLSearchParams()
+		params.append('page', currentPage.value)
+		
+		if (searchQuery.value.trim()) {
+			params.append('search', searchQuery.value.toUpperCase())
+		}
+
+		const response = await authenticatedFetch(`/oficinas/9/bienes?${params.toString()}`)
+		if (!response.ok) throw new Error('Error al cargar los bienes')
+		
+		const data = await response.json()
+		bienesList.value = data
+		totalPages.value = Math.ceil((data.total || 0) / itemsPerPage)
+	} catch (e) {
+		error.value = e.message
+		bienesList.value = { data: [] }
+	} finally {
 		isLoading.value = false
-	}, 300)
+	}
 }
 
 const clearFilters = () => {
 	searchQuery.value = ''
 	selectedStatus.value = ''
 	selectedCategory.value = ''
+	currentPage.value = 1
+	fetchBienes()
+}
+
+const nextPage = () => {
+	if (currentPage.value < totalPages.value) {
+		currentPage.value++
+		fetchBienes()
+	}
+}
+
+const prevPage = () => {
+	if (currentPage.value > 1) {
+		currentPage.value--
+		fetchBienes()
+	}
 }
 
 const viewBienDetails = (bien) => {
@@ -471,6 +455,16 @@ const confirmarTraspaso = () => {
 		oficina: ''
 	}
 }
+
+watch(searchQuery, () => {
+	currentPage.value = 1
+	if (searchTimeout.value) {
+		clearTimeout(searchTimeout.value)
+	}
+	searchTimeout.value = setTimeout(() => {
+		fetchBienes()
+	}, 500)
+})
 
 onMounted(() => {
 	fetchBienes()
